@@ -72,39 +72,56 @@ extension ReadingNowView {
                 .resizable()
                 .scaledToFill()
                 .blur(radius: 15)
+                .frame(maxWidth: 400, maxHeight: 160)
             
             Rectangle()
                 .fill(.ultraThinMaterial).opacity(0.8)
+                .frame(maxWidth: 400, maxHeight: 160)
             
-            VStack(alignment: .leading) {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(book.safeTitle)
-                        .font(.system(.headline, design: .serif))
-                    
-                    Text(book.safeAuthor)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .trailing) {
-                    CustomProgressView(value: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
-                    
-                    Button {
-                        updatingBook = book
-                    } label: {
-                        Text("Update Progress")
-                            .font(.system(size: 10))
-                            .padding(.vertical, 5)
-                            .padding(.horizontal, 7)
-                            .background(Color.accentColor.gradient.opacity(0.7), in: Capsule())
+            GeometryReader { geo in
+                VStack(alignment: .leading) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(book.safeTitle)
+                                .font(.system(.headline, design: .serif))
+                            
+                            Text(book.safeAuthor)
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                        
+                        ZStack {
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                            
+                            Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.safeNumberOfPages)) * 100) / 100.0, format: .percent)
+                                .font(.footnote)
+                        }
+                        .frame(width: 44, height: 44)
                     }
-                    .buttonStyle(.plain)
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .trailing) {
+                        CustomProgressView(value: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
+                        
+                        Button {
+                            updatingBook = book
+                        } label: {
+                            Text("Update Progress")
+                                .font(.system(size: 10))
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 7)
+                                .background(Color.accentColor.gradient.opacity(0.7), in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
+                .padding()
+                .frame(maxWidth: 400, maxHeight: 160)
             }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .aspectRatio(16/9, contentMode: .fill)
         .frame(maxWidth: 400, maxHeight: 160)
