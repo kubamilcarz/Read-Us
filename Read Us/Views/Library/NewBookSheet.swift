@@ -103,6 +103,9 @@ struct NewBookSheet: View {
                         
                     }
                 }
+                .onSubmit {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 
                 Button(action: addBook) {
                     Text("Add")

@@ -16,13 +16,59 @@ struct ReadingNowView: View {
         SortDescriptor(\.title, order: .forward)
     ], predicate: NSPredicate(format: "isReading == true")) var books: FetchedResults<Book>
     
+    @FetchRequest<Entry>(sortDescriptors: [
+        SortDescriptor(\.dateAdded, order: .reverse)
+    ]) var entries: FetchedResults<Entry>
+    
+    var filteredEntries: [Entry] {
+        entries.filter { $0.safeDateAdded.midnight == Date().midnight }
+    }
+    
+    var numberOfPagesReadToday: Int {
+        var number = 0
+        _ = filteredEntries.map { number += $0.safeNumerOfPagesRead }
+        
+        return number
+    }
+    
     @State private var updatingBook: Book?
+    @State private var isLayoutVertical = false
+    
+    @AppStorage("dailyGoal") var dailyGoal = 20
     
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 5) {
+                        HStack {
+                            ZStack {
+                                Circle()
+                                    .strokeBorder(.secondary, lineWidth: 2)
+                                Circle()
+                                    .trim(from: 0, to: CGFloat(numberOfPagesReadToday/dailyGoal))
+                                    .stroke(lineWidth: 2.3)
+                                    .rotationEffect(.degrees(-90))
+                                    .foregroundColor(Color.accentColor)
+                            }
+                            .frame(width: 13, height: 13)
+                            
+                            Text("Today's Reading")
+                                .foregroundColor(.accentColor)
+                                .font(.system(size: 12, weight: .semibold))
+                            
+                            Text("\(numberOfPagesReadToday)/\(dailyGoal) pages")
+                                .font(.system(size: 12))
+                                .foregroundColor(.secondary)
+                        }
+                        Divider()
+                    }
+                    
                     readingNowSection
+                    
+                    Divider()
+                    
+                    
                 }
                 .padding(.horizontal)
             }
@@ -31,6 +77,18 @@ struct ReadingNowView: View {
             .sheet(item: $updatingBook) { book in
                 UpdateBookProgressSheet(book: book)
                     .presentationDetents([.height(220)])
+            }
+            
+            .toolbar {
+                Menu {
+                    Button("Switch Layout") {
+                        withAnimation {
+                            isLayoutVertical.toggle()
+                        }
+                    }
+                } label: {
+                    Label("Options", systemImage: "ellipsis")
+                }
             }
         }
     }
@@ -50,84 +108,163 @@ extension ReadingNowView {
 //                        .font(.caption)
 //                }
 //            }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(books) { book in
-                        NavigationLink {
-                            BookDetailView(book: book)
-                        } label: {
-                            readingNowBookCell(book: book)
-                        }
-                        .buttonStyle(.plain)
+        
+            if isLayoutVertical {
+                readingNowVertical
+            } else {
+                readingNowHorizontal
+            }
+        }
+    }
+    
+    private var readingNowVertical: some View {
+        VStack {
+            ForEach(books) { book in
+                NavigationLink {
+                    BookDetailView(book: book)
+                } label: {
+                    readingNowBookCell(book: book)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+    
+    private var readingNowHorizontal: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(books) { book in
+                    NavigationLink {
+                        BookDetailView(book: book)
+                    } label: {
+                        readingNowBookCell(book: book)
                     }
+                    .buttonStyle(.plain)
                 }
             }
         }
     }
     
+    private func readingNowBookRow(book: Book) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(book.safeTitle)
+                    .font(.headline)
+                Text(book.safeAuthor)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+            
+            ZStack {
+                Circle()
+                    .fill(.ultraThinMaterial)
+                
+                Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.safeNumberOfPages)) * 100) / 100.0, format: .percent)
+                    .font(.footnote)
+                
+                Circle()
+                    .stroke(lineWidth: 3)
+                    .foregroundStyle(.tertiary)
+                
+                Circle()
+                    .trim(from: 0, to: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
+                    .stroke(lineWidth: 3)
+                    .foregroundColor(Color.accentColor)
+                    .rotationEffect(.degrees(-90))
+            }
+            .frame(width: 44, height: 44)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: 70)
+        .background(
+            ZStack {
+                Image(uiImage: book.safePhoto)
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 10)
+                
+                Rectangle().fill(.ultraThinMaterial)
+            }
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    
     private func readingNowBookCell(book: Book) -> some View {
-        ZStack(alignment: .top) {
-            Image(uiImage: book.safePhoto)
-                .resizable()
-                .scaledToFill()
-                .blur(radius: 15)
-                .frame(maxWidth: 400, maxHeight: 160)
-            
-            Rectangle()
-                .fill(.ultraThinMaterial).opacity(0.8)
-                .frame(maxWidth: 400, maxHeight: 160)
-            
-            GeometryReader { geo in
-                VStack(alignment: .leading) {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text(book.safeTitle)
-                                .font(.system(.headline, design: .serif))
+        Group {
+            if isLayoutVertical {
+                readingNowBookRow(book: book)
+            } else {
+                ZStack(alignment: .top) {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.ultraThinMaterial).opacity(0.8)
+                        .frame(maxWidth: 400, maxHeight: 160)
+                        .background(
+                            Image(uiImage: book.safePhoto)
+                                .resizable()
+                                .scaledToFill()
+                                .blur(radius: 15)
+                        )
+                    
+                    VStack(alignment: .leading) {
+                        HStack(alignment: .center) {
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(book.safeTitle)
+                                    .font(.system(.headline, design: .serif))
+                                
+                                Text(book.safeAuthor)
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
                             
-                            Text(book.safeAuthor)
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
+                            Spacer()
+                            
+                            ZStack {
+                                Circle()
+                                    .fill(.ultraThinMaterial)
+                                
+                                Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.safeNumberOfPages)) * 100) / 100.0, format: .percent)
+                                    .font(.footnote)
+                            }
+                            .frame(width: 44, height: 44)
                         }
                         
                         Spacer()
                         
-                        ZStack {
-                            Circle()
-                                .fill(.ultraThinMaterial)
+                        VStack(alignment: .trailing) {
+                            CustomProgressView(value: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
                             
-                            Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.safeNumberOfPages)) * 100) / 100.0, format: .percent)
-                                .font(.footnote)
+                            Button {
+                                updatingBook = book
+                            } label: {
+                                Text("Update Progress")
+                                    .font(.system(size: 10))
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 7)
+                                    .background(Color.accentColor, in: Capsule())
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .frame(width: 44, height: 44)
                     }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing) {
-                        CustomProgressView(value: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
-                        
-                        Button {
-                            updatingBook = book
-                        } label: {
-                            Text("Update Progress")
-                                .font(.system(size: 10))
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 7)
-                                .background(Color.accentColor.gradient.opacity(0.7), in: Capsule())
-                        }
-                        .buttonStyle(.plain)
-                    }
+                    .padding()
+                    .frame(minHeight:  160)
+                    .frame(maxWidth: 400, maxHeight: 160)
                 }
-                .padding()
+                .aspectRatio(16/9, contentMode: .fill)
+                .frame(minHeight: 160)
                 .frame(maxWidth: 400, maxHeight: 160)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipped()
             }
         }
-        .aspectRatio(16/9, contentMode: .fill)
-        .frame(maxWidth: 400, maxHeight: 160)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        
         .contextMenu {
+            bookCellContextMenu(for: book)
+        }
+    }
+    
+    private func bookCellContextMenu(for book: Book) -> some View {
+        Group {
             Button {
                 updatingBook = book
             } label: {

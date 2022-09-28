@@ -17,7 +17,7 @@ struct ExploreView: View {
         "978-1524763169", "978-0593135204"
     ]
     
-    let API_KEY = "AIzaSyCDveKv1eUYZeZYTRJsU8sf5kBCopVuVoM"
+    let API_KEY = "###"
     
     var body: some View {
         NavigationStack {
