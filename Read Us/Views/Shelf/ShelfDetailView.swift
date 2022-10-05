@@ -25,10 +25,11 @@ struct ShelfDetailView: View {
     }
     
     @State private var isShowingNewShelfSheet = false
+    @State private var isEditModeOn = false
     
     var body: some View {
         List {
-            HStack(spacing: 30) {
+            HStack(spacing: 25) {
                 Image(systemName: shelf.safeIcon)
                     .font(.largeTitle.bold())
                     .foregroundColor(.secondary)
@@ -44,8 +45,8 @@ struct ShelfDetailView: View {
                 }
             }
             .withoutListInset()
-            .padding(.vertical, 30)
-            .padding(.horizontal, 15)
+            .padding(.vertical, 15)
+            .padding(.horizontal, 25)
             
             Section {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 15)], alignment: .leading) {
@@ -83,6 +84,14 @@ struct ShelfDetailView: View {
         .sheet(isPresented: $isShowingNewShelfSheet) {
             NewShelfSheet()
                 .presentationDetents([.fraction(2/3)])
+        }
+        
+        .toolbar {
+            Button(isEditModeOn ? "Done" : "Edit") {
+                withAnimation {
+                    isEditModeOn.toggle()
+                }
+            }
         }
     }
     
@@ -148,6 +157,14 @@ struct ShelfDetailView: View {
         } label: {
             VStack {
                 BookPhotoCell(for: book.safePhoto, width: 90)
+                    .overlay(!isEditModeOn ? nil :
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.7))
+                            
+                            Image(systemName: "trash")
+                                .foregroundColor(.red)
+                        }
+                    )
                 
                 VStack {
                     Text(book.safeTitle)
@@ -163,6 +180,13 @@ struct ShelfDetailView: View {
                 .frame(maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity)
+        } primaryAction: {
+            if isEditModeOn {
+                withAnimation {
+                    book.removeFromShelves(shelf)
+                    try? moc.save()
+                }
+            }
         }
         .buttonStyle(.plain)
     }
