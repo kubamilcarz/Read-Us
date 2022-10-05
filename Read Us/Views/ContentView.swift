@@ -17,8 +17,8 @@ struct ContentView: View {
                 .tabBarItem(tab: .readingNow, selection: $mainVM.tabSelection)
             LibraryView()
                 .tabBarItem(tab: .library, selection: $mainVM.tabSelection)
-            ExploreView()
-                .tabBarItem(tab: .explore, selection: $mainVM.tabSelection)
+            TrendsView()
+                .tabBarItem(tab: .trends, selection: $mainVM.tabSelection)
             ProfileView()
                 .tabBarItem(tab: .profile, selection: $mainVM.tabSelection)
         }

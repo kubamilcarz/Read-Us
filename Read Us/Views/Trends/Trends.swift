@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExploreView: View {
+struct TrendsView: View {
     @State private var searchQuery = ""
     
     @State private var fetchedBooks = [CachedBook]()
@@ -24,7 +24,7 @@ struct ExploreView: View {
                         .font(.caption2)
                 }
             }
-            .navigationTitle("Explore")
+            .navigationTitle("Trends")
         }
     }
 }
