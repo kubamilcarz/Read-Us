@@ -2,7 +2,7 @@
 //  Entry+CoreDataProperties.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 9/27/22.
+//  Created by Kuba Milcarz on 10/4/22.
 //
 //
 
@@ -16,12 +16,12 @@ extension Entry {
         return NSFetchRequest<Entry>(entityName: "Entry")
     }
 
-    @NSManaged public var id: UUID?
+    @NSManaged public var currentPage: Int16
     @NSManaged public var dateAdded: Date?
+    @NSManaged public var id: UUID?
+    @NSManaged public var isVisible: Bool
     @NSManaged public var notes: String?
     @NSManaged public var numberOfPages: Int16
-    @NSManaged public var currentPage: Int16
-    @NSManaged public var isVisible: Bool
     @NSManaged public var book: Book?
     
     public var safeDateAdded: Date { dateAdded ?? Date.now }

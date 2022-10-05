@@ -2,7 +2,7 @@
 //  Entry+CoreDataClass.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 9/27/22.
+//  Created by Kuba Milcarz on 10/4/22.
 //
 //
 

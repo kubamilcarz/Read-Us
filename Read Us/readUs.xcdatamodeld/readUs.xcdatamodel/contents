@@ -16,6 +16,7 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Entry" inverseName="book" inverseEntity="Entry"/>
         <relationship name="quotes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Quote" inverseName="book" inverseEntity="Quote"/>
+        <relationship name="shelves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Shelf" inverseName="books" inverseEntity="Shelf"/>
     </entity>
     <entity name="Entry" representedClassName="Entry" syncable="YES">
         <attribute name="currentPage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -32,5 +33,12 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="pageNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="book" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Book" inverseName="quotes" inverseEntity="Book"/>
+    </entity>
+    <entity name="Shelf" representedClassName="Shelf" syncable="YES" codeGenerationType="class">
+        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="subtitle" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="shelves" inverseEntity="Book"/>
     </entity>
 </model>

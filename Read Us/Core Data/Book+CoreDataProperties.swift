@@ -2,7 +2,7 @@
 //  Book+CoreDataProperties.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 9/27/22.
+//  Created by Kuba Milcarz on 10/4/22.
 //
 //
 
@@ -17,24 +17,25 @@ extension Book {
         return NSFetchRequest<Book>(entityName: "Book")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var title: String?
     @NSManaged public var author: String?
+    @NSManaged public var dateAdded: Date?
+    @NSManaged public var finishedReadingOn: Date?
+    @NSManaged public var id: UUID?
     @NSManaged public var isRead: Bool
+    @NSManaged public var isReading: Bool
     @NSManaged public var notes: String?
     @NSManaged public var numberOfPages: Int16
-    @NSManaged public var startedReadingOn: Date?
-    @NSManaged public var finishedReadingOn: Date?
-    @NSManaged public var tags: [String]?
     @NSManaged public var photo: Data?
     @NSManaged public var rating: Int16
-    @NSManaged public var dateAdded: Date?
-    @NSManaged public var isReading: Bool
+    @NSManaged public var startedReadingOn: Date?
+    @NSManaged public var tags: [String]?
+    @NSManaged public var title: String?
     @NSManaged public var entries: NSSet?
     @NSManaged public var quotes: NSSet?
+    @NSManaged public var shelves: NSSet?
     
     public var safeTitle: String { title ?? "Untitled" }
-    
+        
     public var safeAuthor: String { author ?? "Anonymous Anonymous" }
     
     public var safeNotes: String { notes ?? "" }
@@ -54,15 +55,15 @@ extension Book {
     public var safeTags: [String] { tags ?? [] }
     
     public var qoutesArray: [Quote] {
-        let set = quotes as? Set<Quote> ?? []
-        
-        return Array(set)
+        Array(quotes as? Set<Quote> ?? [])
     }
     
     public var safeEntries: [Entry] {
-        let set = entries as? Set<Entry> ?? []
-        
-        return Array(set)
+        Array(entries as? Set<Entry> ?? [])
+    }
+    
+    public var safeShelves: [Shelf] {
+        Array(shelves as? Set<Shelf> ?? [])
     }
 
 }
@@ -98,6 +99,23 @@ extension Book {
 
     @objc(removeQuotes:)
     @NSManaged public func removeFromQuotes(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for shelves
+extension Book {
+
+    @objc(addShelvesObject:)
+    @NSManaged public func addToShelves(_ value: Shelf)
+
+    @objc(removeShelvesObject:)
+    @NSManaged public func removeFromShelves(_ value: Shelf)
+
+    @objc(addShelves:)
+    @NSManaged public func addToShelves(_ values: NSSet)
+
+    @objc(removeShelves:)
+    @NSManaged public func removeFromShelves(_ values: NSSet)
 
 }
 

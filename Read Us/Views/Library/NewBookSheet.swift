@@ -119,14 +119,9 @@ struct NewBookSheet: View {
             .navigationTitle("New Book")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button {
+                Button("Done") {
                     dismiss()
-                } label: {
-                    Image(systemName: "xmark.circle")
-                        .frame(width: 36, height: 36)
-                        .clipShape(Circle())
                 }
-                .tint(.secondary)
             }
             
             .onChange(of: photoSelection) { newValue in
