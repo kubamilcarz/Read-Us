@@ -1,5 +1,5 @@
 //
-//  ExploreView.swift
+//  TrendsView.swift
 //  Read Us
 //
 //  Created by Kuba Milcarz on 9/25/22.

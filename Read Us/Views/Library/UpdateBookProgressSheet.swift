@@ -86,7 +86,17 @@ struct UpdateBookProgressSheet: View {
     private func updateProgress() {
         withAnimation {
             if let pages = Int(numberOfPagesToAdd) {
-                mainVM.updateProgress(moc: moc, for: book, pages: pages)
+                if pages >= book.safeNumberOfPages {
+                    // book should be marked as read
+                    mainVM.finish(moc: moc, book: book)
+                } else if pages <= 0 {
+                    // book has 50 pages
+                    // was at 20
+                    // updated to -30
+                    mainVM.updateProgress(moc: moc, for: book, pages: 0)
+                } else {
+                    mainVM.updateProgress(moc: moc, for: book, pages: pages)
+                }
                 dismiss()
             }
         }

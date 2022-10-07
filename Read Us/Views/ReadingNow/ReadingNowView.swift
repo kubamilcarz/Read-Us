@@ -37,6 +37,7 @@ struct ReadingNowView: View {
     
     @State private var updatingBook: Book?
     @State private var isShowingNewShelfSheet = false
+    @State private var isShowingReadingHistorySheet = false
     
     @AppStorage("readingNowLayout") private var isLayoutVertical = false
     
@@ -87,6 +88,10 @@ struct ReadingNowView: View {
                 NewShelfSheet()
                     .presentationDetents([.fraction(2/3)])
             }
+            
+            .sheet(isPresented: $isShowingReadingHistorySheet, content: {
+                ReadingHistorySheet()
+            })
             
             .toolbar {
                 Menu {
@@ -321,16 +326,7 @@ extension ReadingNowView {
     private var todaysReading: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
-                ZStack {
-                    Circle()
-                        .strokeBorder(.secondary, lineWidth: 2)
-                    Circle()
-                        .trim(from: 0, to: CGFloat(numberOfPagesReadToday/dailyGoal))
-                        .stroke(lineWidth: 2.3)
-                        .rotationEffect(.degrees(-90))
-                        .foregroundColor(Color.accentColor)
-                }
-                .frame(width: 13, height: 13)
+                CustomCircularProgressView(progress: CGFloat(numberOfPagesReadToday) / CGFloat(dailyGoal), width: 13)
                 
                 Text("Today's Reading")
                     .foregroundColor(.accentColor)
@@ -340,6 +336,10 @@ extension ReadingNowView {
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
             }
+            .onTapGesture {
+                isShowingReadingHistorySheet = true
+            }
+            
             Divider()
         }
     }

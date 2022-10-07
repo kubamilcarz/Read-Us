@@ -28,8 +28,8 @@ struct LibraryView: View {
             .navigationTitle("Library")
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    EditButton().tint(.secondary)
-                    navBarAddButton.tint(.secondary)
+                    EditButton()
+                    navBarAddButton
                 }
                 
             }
