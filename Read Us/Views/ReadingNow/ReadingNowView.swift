@@ -12,8 +12,7 @@ struct ReadingNowView: View {
     @Environment(\.managedObjectContext) var moc
     
     @FetchRequest<Book>(sortDescriptors: [
-        SortDescriptor(\.dateAdded, order: .reverse),
-        SortDescriptor(\.title, order: .forward)
+        SortDescriptor(\.dateAdded, order: .reverse)
     ], predicate: NSPredicate(format: "isReading == true")) var books: FetchedResults<Book>
     
     @FetchRequest<Entry>(sortDescriptors: [
@@ -38,6 +37,7 @@ struct ReadingNowView: View {
     @State private var updatingBook: Book?
     @State private var isShowingNewShelfSheet = false
     @State private var isShowingReadingHistorySheet = false
+    @State private var isBookChooserOpen = false
         
     @AppStorage("dailyGoal") var dailyGoal = 20
     
@@ -50,6 +50,28 @@ struct ReadingNowView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
+                            if books.isEmpty {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(.ultraThinMaterial)
+                                    .aspectRatio(16/9, contentMode: .fill)
+                                    .frame(maxWidth: 400, maxHeight: 160)
+                                    .frame(minHeight: 160)
+                                    .overlay(
+                                        VStack(spacing: 10) {
+                                            Image(systemName: "plus")
+                                                .font(.largeTitle)
+                                                .foregroundColor(.secondary)
+                                            
+                                            Text("Start Reading")
+                                                .font(.subheadline.bold())
+                                                .foregroundColor(.secondary)
+                                        }
+                                    )
+                                    .onTapGesture {
+                                        isBookChooserOpen = true
+                                    }
+                            }
+                            
                             ForEach(books) { book in
                                 NavigationLink(value: book) {
                                     bookCell(book: book)
@@ -144,9 +166,13 @@ struct ReadingNowView: View {
                     .presentationDetents([.fraction(2/3)])
             }
             
-            .sheet(isPresented: $isShowingReadingHistorySheet, content: {
+            .sheet(isPresented: $isShowingReadingHistorySheet) {
                 ReadingHistorySheet()
-            })
+            }
+            
+            .sheet(isPresented: $isBookChooserOpen) {
+                BookChooserSheet(readingNow: true)
+            }
             
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)

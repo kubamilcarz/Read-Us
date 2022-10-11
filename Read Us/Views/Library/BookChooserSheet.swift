@@ -11,7 +11,8 @@ struct BookChooserSheet: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
-    var shelf: Shelf
+    var shelf: Shelf?
+    var readingNow: Bool?
     
     @FetchRequest<Book>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
@@ -20,16 +21,26 @@ struct BookChooserSheet: View {
     init(for shelf: Shelf) {
         self.shelf = shelf
     }
+    
+    init(readingNow: Bool) {
+        self.readingNow = readingNow
+    }
 
     
     @State private var query = ""
     
     var filteredBooks: [Book] {
-        if query.isEmpty {
-            return books.compactMap { $0 }
+        var filBooks = books.compactMap { $0 }
+        
+        if let readingNow, readingNow {
+            filBooks = books.filter { $0.isRead == false }
         }
         
-        return books.filter { $0.safeTitle.lowercased().contains(query.lowercased()) || $0.safeAuthor.lowercased().contains(query.lowercased()) }
+        if query.isEmpty {
+            return filBooks
+        }
+        
+        return filBooks.filter { $0.safeTitle.lowercased().contains(query.lowercased()) || $0.safeAuthor.lowercased().contains(query.lowercased()) }
     }
     
     var body: some View {
@@ -51,8 +62,8 @@ struct BookChooserSheet: View {
     
     private func row(book: Book) -> some View {
         HStack(spacing: 15) {
-            Image(systemName: shelf.safeBooks.contains(book) ? "checkmark.circle.fill" : "circle")
-                .foregroundColor(shelf.safeBooks.contains(book) ? .accentColor : .secondary)
+            Image(systemName: readingNow != nil ? (book.isReading ? "checkmark.circle.fill" : "circle") : shelf?.safeBooks.contains(book) ?? false ? "checkmark.circle.fill" : "circle")
+                .foregroundColor(readingNow != nil ? (book.isReading ? .accentColor : .secondary) :  shelf?.safeBooks.contains(book) ?? false ? .accentColor : .secondary)
                 .symbolRenderingMode(.hierarchical)
             
             VStack(alignment: .leading) {
@@ -72,13 +83,21 @@ struct BookChooserSheet: View {
         }
         .padding(.vertical, 2)
         .onTapGesture {
-            if shelf.safeBooks.contains(book) {
-                shelf.removeFromBooks(book)
-            } else {
-                shelf.addToBooks(book)
+            if let shelf {
+                if shelf.safeBooks.contains(book) {
+                    shelf.removeFromBooks(book)
+                } else {
+                    shelf.addToBooks(book)
+                }
+                
+                try? moc.save()
             }
             
-            try? moc.save()
+            if let readingNow, readingNow {
+                book.isReading.toggle()
+                
+                try? moc.save()
+            }
         }
     }
 }
