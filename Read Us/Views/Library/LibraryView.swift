@@ -13,22 +13,31 @@ struct LibraryView: View {
     
     @State private var isShowingNewBookSheet = false
     
+    @State private var isEditModeOn = false
+    @State private var query = ""
+    
+    var filteredBooks: [Book] {
+        if query.isEmpty {
+            return books.compactMap { $0 }
+        }
+        
+        return books.filter { $0.safeTitle.lowercased().contains(query.lowercased()) || $0.safeAuthor.lowercased().contains(query.lowercased()) }
+    }
+    
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(books) { book in
-                    NavigationLink {
-                        BookDetailView(book: book)
-                    } label: {
-                        bookCell(book: book)
-                    }
-                }
-                .onDelete(perform: removeBook)
+            ScrollView {
+                BookGrid(books: filteredBooks, isEditModeOn: $isEditModeOn, isShowingLibraryChoser: .constant(false), isShelf: false)
+                    .padding(.horizontal)
             }
             .navigationTitle("Library")
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    EditButton()
+                    Button(isEditModeOn ? "Done" : "Edit") {
+                        withAnimation {
+                            isEditModeOn.toggle()
+                        }
+                    }
                     navBarAddButton
                 }
                 
@@ -37,6 +46,8 @@ struct LibraryView: View {
                 NewBookSheet()
 //                    .presentationDetents([.fraction(2/3)])
             }
+            
+            .searchable(text: $query.animation(.easeInOut), placement: .navigationBarDrawer(displayMode: .automatic), prompt: Text("Search Library"))
         }
     }
     
@@ -53,6 +64,7 @@ struct LibraryView: View {
             isShowingNewBookSheet = true
         } label: {
             Label("Add Book", systemImage: "plus.circle.fill")
+                .symbolRenderingMode(.hierarchical)
         }
     }
     

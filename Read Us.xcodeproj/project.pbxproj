@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C8277D6B28F067B10078C9FD /* ReadingGoalsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */; };
 		C8408B6C28EC8B27009D45A3 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B6428EC8B27009D45A3 /* Entry+CoreDataClass.swift */; };
 		C8408B6D28EC8B27009D45A3 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B6528EC8B27009D45A3 /* Entry+CoreDataProperties.swift */; };
 		C8408B6E28EC8B27009D45A3 /* Quote+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B6628EC8B27009D45A3 /* Quote+CoreDataClass.swift */; };
@@ -19,6 +20,9 @@
 		C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B8928ED8977009D45A3 /* ShelfRow.swift */; };
 		C8408B8C28EDA1EC009D45A3 /* ReadingHistorySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B8B28EDA1EC009D45A3 /* ReadingHistorySheet.swift */; };
 		C847069B28E45A29006CC559 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847069A28E45A29006CC559 /* Date.swift */; };
+		C86CEDEB28F5F95800C5EB9A /* BookGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86CEDEA28F5F95800C5EB9A /* BookGrid.swift */; };
+		C86CEDED28F5FE6100C5EB9A /* CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86CEDEC28F5FE6100C5EB9A /* CornerRadius.swift */; };
+		C86CEDEF28F602FE00C5EB9A /* ReadThisYearSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86CEDEE28F602FE00C5EB9A /* ReadThisYearSection.swift */; };
 		C898CE2928E09E960038AAA3 /* Read_UsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C898CE2828E09E960038AAA3 /* Read_UsApp.swift */; };
 		C898CE2B28E09E960038AAA3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C898CE2A28E09E960038AAA3 /* ContentView.swift */; };
 		C898CE2D28E09E970038AAA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C898CE2C28E09E970038AAA3 /* Assets.xcassets */; };
@@ -50,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingGoalsSection.swift; sourceTree = "<group>"; };
 		C8408B6428EC8B27009D45A3 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C8408B6528EC8B27009D45A3 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C8408B6628EC8B27009D45A3 /* Quote+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Quote+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -63,6 +68,9 @@
 		C8408B8928ED8977009D45A3 /* ShelfRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfRow.swift; sourceTree = "<group>"; };
 		C8408B8B28EDA1EC009D45A3 /* ReadingHistorySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistorySheet.swift; sourceTree = "<group>"; };
 		C847069A28E45A29006CC559 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		C86CEDEA28F5F95800C5EB9A /* BookGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookGrid.swift; sourceTree = "<group>"; };
+		C86CEDEC28F5FE6100C5EB9A /* CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadius.swift; sourceTree = "<group>"; };
+		C86CEDEE28F602FE00C5EB9A /* ReadThisYearSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadThisYearSection.swift; sourceTree = "<group>"; };
 		C898CE2528E09E960038AAA3 /* Read Us.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Read Us.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C898CE2828E09E960038AAA3 /* Read_UsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Read_UsApp.swift; sourceTree = "<group>"; };
 		C898CE2A28E09E960038AAA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,6 +121,7 @@
 				C8408B8228EC9397009D45A3 /* ShelfDetailView.swift */,
 				C8408B8528ED8341009D45A3 /* NewShelfSheet.swift */,
 				C8408B8928ED8977009D45A3 /* ShelfRow.swift */,
+				C86CEDEA28F5F95800C5EB9A /* BookGrid.swift */,
 			);
 			path = Shelf;
 			sourceTree = "<group>";
@@ -121,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				C847069A28E45A29006CC559 /* Date.swift */,
+				C86CEDEC28F5FE6100C5EB9A /* CornerRadius.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +243,8 @@
 			children = (
 				C89985E928E0CAC5002C678D /* ReadingNowView.swift */,
 				C8408B8B28EDA1EC009D45A3 /* ReadingHistorySheet.swift */,
+				C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */,
+				C86CEDEE28F602FE00C5EB9A /* ReadThisYearSection.swift */,
 			);
 			path = ReadingNow;
 			sourceTree = "<group>";
@@ -348,10 +360,12 @@
 				C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */,
 				C89985EC28E0CACE002C678D /* LibraryView.swift in Sources */,
 				C89985E128E0B161002C678D /* CustomTabBarContainerView.swift in Sources */,
+				C86CEDED28F5FE6100C5EB9A /* CornerRadius.swift in Sources */,
 				C89985DF28E0AF92002C678D /* TabBarItem.swift in Sources */,
 				C8CE889428EEE90A00FCB607 /* Shelf+CoreDataProperties.swift in Sources */,
 				C89985F228E0D051002C678D /* CachedBook.swift in Sources */,
 				C898CE3228E09E970038AAA3 /* Persistence.swift in Sources */,
+				C8277D6B28F067B10078C9FD /* ReadingGoalsSection.swift in Sources */,
 				C8408B6C28EC8B27009D45A3 /* Entry+CoreDataClass.swift in Sources */,
 				C899860128E0F8A7002C678D /* BookDetailView.swift in Sources */,
 				C899861B28E1FD73002C678D /* CustomProgressView.swift in Sources */,
@@ -365,7 +379,9 @@
 				C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */,
 				C8408B8C28EDA1EC009D45A3 /* ReadingHistorySheet.swift in Sources */,
 				C8408B7028EC8B27009D45A3 /* Book+CoreDataClass.swift in Sources */,
+				C86CEDEF28F602FE00C5EB9A /* ReadThisYearSection.swift in Sources */,
 				C898CE2928E09E960038AAA3 /* Read_UsApp.swift in Sources */,
+				C86CEDEB28F5F95800C5EB9A /* BookGrid.swift in Sources */,
 				C8408B6E28EC8B27009D45A3 /* Quote+CoreDataClass.swift in Sources */,
 				C89985EA28E0CAC5002C678D /* ReadingNowView.swift in Sources */,
 				C8408B8628ED8341009D45A3 /* NewShelfSheet.swift in Sources */,

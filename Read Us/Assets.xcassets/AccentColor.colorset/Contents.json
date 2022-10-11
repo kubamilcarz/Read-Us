@@ -2,21 +2,13 @@
   "colors" : [
     {
       "color" : {
-        "platform" : "universal",
-        "reference" : "systemPurpleColor"
-      },
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
+        "color-space" : "srgb",
+        "components" : {
+          "alpha" : "1.000",
+          "blue" : "0.289",
+          "green" : "0.322",
+          "red" : "0.686"
         }
-      ],
-      "color" : {
-        "platform" : "universal",
-        "reference" : "systemPurpleColor"
       },
       "idiom" : "universal"
     }

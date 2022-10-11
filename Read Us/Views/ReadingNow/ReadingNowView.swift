@@ -38,9 +38,7 @@ struct ReadingNowView: View {
     @State private var updatingBook: Book?
     @State private var isShowingNewShelfSheet = false
     @State private var isShowingReadingHistorySheet = false
-    
-    @AppStorage("readingNowLayout") private var isLayoutVertical = false
-    
+        
     @AppStorage("dailyGoal") var dailyGoal = 20
     
     var body: some View {
@@ -48,34 +46,76 @@ struct ReadingNowView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 15) {
                     todaysReading
+                        .padding(.horizontal)
                     
-                    if isLayoutVertical {
-                        VStack(spacing: 10) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
                             ForEach(books) { book in
                                 NavigationLink(value: book) {
-                                    bookRow(book: book)
+                                    bookCell(book: book)
                                 }
                                 .buttonStyle(.plain)
                             }
                         }
-                    } else {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack {
-                                ForEach(books) { book in
-                                    NavigationLink(value: book) {
-                                        bookCell(book: book)
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                            }
+                    }
+                    .padding(.horizontal)
+                    
+                    VStack(spacing: 0) {
+                        ZStack {
+                            Rectangle()
+                                .fill(.ultraThinMaterial)
+                            Rectangle()
+                                .fill(.background)
+                                .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
                         }
+                        .frame(height: 30)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, -15)
+                        
+                        listsSection
+                            .padding(.vertical, 15)
+                            .padding(.horizontal)
+                            .background(.ultraThinMaterial)
                     }
                     
-                    listsSection
-                        .padding(.top, 15)
+                    VStack(spacing: 0) {
+                        ZStack {
+                            Rectangle()
+                                .fill(.ultraThinMaterial)
+
+                            Rectangle()
+                                .fill(.background)
+                                .cornerRadius(24, corners: [.topLeft, .topRight])
+                        }
+                        .frame(height: 30)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, -15)
+                        
+                        ReadingGoalsSection()
+                            .padding(.vertical, 10)
+                            .padding(.bottom, 15)
+                    }
+                    
+                    VStack(spacing: 0) {
+                        ZStack {
+                            Rectangle()
+                                .fill(.ultraThinMaterial)
+                            Rectangle()
+                                .fill(.background)
+                                .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
+                        }
+                        .frame(height: 30)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, -30)
+                        
+                        ReadThisYearSection()
+                            .padding(.vertical, 30)
+                            .padding(.horizontal)
+                            .background(.ultraThinMaterial)
+                    }
                     
                 }
-                .padding(.horizontal)
+                .padding(.bottom, 75)
             }
             .navigationTitle("Reading Now")
             
@@ -92,18 +132,6 @@ struct ReadingNowView: View {
             .sheet(isPresented: $isShowingReadingHistorySheet, content: {
                 ReadingHistorySheet()
             })
-            
-            .toolbar {
-                Menu {
-                    Button("Switch Layout") {
-                        withAnimation {
-                            isLayoutVertical.toggle()
-                        }
-                    }
-                } label: {
-                    Label("Options", systemImage: "ellipsis")
-                }
-            }
             
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)
