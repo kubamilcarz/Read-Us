@@ -29,12 +29,12 @@ struct ReadThisYearSection: View {
                     .frame(maxWidth: 210)
             }
             
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60, maximum: 60), spacing: 10)], alignment: .leading) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 50), spacing: 10)], alignment: .leading) {
                 ForEach(filteredBooks) { book in
                     NavigationLink(destination: BookDetailView(book: book)) {
                         bookCell(book: book)
                     }
-                    .frame(width: 60)
+                    .frame(minWidth: 50)
                 }
             }
             .padding()
@@ -43,6 +43,6 @@ struct ReadThisYearSection: View {
     }
     
     private func bookCell(book: Book) -> some View {
-        BookPhotoCell(for: book.safePhoto, width: 60)
+        BookPhotoCell(for: book.safePhoto, minWidth: 50)
     }
 }

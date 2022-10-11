@@ -114,8 +114,23 @@ struct ReadingNowView: View {
                             .background(.ultraThinMaterial)
                     }
                     
+                    VStack(spacing: 0) {
+                        ZStack {
+                            Rectangle()
+                                .fill(.ultraThinMaterial)
+                            
+                            Rectangle()
+                                .fill(.background)
+                                .cornerRadius(24, corners: [.topLeft, .topRight])
+                        }
+                        .frame(height: 30)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, -15)
+                        
+                    }
+                    
                 }
-                .padding(.bottom, 75)
+                .padding(.bottom, 50)
             }
             .navigationTitle("Reading Now")
             
