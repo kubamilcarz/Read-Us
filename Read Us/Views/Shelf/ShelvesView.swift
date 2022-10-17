@@ -21,16 +21,24 @@ struct ShelvesView: View {
 
     var content: some View {
         List {
-            ForEach(shelves) { shelf in
-                NavigationLink(destination: ShelfDetailView(shelf: shelf)) {
-                    ShelfRow(shelf: shelf)
+            if shelves.isEmpty {
+                Button {
+                    isShowingNewShelfSheet = true
+                } label: {
+                    ShelfRow()
                 }
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    Button("Delete") {
-                        shelfToDelete = shelf
-                        isShowingAlert = true
+            } else {
+                ForEach(shelves) { shelf in
+                    NavigationLink(destination: ShelfDetailView(shelf: shelf)) {
+                        ShelfRow(shelf: shelf)
                     }
-                    .tint(.red)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button("Delete") {
+                            shelfToDelete = shelf
+                            isShowingAlert = true
+                        }
+                        .tint(.red)
+                    }
                 }
             }
         }

@@ -14,7 +14,14 @@ struct ReadThisYearSection: View {
     ], predicate: NSPredicate(format: "isRead == true")) var books: FetchedResults<Book>
     
     var filteredBooks: [Book] {
-        books.compactMap { $0 }
+        books.compactMap { book in
+            let dateComponents = DateComponents()
+            let currentYear = dateComponents.year
+//            let date = Calendar.current.date(from: book.safeFinishedReadingOn.com)
+            // TODO: - get books read in the current year
+            return book
+            
+        }
     }
     
     var body: some View {

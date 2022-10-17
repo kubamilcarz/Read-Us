@@ -27,7 +27,7 @@ struct CustomCircularProgressView: View {
                 .trim(from: 0, to: progress)
                 .stroke(lineWidth: borderWidth)
                 .rotationEffect(.degrees(-90))
-                .foregroundColor(Color.accentColor)
+                .foregroundColor(Color.ruAccentColor)
         }
         .frame(width: width, height: width)
     }

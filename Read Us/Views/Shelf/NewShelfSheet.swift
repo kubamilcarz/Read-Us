@@ -39,7 +39,7 @@ struct NewShelfSheet: View {
                                         .padding(5)
                                 }
                                 .buttonStyle(.bordered)
-                                .tint(icon == chosenIcon ? .accentColor : .secondary)
+                                .tint(icon == chosenIcon ? .ruAccentColor : .secondary)
                                 .clipShape(Circle())
                                 .frame(minWidth: 70, minHeight: 70)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)

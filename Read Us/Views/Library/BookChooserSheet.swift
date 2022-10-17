@@ -63,7 +63,7 @@ struct BookChooserSheet: View {
     private func row(book: Book) -> some View {
         HStack(spacing: 15) {
             Image(systemName: readingNow != nil ? (book.isReading ? "checkmark.circle.fill" : "circle") : shelf?.safeBooks.contains(book) ?? false ? "checkmark.circle.fill" : "circle")
-                .foregroundColor(readingNow != nil ? (book.isReading ? .accentColor : .secondary) :  shelf?.safeBooks.contains(book) ?? false ? .accentColor : .secondary)
+                .foregroundColor(readingNow != nil ? (book.isReading ? .ruAccentColor : .secondary) :  shelf?.safeBooks.contains(book) ?? false ? .ruAccentColor : .secondary)
                 .symbolRenderingMode(.hierarchical)
             
             VStack(alignment: .leading) {

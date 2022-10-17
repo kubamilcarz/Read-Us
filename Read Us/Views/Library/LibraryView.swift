@@ -29,6 +29,7 @@ struct LibraryView: View {
             ScrollView {
                 BookGrid(books: filteredBooks, isEditModeOn: $isEditModeOn, isShowingLibraryChoser: .constant(false), isShelf: false)
                     .padding(.horizontal)
+                    .padding(.bottom, 75)
             }
             .navigationTitle("Library")
             .toolbar {
@@ -38,9 +39,10 @@ struct LibraryView: View {
                             isEditModeOn.toggle()
                         }
                     }
+                    .tint(.ruAccentColor)
                     navBarAddButton
+                        .tint(.ruAccentColor)
                 }
-                
             }
             .sheet(isPresented: $isShowingNewBookSheet) {
                 NewBookSheet()

@@ -30,10 +30,10 @@ enum TabBarItem: Hashable {
     
     var color: Color {
         switch self {
-        case .readingNow: return Color.accentColor
-        case .library: return Color.accentColor
-        case .trends: return Color.accentColor
-        case .profile: return Color.accentColor
+        case .readingNow: return .ruAccentColor
+        case .library: return .ruAccentColor
+        case .trends: return .ruAccentColor
+        case .profile: return .ruAccentColor
         }
     }
 }

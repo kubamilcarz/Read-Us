@@ -83,7 +83,7 @@ extension CustomTabBarView {
                         .fill(tab.color.opacity(0.2))
                         .matchedGeometryEffect(id: "background_rectangle", in: tabBarNamespace)
                 } else {
-                    Color.accentColor.opacity(0.001)
+                    Color.ruAccentColor.opacity(0.001)
                 }
             }
         )

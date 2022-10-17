@@ -24,7 +24,7 @@ struct ReadingNowView: View {
     ]) var shelves: FetchedResults<Shelf>
     
     var filteredEntries: [Entry] {
-        entries.filter { $0.safeDateAdded.midnight == Date().midnight }
+        entries.filter { $0.safeDateAdded.midnight == Date().midnight && $0.isVisible }
     }
     
     var numberOfPagesReadToday: Int {
@@ -194,16 +194,26 @@ extension ReadingNowView {
                 NavigationLink(destination: ShelvesView(isNested: true)) {
                     Text("All")
                         .font(.subheadline)
-                        .foregroundColor(.accentColor)
+                        .foregroundColor(.ruAccentColor)
                 }
             }
             
             VStack(alignment: .leading, spacing: 5) {
-                ForEach(shelves.prefix(3)) { shelf in
-                    NavigationLink(destination: ShelfDetailView(shelf: shelf)) {
-                        listRow(shelf: shelf)
+                if shelves.isEmpty {
+                    Button {
+                        isShowingNewShelfSheet = true
+                    } label: {
+                        ShelfRow()
+                            .padding()
+                            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
                     }
-                    .buttonStyle(.plain)
+                } else {
+                    ForEach(shelves.prefix(3)) { shelf in
+                        NavigationLink(destination: ShelfDetailView(shelf: shelf)) {
+                            listRow(shelf: shelf)
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
         }
@@ -241,7 +251,7 @@ extension ReadingNowView {
                 Circle()
                     .trim(from: 0, to: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
                     .stroke(lineWidth: 3)
-                    .foregroundColor(Color.accentColor)
+                    .foregroundColor(Color.ruAccentColor)
                     .rotationEffect(.degrees(-90))
             }
             .frame(width: 44, height: 44)
@@ -307,7 +317,7 @@ extension ReadingNowView {
                         .font(.system(size: 10))
                         .padding(.vertical, 5)
                         .padding(.horizontal, 7)
-                        .background(Color.accentColor, in: Capsule())
+                        .background(Color.ruAccentColor, in: Capsule())
                         .foregroundStyle(.white)
                 }
                 .buttonStyle(.plain)
@@ -398,7 +408,7 @@ extension ReadingNowView {
                 CustomCircularProgressView(progress: CGFloat(numberOfPagesReadToday) / CGFloat(dailyGoal), width: 13)
                 
                 Text("Today's Reading")
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(.ruAccentColor)
                     .font(.system(size: 12, weight: .semibold))
                 
                 Text("\(numberOfPagesReadToday)/\(dailyGoal) pages")

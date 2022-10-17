@@ -24,7 +24,7 @@ struct CustomProgressView: View {
                     .frame(width: geo.size.width, height: height)
                 
                 Capsule()
-                    .fill(Color.accentColor.gradient)
+                    .fill(Color.ruAccentColor.gradient)
                     .frame(width: geo.size.width * value, height: height)
             }
         }

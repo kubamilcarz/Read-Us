@@ -94,7 +94,7 @@ struct BookGrid: View {
                 
                 if book.isRead && !isEditModeOn {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(Color.accentColor)
+                        .foregroundStyle(Color.ruAccentColor)
                         .padding(5)
                 }
                 
@@ -120,7 +120,7 @@ struct BookGrid: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 10)
         .overlay(
-            !isEditModeOn ? NavigationLink(destination: BookDetailView(book: book)) { RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.01)) } : nil
+            !isEditModeOn ? NavigationLink(destination: BookDetailView(book: book)) { RoundedRectangle(cornerRadius: 12).fill(.ultraThinMaterial.opacity(0.01)) } : nil
         )
         .buttonStyle(.plain)
         .simultaneousGesture(
