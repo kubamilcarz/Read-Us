@@ -130,7 +130,7 @@ struct ReadingNowView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.top, -30)
                         
-                        ReadThisYearSection()
+                        ReadThisYearSection(for: Date.now.year)
                             .padding(.vertical, 30)
                             .padding(.horizontal)
                             .background(.ultraThinMaterial)

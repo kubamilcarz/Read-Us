@@ -46,42 +46,24 @@ struct ReadingHistorySheet: View {
                     if isHidingExcluded && value.filter { $0.isVisible }.isEmpty {
                         
                     } else {
-                        Section("\(key.formatted(date: .long, time: .omitted))") {
+                        Section {
                             ForEach(value, id: \.self) { entry in
                                 if isHidingExcluded && entry.isVisible == false {
                                 } else {
-                                    HStack {
-                                        VStack(alignment: .leading) {
-                                            Text(entry.safeDateAdded.formatted(date: .omitted, time: .shortened))
-                                                .font(.subheadline)
-                                            Text(entry.book?.safeTitle ?? "Unknown Book")
-                                                .foregroundColor(.secondary)
-                                                .font(.system(.caption, design: .serif))
-                                        }
-                                        Spacer()
-                                        Text("**\(entry.safeNumerOfPagesRead)** page(s)")
-                                            .font(.caption)
-                                            .bold()
+                                    NavigationLink {
+                                        EditReadingEntryView(entry: entry)
+                                    } label: {
+                                        logRow(entry: entry)
                                     }
-                                    .opacity(entry.isVisible ? 1 : 0.3)
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                        Button {
-                                            entry.isVisible.toggle()
-                                            try? moc.save()
-                                        } label: {
-                                            Label("Exclude", systemImage: "square.3.stack.3d.slash")
-                                        }
-                                        .tint(.ruAccentColor)
-                                        
-                                        Button {
-                                            moc.delete(entry)
-                                            try? moc.save()
-                                        } label: {
-                                            Label("Remove", systemImage: "minus.circle")
-                                        }
-                                        .tint(.red)
-                                    }
+                                    .buttonStyle(.plain)
                                 }
+                            }
+                        } header: {
+                            HStack {
+                                Text("\(key.formatted(date: .long, time: .omitted))")
+                                Spacer()
+                                Text("\(getTotalNumberOfPages(for: value))")
+                                    .bold()
                             }
                         }
                     }
@@ -113,5 +95,49 @@ struct ReadingHistorySheet: View {
                 }
             }
         }
+    }
+    
+    private func logRow(entry: Entry) -> some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(entry.safeDateAdded.formatted(date: .omitted, time: .shortened))
+                    .font(.subheadline)
+                Text(entry.book?.safeTitle ?? "Unknown Book")
+                    .foregroundColor(.secondary)
+                    .font(.system(.caption, design: .serif))
+            }
+            Spacer()
+            Text("**\(entry.safeNumerOfPagesRead)** page(s)")
+                .font(.caption)
+                .bold()
+        }
+        .opacity(entry.isVisible ? 1 : 0.3)
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button {
+                entry.isVisible.toggle()
+                try? moc.save()
+            } label: {
+                Label("Exclude", systemImage: "square.3.stack.3d.slash")
+            }
+            .tint(.ruAccentColor)
+            
+            Button {
+                moc.delete(entry)
+                try? moc.save()
+            } label: {
+                Label("Remove", systemImage: "minus.circle")
+            }
+            .tint(.red)
+        }
+    }
+    
+    private func getTotalNumberOfPages(for entries: [Entry]) -> Int {
+        var result = 0
+        
+        for entry in entries.filter { $0.isVisible } {
+            result += entry.safeNumerOfPagesRead
+        }
+        
+        return result
     }
 }

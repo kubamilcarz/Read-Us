@@ -16,7 +16,12 @@ extension Date {
     }
 
     var midnight: Date {
-        let cal = Calendar(identifier: .gregorian)
+        let cal = Calendar(identifier: Locale().calendar.identifier)
         return cal.startOfDay(for: self)
+    }
+    
+    var year: Int {
+        let cal = Calendar(identifier: Locale().calendar.identifier)
+        return cal.component(.year, from: self)
     }
 }

@@ -13,21 +13,25 @@ struct ReadThisYearSection: View {
         SortDescriptor(\.title)
     ], predicate: NSPredicate(format: "isRead == true")) var books: FetchedResults<Book>
     
+    var year: Int
+    
     var filteredBooks: [Book] {
-        books.compactMap { book in
-            let dateComponents = DateComponents()
-            let currentYear = dateComponents.year
-//            let date = Calendar.current.date(from: book.safeFinishedReadingOn.com)
-            // TODO: - get books read in the current year
-            return book
-            
-        }
+        books.filter { $0.safeFinishedReadingOn.year == year }
+    }
+    
+    init(for year: Int) {
+        self.year = year
+        
+        _books = FetchRequest<Book>(sortDescriptors: [
+            SortDescriptor(\.finishedReadingOn, order: .reverse),
+            SortDescriptor(\.title)
+        ], predicate: NSPredicate(format: "isRead == true"))
     }
     
     var body: some View {
         VStack(spacing: 15) {
             VStack(spacing: 5) {
-                Text("\(Text(Date.now, format: .dateTime.year())) So Far")
+                Text("\(year) So Far")
                     .font(.system(.title2, design: .serif))
                 Text("You read **\(filteredBooks.count)** books")
                     .font(.subheadline)

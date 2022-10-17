@@ -47,6 +47,7 @@
 		C899861B28E1FD73002C678D /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899861A28E1FD73002C678D /* CustomProgressView.swift */; };
 		C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899861C28E1FFAB002C678D /* UpdateBookProgressSheet.swift */; };
 		C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89028FD6CE9004DC8FD /* Color.swift */; };
+		C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */; };
 		C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B8228EC9397009D45A3 /* ShelfDetailView.swift */; };
 		C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8CE888D28EEE8D000FCB607 /* readUs.xcdatamodeld */; };
 		C8CE889328EEE90A00FCB607 /* Shelf+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889128EEE90A00FCB607 /* Shelf+CoreDataClass.swift */; };
@@ -101,6 +102,7 @@
 		C89ADAA728EC80AD00F0F36B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8BCD88F28FD6A94004DC8FD /* Read-Us-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Read-Us-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8BCD89028FD6CE9004DC8FD /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReadingEntryView.swift; sourceTree = "<group>"; };
 		C8CE888E28EEE8D000FCB607 /* readUs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = readUs.xcdatamodel; sourceTree = "<group>"; };
 		C8CE889128EEE90A00FCB607 /* Shelf+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shelf+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C8CE889228EEE90A00FCB607 /* Shelf+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shelf+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				C8408B8B28EDA1EC009D45A3 /* ReadingHistorySheet.swift */,
 				C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */,
 				C86CEDEE28F602FE00C5EB9A /* ReadThisYearSection.swift */,
+				C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */,
 			);
 			path = ReadingNow;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				C89985F028E0CAE9002C678D /* ProfileView.swift in Sources */,
 				C89985DD28E0AEC5002C678D /* CustomTabBarView.swift in Sources */,
 				C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */,
+				C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */,
 				C8408B6D28EC8B27009D45A3 /* Entry+CoreDataProperties.swift in Sources */,
 				C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */,
 				C8408B8C28EDA1EC009D45A3 /* ReadingHistorySheet.swift in Sources */,
@@ -534,7 +538,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Read Us/Read Us.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "Read\\ Us/Preview\\ Content";
 				DEVELOPMENT_TEAM = 7AGNJTPT6V;
 				ENABLE_PREVIEWS = YES;
@@ -569,7 +573,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Read Us/Read Us.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "Read\\ Us/Preview\\ Content";
 				DEVELOPMENT_TEAM = 7AGNJTPT6V;
 				ENABLE_PREVIEWS = YES;

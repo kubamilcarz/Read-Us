@@ -16,6 +16,7 @@ struct UpdateBookProgressSheet: View {
     var book: Book
     
     @State private var numberOfPagesToAdd = ""
+    @State private var numberOfPagesToAddInt: Double = 0
     
     var newProgress: CGFloat {
         CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages)
@@ -45,6 +46,7 @@ struct UpdateBookProgressSheet: View {
                     .buttonStyle(.borderedProminent)
                 }
                 .controlSize(.small)
+                .tint(.ruAccentColor)
                 .padding()
             }
             .navigationTitle("Update Progress")
@@ -62,12 +64,19 @@ struct UpdateBookProgressSheet: View {
         }
         .onAppear {
             numberOfPagesToAdd = "\(mainVM.getCurrentPage(for: book))"
+            numberOfPagesToAddInt = Double(mainVM.getCurrentPage(for: book))
         }
     }
     
     private var updateProgressForm: some View {
         VStack(spacing: 15) {
-            CustomProgressView(value: newProgress)
+//            CustomProgressView(value: newProgress)
+            Slider(value: $numberOfPagesToAddInt, in: 0 ... Double(book.safeNumberOfPages), step: 1) { _ in
+                withAnimation {
+                    numberOfPagesToAdd = "\(Int(numberOfPagesToAddInt))"
+                }
+            }
+            .tint(.ruAccentColor)
             
             HStack {
                 Text("Where are you?")
