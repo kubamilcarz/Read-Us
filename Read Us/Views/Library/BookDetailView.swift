@@ -227,6 +227,8 @@ struct BookDetailView: View {
                 moc.refresh(book, mergeChanges: true)
             }
         }
+        
+        .tint(.ruAccentColor)
     }
     
     private var editModeButton: some View {
@@ -235,6 +237,5 @@ struct BookDetailView: View {
                 isEditModeOn.toggle()
             }
         }
-        .tint(.secondary)
     }
 }

@@ -50,6 +50,8 @@ struct LibraryView: View {
             }
             
             .searchable(text: $query.animation(.easeInOut), placement: .navigationBarDrawer(displayMode: .automatic), prompt: Text("Search Library"))
+            
+            .tint(.ruAccentColor)
         }
     }
     

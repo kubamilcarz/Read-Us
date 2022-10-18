@@ -21,9 +21,12 @@ struct ShelfRow: View {
     var body: some View {
         HStack(spacing: 15) {
             if let shelf {
-                Image(systemName: shelf.safeIcon)
-                    .font(.title)
-                    .foregroundColor(.secondary)
+                VStack {
+                    Image(systemName: shelf.safeIcon)
+                        .font(.title)
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: 44)
                 
                 VStack(alignment: .leading) {
                     Text(shelf.safeTitle)

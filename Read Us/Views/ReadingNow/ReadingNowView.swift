@@ -177,6 +177,8 @@ struct ReadingNowView: View {
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)
             }
+            
+            .tint(.ruAccentColor)
         }
     }
 }
@@ -192,7 +194,7 @@ extension ReadingNowView {
                 Spacer()
             
                 NavigationLink(destination: ShelvesView(isNested: true)) {
-                    Text("All")
+                    Text("See All")
                         .font(.subheadline)
                         .foregroundColor(.ruAccentColor)
                 }

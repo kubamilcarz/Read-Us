@@ -23,6 +23,7 @@ struct ContentView: View {
                 .tabBarItem(tab: .profile, selection: $mainVM.tabSelection)
         }
         .environmentObject(mainVM)
+        .tint(.ruAccentColor)
     }
 
 }

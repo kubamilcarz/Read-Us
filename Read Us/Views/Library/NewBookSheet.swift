@@ -85,13 +85,13 @@ struct NewBookSheet: View {
                         
                     }
                     Section {
-                        DatePicker("Start Date", selection: $startedReadingDate, displayedComponents: .date)
+                        DatePicker("Start Date", selection: $startedReadingDate, in: ...Date.now, displayedComponents: .date)
                         
                         Toggle(isOn: $didFinish.animation()) {
                             Text("Did you finish?")
                         }
                         if didFinish {
-                            DatePicker("Finish Date", selection: $finishedReadingDate, displayedComponents: .date)
+                            DatePicker("Finish Date", selection: $finishedReadingDate, in: startedReadingDate..., displayedComponents: .date)
                         }
                     }
                     
@@ -131,6 +131,10 @@ struct NewBookSheet: View {
                         photo = Image(uiImage: image)
                     }
                 }
+            }
+            
+            .onChange(of: startedReadingDate) { newValue in
+                finishedReadingDate = newValue + 604_800
             }
         }
     }
