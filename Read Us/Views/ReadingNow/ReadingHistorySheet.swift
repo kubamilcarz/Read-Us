@@ -19,7 +19,7 @@ struct ReadingHistorySheet: View {
         var result: [Date: [Entry]] = [:]
         
         if entries.isEmpty { return result }
-        
+                
         var currentMidnight = entries[0].safeDateAdded.midnight
         
         for entry in entries {

@@ -49,6 +49,7 @@
 		C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89028FD6CE9004DC8FD /* Color.swift */; };
 		C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */; };
 		C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */ = {isa = PBXBuildFile; productRef = C8BCD8BA2900436A004DC8FD /* FrameUp */; };
+		C8BCD8BD29004C71004DC8FD /* BookDetailNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD8BC29004C71004DC8FD /* BookDetailNotesView.swift */; };
 		C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B8228EC9397009D45A3 /* ShelfDetailView.swift */; };
 		C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8CE888D28EEE8D000FCB607 /* readUs.xcdatamodeld */; };
 		C8CE889328EEE90A00FCB607 /* Shelf+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889128EEE90A00FCB607 /* Shelf+CoreDataClass.swift */; };
@@ -104,6 +105,7 @@
 		C8BCD88F28FD6A94004DC8FD /* Read-Us-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Read-Us-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8BCD89028FD6CE9004DC8FD /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReadingEntryView.swift; sourceTree = "<group>"; };
+		C8BCD8BC29004C71004DC8FD /* BookDetailNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailNotesView.swift; sourceTree = "<group>"; };
 		C8CE888E28EEE8D000FCB607 /* readUs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = readUs.xcdatamodel; sourceTree = "<group>"; };
 		C8CE889128EEE90A00FCB607 /* Shelf+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shelf+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C8CE889228EEE90A00FCB607 /* Shelf+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shelf+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				C899861028E1F904002C678D /* StarRatingCell.swift */,
 				C899861C28E1FFAB002C678D /* UpdateBookProgressSheet.swift */,
 				C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */,
+				C8BCD8BC29004C71004DC8FD /* BookDetailNotesView.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 			files = (
 				C898CE4028E0A9CF0038AAA3 /* MainViewModel.swift in Sources */,
 				C8CE889628EF2CCD00FCB607 /* BookChooserSheet.swift in Sources */,
+				C8BCD8BD29004C71004DC8FD /* BookDetailNotesView.swift in Sources */,
 				C89985F728E0E9C4002C678D /* NewBookSheet.swift in Sources */,
 				C8CE889328EEE90A00FCB607 /* Shelf+CoreDataClass.swift in Sources */,
 				C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */,

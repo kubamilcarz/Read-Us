@@ -24,6 +24,9 @@ struct BookDetailView: View {
     @State private var title = ""
     @State private var author = ""
     
+    @State private var startDate = Date.now
+    @State private var finishDate = Date.now
+    
     var bookProgress: CGFloat {
         if book.isRead {
             return 1.0
@@ -86,6 +89,18 @@ struct BookDetailView: View {
                             }
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
+                            
+                            if isEditModeOn && book.isRead && !book.isReading {
+                                HStack(spacing: 5) {
+                                    DatePicker("Start", selection: $startDate, displayedComponents: .date)
+                                    
+                                    Text("–").foregroundColor(.secondary)
+                                    
+                                    DatePicker("Finish", selection: $finishDate, in: startDate..., displayedComponents: .date)
+                                }
+                                .labelsHidden()
+                                .padding(.top, 15)
+                            }
                         }
                         .offset(y: isEditModeOn ? -5 : 0)
                         
@@ -123,18 +138,10 @@ struct BookDetailView: View {
                 
                 Divider()
                 
-                VStack(spacing: 15) {
-                    HStack {
-                        Text("Notes")
-                            .font(.headline)
-                        
-                        Spacer()
-                    }
-                    
-                    Text(book.safeNotes)
-                }
+                BookDetailNotesView(book: book)
             }
             .padding()
+            .padding(.bottom, 75)
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -149,6 +156,9 @@ struct BookDetailView: View {
         .onAppear {
             title = book.safeTitle
             author = book.safeAuthor
+            
+            startDate = book.safeStartedReadingOn
+            finishDate = book.safeFinishedReadingOn
         }
         
         .onChange(of: photoSelection) { newValue in
@@ -183,6 +193,11 @@ struct BookDetailView: View {
                     // update title and author
                     book.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
                     book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    if book.isRead && !book.isReading {
+                        book.startedReadingOn = startDate
+                        book.finishedReadingOn = finishDate
+                    }
                     try? moc.save()
                 }
             }

@@ -32,8 +32,12 @@ struct ReadThisYearSection: View {
     var body: some View {
         VStack(spacing: 15) {
             HStack {
-                arrow(icon: "chevron.left") {
-                    year -= 1
+                if year-1 >= 2000 {
+                    arrow(icon: "chevron.left") {
+                        year -= 1
+                    }
+                } else {
+                    Circle().fill(.clear).frame(width: 44, height: 44)
                 }
                 
                 Spacer()
@@ -62,16 +66,6 @@ struct ReadThisYearSection: View {
                 }
             }
             .padding()
-            
-//            LazyVGrid(columns: [GridItem(.adaptive(minimum: 50), spacing: 10)], alignment: .leading) {
-//                ForEach(filteredBooks) { book in
-//                    NavigationLink(destination: BookDetailView(book: book)) {
-//                        bookCell(book: book)
-//                    }
-//                    .frame(minWidth: 50)
-//                }
-//            }
-            
         }
         .frame(maxWidth: .infinity)
     }
@@ -83,7 +77,7 @@ struct ReadThisYearSection: View {
             }
         } label: {
             Image(systemName: icon)
-                .font(.title2)
+                .font(.title3)
                 .foregroundStyle(.tertiary)
                 .frame(width: 44, height: 44)
                 .clipShape(Circle())
