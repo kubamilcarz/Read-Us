@@ -95,6 +95,7 @@ struct ShelfDetailView: View {
         
         .sheet(isPresented: $isShowingLibraryChoser) {
             BookChooserSheet(for: shelf)
+                .presentationDragIndicator(.visible)
         }
         
         .toolbar {

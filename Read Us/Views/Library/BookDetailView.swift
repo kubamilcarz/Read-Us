@@ -21,6 +21,9 @@ struct BookDetailView: View {
     @State private var photo: Image?
     @State private var uiImage: UIImage?
     
+    @State private var title = ""
+    @State private var author = ""
+    
     var bookProgress: CGFloat {
         if book.isRead {
             return 1.0
@@ -40,7 +43,7 @@ struct BookDetailView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 15) {
-                HStack(alignment: .top, spacing: 15) {
+                HStack(alignment: .top, spacing: isEditModeOn ? 8 : 15) {
                     ZStack {
                         BookPhotoCell(for: book.safePhoto, width: 100)
                         
@@ -67,103 +70,37 @@ struct BookDetailView: View {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 3) {
-                            Text(book.safeTitle)
-                                .font(.system(.title3, design: .serif)).bold()
+                            Group {
+                                if isEditModeOn {
+                                    TextField(book.safeTitle, text: $title)
+                                        .textFieldStyle(.roundedBorder)
+                                } else { Text(book.safeTitle) }
+                            }
+                            .font(.system(.title3, design: .serif)).bold()
                             
-                            Text(book.safeAuthor)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            Group {
+                                if isEditModeOn {
+                                    TextField(book.safeAuthor, text: $author)
+                                        .textFieldStyle(.roundedBorder)
+                                } else { Text(book.safeAuthor) }
+                            }
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
                         }
+                        .offset(y: isEditModeOn ? -5 : 0)
                         
-                        if !isNewBook && !stoppedReading {
+                        if !isNewBook && !stoppedReading && !isEditModeOn {
                             StarRatingCell(for: book)
                         }
                         
-                        VStack {
-                            Spacer()
-                            
-                            if book.isRead {
-                                Button {
-                                    mainVM.resetProgress(moc: moc, for: book)
-                                } label: {
-                                    Text("Read it Again")
-                                        .font(.caption2)
-                                }
-                                .buttonStyle(.bordered)
-                                .clipShape(Capsule())
-                            } else {
-                                ZStack {
-                                    VStack(alignment: .trailing, spacing: 10) {
-                                        CustomProgressView(value: bookProgress)
-                                        Button {
-                                            isShowingUpdateProgressSheet = true
-                                        } label: {
-                                            Text("Update Progress")
-                                                .font(.caption2)
-                                        }
-                                        .buttonStyle(.bordered)
-                                        .clipShape(Capsule())
-                                    }
-                                    
-                                    if stoppedReading {
-                                        VStack {
-                                            Text("You stopped reading this book")
-                                                .font(.caption2)
-                                                .multilineTextAlignment(.center)
-                                            HStack {
-                                                Button("Cancel", role: .destructive) {
-                                                    mainVM.resetProgress(moc: moc, for: book)
-                                                }
-                                                .font(.system(size: 12))
-                                                
-                                                Button("Resume") {
-                                                    book.isReading = true
-                                                    try? moc.save()
-                                                }
-                                                .font(.system(size: 12))
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .controlSize(.mini)
-                                        }
-                                        .frame(maxWidth: .infinity)
-                                        .padding()
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .fill(.ultraThinMaterial)
-                                            )
-                                    }
-                                    
-                                    if isNewBook {
-                                        VStack {
-                                            Text("Start reading this book")
-                                                .font(.caption2)
-                                                .multilineTextAlignment(.center)
-                                            HStack {
-                                                Button("Read Later") {
-                                                    
-                                                }
-                                                .font(.system(size: 12))
-                                                
-                                                Button("Start") {
-                                                    book.isReading = true
-                                                    try? moc.save()
-                                                }
-                                                .font(.system(size: 12))
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .controlSize(.mini)
-                                        }
-                                        .frame(maxWidth: .infinity)
-                                        .padding()
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .fill(.ultraThinMaterial)
-                                            )
-                                    }
-                                }
+                        if !isEditModeOn {
+                            VStack {
+                                Spacer()
+                                
+                                readingStatusOverlays
+                                
+                                Spacer()
                             }
-                            
-                            Spacer()
                         }
                         
                         HStack {
@@ -205,7 +142,13 @@ struct BookDetailView: View {
         }
         .sheet(isPresented: $isShowingUpdateProgressSheet) {
             UpdateBookProgressSheet(book: book)
-                .presentationDetents([.height(220)])
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
+        }
+        
+        .onAppear {
+            title = book.safeTitle
+            author = book.safeAuthor
         }
         
         .onChange(of: photoSelection) { newValue in
@@ -235,6 +178,98 @@ struct BookDetailView: View {
         Button(isEditModeOn ? "Done" : "Edit") {
             withAnimation {
                 isEditModeOn.toggle()
+                
+                if isEditModeOn == false {
+                    // update title and author
+                    book.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
+                    book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
+                    try? moc.save()
+                }
+            }
+        }
+    }
+    
+    private var readingStatusOverlays: some View {
+        Group {
+            if book.isRead {
+                Button {
+                    mainVM.resetProgress(moc: moc, for: book)
+                } label: {
+                    Text("Read it Again")
+                        .font(.caption2)
+                }
+                .buttonStyle(.bordered)
+                .clipShape(Capsule())
+            } else {
+                ZStack {
+                    VStack(alignment: .trailing, spacing: 10) {
+                        CustomProgressView(value: bookProgress)
+                        Button {
+                            isShowingUpdateProgressSheet = true
+                        } label: {
+                            Text("Update Progress")
+                                .font(.caption2)
+                        }
+                        .buttonStyle(.bordered)
+                        .clipShape(Capsule())
+                    }
+                    
+                    if stoppedReading {
+                        VStack {
+                            Text("You stopped reading this book")
+                                .font(.caption2)
+                                .multilineTextAlignment(.center)
+                            HStack {
+                                Button("Cancel", role: .destructive) {
+                                    mainVM.resetProgress(moc: moc, for: book)
+                                }
+                                .font(.system(size: 12))
+                                
+                                Button("Resume") {
+                                    book.isReading = true
+                                    try? moc.save()
+                                }
+                                .font(.system(size: 12))
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.mini)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(.ultraThinMaterial)
+                        )
+                    }
+                    
+                    if isNewBook {
+                        VStack {
+                            Text("Start reading this book")
+                                .font(.caption2)
+                                .multilineTextAlignment(.center)
+                            HStack {
+                                Button("Read Later") {
+                                    
+                                }
+                                .font(.system(size: 12))
+                                
+                                Button("Start") {
+                                    book.isReading = true
+                                    try? moc.save()
+                                }
+                                .font(.system(size: 12))
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.mini)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(.ultraThinMaterial)
+                        )
+                    }
+                }
             }
         }
     }

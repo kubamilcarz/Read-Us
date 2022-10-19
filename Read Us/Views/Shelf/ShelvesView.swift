@@ -56,6 +56,7 @@ struct ShelvesView: View {
         .sheet(isPresented: $isShowingNewShelfSheet) {
             NewShelfSheet()
                 .presentationDetents([.fraction(2/3)])
+                .presentationDragIndicator(.visible)
         }
         
         .alert("Are you sure?", isPresented: $isShowingAlert, presenting: shelfToDelete) { _ in

@@ -15,6 +15,7 @@ struct EditReadingEntryView: View {
     
     @State private var errorMessage: String?
     @State private var pageCount = ""
+    @State private var note = ""
     
     var body: some View {
         List {
@@ -39,6 +40,18 @@ struct EditReadingEntryView: View {
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 70)
                 }
+                
+                TextEditor(text: $note)
+                    .frame(minHeight: 120, maxHeight: 160)
+                    .padding(5)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(lineWidth: 1)
+                            .foregroundColor(.secondary)
+                            .opacity(0.3)
+                            .zIndex(6)
+                    )
+                    .padding(2)
             }
             
             Button {
@@ -48,6 +61,8 @@ struct EditReadingEntryView: View {
                     } else {
                         entry.numberOfPages = Int16(Int(pageCount) ?? 0)
                     }
+                    
+                    entry.notes = note.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     try? moc.save()
                     
@@ -69,6 +84,7 @@ struct EditReadingEntryView: View {
         .navigationTitle(entry.safeDateAdded.formatted(date: .abbreviated, time: .shortened))
         .onAppear {
             pageCount = String(entry.safeNumerOfPagesRead)
+            note = entry.safeNotes
         }
     }
 }

@@ -48,6 +48,7 @@
 		C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899861C28E1FFAB002C678D /* UpdateBookProgressSheet.swift */; };
 		C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89028FD6CE9004DC8FD /* Color.swift */; };
 		C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */; };
+		C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */ = {isa = PBXBuildFile; productRef = C8BCD8BA2900436A004DC8FD /* FrameUp */; };
 		C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8408B8228EC9397009D45A3 /* ShelfDetailView.swift */; };
 		C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8CE888D28EEE8D000FCB607 /* readUs.xcdatamodeld */; };
 		C8CE889328EEE90A00FCB607 /* Shelf+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889128EEE90A00FCB607 /* Shelf+CoreDataClass.swift */; };
@@ -115,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +309,7 @@
 			);
 			name = "Read Us";
 			packageProductDependencies = (
+				C8BCD8BA2900436A004DC8FD /* FrameUp */,
 			);
 			productName = "Read Us";
 			productReference = C898CE2528E09E960038AAA3 /* Read Us.app */;
@@ -337,6 +340,7 @@
 			);
 			mainGroup = C898CE1C28E09E960038AAA3;
 			packageReferences = (
+				C8BCD8B92900436A004DC8FD /* XCRemoteSwiftPackageReference "FrameUp" */,
 			);
 			productRefGroup = C898CE2628E09E960038AAA3 /* Products */;
 			projectDirPath = "";
@@ -535,7 +539,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = TintColor;
 				CODE_SIGN_ENTITLEMENTS = "Read Us/Read Us.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
@@ -570,7 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = TintColor;
 				CODE_SIGN_ENTITLEMENTS = "Read Us/Read Us.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
@@ -623,6 +627,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C8BCD8B92900436A004DC8FD /* XCRemoteSwiftPackageReference "FrameUp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ryanlintott/FrameUp";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C8BCD8BA2900436A004DC8FD /* FrameUp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8BCD8B92900436A004DC8FD /* XCRemoteSwiftPackageReference "FrameUp" */;
+			productName = FrameUp;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		C8CE888D28EEE8D000FCB607 /* readUs.xcdatamodeld */ = {

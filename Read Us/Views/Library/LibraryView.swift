@@ -46,6 +46,7 @@ struct LibraryView: View {
             }
             .sheet(isPresented: $isShowingNewBookSheet) {
                 NewBookSheet()
+                    .presentationDragIndicator(.visible)
 //                    .presentationDetents([.fraction(2/3)])
             }
             

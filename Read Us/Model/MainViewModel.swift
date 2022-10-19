@@ -12,7 +12,7 @@ class MainViewModel: ObservableObject {
     @Published var tabSelection: TabBarItem = .readingNow
     
     func getCurrentPage(for book: Book) -> Int {
-        Int(book.safeEntries.filter {$0.isVisible}.sorted { $0.safeDateAdded > $1.safeDateAdded }.first?.currentPage ?? 0)
+        Int(book.safeEntries.sorted { $0.safeDateAdded > $1.safeDateAdded }.first?.currentPage ?? 0)
     }
     
     func updateProgress(moc: NSManagedObjectContext, for book: Book, pages numberOfPages: Int, notes: String = "") {
@@ -21,7 +21,7 @@ class MainViewModel: ObservableObject {
         newEntry.dateAdded = Date.now
         newEntry.numberOfPages = Int16(numberOfPages) - Int16(self.getCurrentPage(for: book))
         newEntry.currentPage = Int16(numberOfPages)
-        newEntry.notes = notes
+        newEntry.notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
         newEntry.isVisible = true
         
         book.addToEntries(newEntry)

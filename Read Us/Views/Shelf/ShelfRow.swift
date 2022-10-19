@@ -10,14 +10,6 @@ import SwiftUI
 struct ShelfRow: View {
     var shelf: Shelf?
     
-    init(shelf: Shelf) {
-        self.shelf = shelf
-    }
-    
-    init() {
-        
-    }
-    
     var body: some View {
         HStack(spacing: 15) {
             if let shelf {

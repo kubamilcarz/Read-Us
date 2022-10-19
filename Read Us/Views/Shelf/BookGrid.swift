@@ -37,12 +37,14 @@ struct BookGrid: View {
         .sheet(item: $bookToUpdate, content: { _ in
             if let bookToUpdate {
                 UpdateBookProgressSheet(book: bookToUpdate)
-                    .presentationDetents([.height(220)])
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
             }
         })
         .sheet(isPresented: $isShowingNewShelfSheet) {
             NewShelfSheet()
                 .presentationDetents([.fraction(2/3)])
+                .presentationDragIndicator(.visible)
         }
     }
     

@@ -158,24 +158,29 @@ struct ReadingNowView: View {
             
             .sheet(item: $updatingBook) { book in
                 UpdateBookProgressSheet(book: book)
-                    .presentationDetents([.height(220)])
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
             }
             
             .sheet(isPresented: $isShowingNewShelfSheet) {
                 NewShelfSheet()
                     .presentationDetents([.fraction(2/3)])
+                    .presentationDragIndicator(.visible)
             }
             
             .sheet(isPresented: $isShowingReadingHistorySheet) {
                 ReadingHistorySheet()
+                    .presentationDragIndicator(.visible)
             }
             
             .sheet(isPresented: $isBookChooserOpen) {
                 BookChooserSheet(readingNow: true)
+                    .presentationDragIndicator(.visible)
             }
             
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)
+                    .presentationDragIndicator(.visible)
             }
             
             .tint(.ruAccentColor)
