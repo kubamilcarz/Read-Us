@@ -11,7 +11,7 @@ struct NewShelfSheet: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    let icons = ["book", "book.circle", "books.vertical", "books.vertical.circle", "book.closed", "character.book.closed", "text.book.closed", "bookmark", "heart", "star", "moon", "pencil"]
+    static let icons = ["book", "book.circle", "books.vertical", "books.vertical.circle", "book.closed", "character.book.closed", "text.book.closed", "bookmark", "heart", "star", "moon", "pencil"]
     
     @State private var chosenIcon = "book"
     @State private var title = ""
@@ -30,7 +30,7 @@ struct NewShelfSheet: View {
                 Section {
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 70))], spacing: 15) {
-                            ForEach(icons, id: \.self) { icon in
+                            ForEach(NewShelfSheet.icons, id: \.self) { icon in
                                 Button {
                                     chosenIcon = icon
                                 } label: {

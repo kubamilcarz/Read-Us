@@ -134,7 +134,7 @@ struct ReadingHistorySheet: View {
     private func getTotalNumberOfPages(for entries: [Entry]) -> Int {
         var result = 0
         
-        for entry in entries.filter { $0.isVisible } {
+        for entry in entries.filter({ $0.isVisible }) {
             result += entry.safeNumerOfPagesRead
         }
         

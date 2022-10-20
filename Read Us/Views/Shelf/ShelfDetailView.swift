@@ -27,15 +27,56 @@ struct ShelfDetailView: View {
     
     @State private var title = ""
     @State private var subtitle = ""
-    
+    @State private var icon = ""
     
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
                 VStack(spacing: 25) {
-                    Image(systemName: shelf.safeIcon)
-                        .font(.system(size: 60).bold())
-                        .foregroundColor(.secondary)
+                    if isEditModeOn {
+                        ScrollViewReader { scrollView in
+                            ScrollView(.horizontal) {
+                                HStack(alignment: .center, spacing: 30) {
+                                    Rectangle().fill(.clear)
+                                        .frame(width: 100)
+                                    
+                                    ForEach(NewShelfSheet.icons, id: \.self) { sysIcon in
+                                        Image(systemName: sysIcon)
+                                            .font(.system(size: sysIcon == icon ? 60 : 30).bold())
+                                            .foregroundColor(sysIcon == icon ? .ruAccentColor : .secondary)
+                                            .id(sysIcon)
+                                        
+                                            .onTapGesture {
+                                                withAnimation {
+                                                    icon = sysIcon
+                                                }
+                                            }
+                                    }
+                                    
+                                    Rectangle().fill(.clear)
+                                        .frame(width: 100)
+                                }
+                                .frame(height: 70)
+                                .padding(.vertical)
+                            }
+                            .onAppear {
+                                withAnimation {
+                                    scrollView.scrollTo(icon, anchor: .center)
+                                }
+                            }
+                            .onChange(of: icon) { newValue in
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    withAnimation {
+                                        scrollView.scrollTo(newValue, anchor: .center)
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Image(systemName: shelf.safeIcon)
+                            .font(.system(size: 60).bold())
+                            .foregroundColor(.secondary)
+                    }
                     
                     VStack(alignment: .center, spacing: 5) {
                         if isEditModeOn {
@@ -109,11 +150,13 @@ struct ShelfDetailView: View {
         .onAppear {
             title = shelf.safeTitle
             subtitle = shelf.safeSubtitle
+            icon = shelf.safeIcon
         }
         
         .onChange(of: isEditModeOn) { _ in
             shelf.title = title
             shelf.subtitle = subtitle
+            shelf.icon = icon
             
             if moc.hasChanges {
                 try? moc.save()
