@@ -20,7 +20,7 @@ struct CustomCircularProgressView: View {
     }
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .center) {
             Circle()
                 .strokeBorder(.secondary, lineWidth: borderWidth)
             Circle()
@@ -28,7 +28,9 @@ struct CustomCircularProgressView: View {
                 .stroke(lineWidth: borderWidth)
                 .rotationEffect(.degrees(-90))
                 .foregroundColor(Color.ruAccentColor)
+                .frame(width: width, height: width)
         }
+        .padding(width > 30 ? 15 : 0)
         .frame(width: width, height: width)
     }
 }
