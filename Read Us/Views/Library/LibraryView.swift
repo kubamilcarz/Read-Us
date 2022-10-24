@@ -27,7 +27,12 @@ struct LibraryView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                BookGrid(books: filteredBooks, isEditModeOn: $isEditModeOn, isShowingLibraryChoser: .constant(false), isShelf: false)
+                BookGrid(
+                    books: filteredBooks,
+                    isEditModeOn: $isEditModeOn,
+                    isShowingLibraryChoser: .constant(false),
+                    isShelf: false
+                )
                     .padding(.horizontal)
                     .padding(.bottom, 75)
             }

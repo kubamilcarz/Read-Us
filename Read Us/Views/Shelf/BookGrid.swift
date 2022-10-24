@@ -19,6 +19,14 @@ struct BookGrid: View {
     
     var shelf: Shelf?
     
+    init(books: [Book], isEditModeOn: Binding<Bool>, isShowingLibraryChoser: Binding<Bool>, isShelf: Bool = true, shelf: Shelf? = nil) {
+        self.books = books
+        self._isEditModeOn = isEditModeOn
+        self._isShowingLibraryChoser = isShowingLibraryChoser
+        self.isShelf = isShelf
+        self.shelf = shelf
+    }
+    
     @State private var bookToUpdate: Book?
     @State private var isShowingNewShelfSheet = false
     
@@ -28,7 +36,7 @@ struct BookGrid: View {
     
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 15)], alignment: .leading) {
-            ForEach(books, id: \.id) { book in
+            ForEach(books) { book in
                 bookCell(book: book)
             }
             
@@ -84,15 +92,25 @@ struct BookGrid: View {
     private func bookCell(book: Book) -> some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
-                BookPhotoCell(for: book.safePhoto, width: 90)
-                    .overlay(!isEditModeOn ? nil :
-                        ZStack {
+                ZStack {
+                    BookPhotoCell(for: book.safePhoto, width: 90)
+                        .overlay(!isEditModeOn ? nil :
+                            ZStack {
                             RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.7))
                             
                             Image(systemName: "trash")
                                 .foregroundColor(.red)
+                            }
+                        )
+                    
+                    if isEditModeOn == false {
+                        NavigationLink(destination: BookDetailView(book: book)) {
+                            RoundedRectangle(cornerRadius: 12).fill(.background).opacity(0.001)
                         }
-                    )
+                        .id(book.id)
+                        .frame(width: 60)
+                    }
+                }
                 
                 if book.isRead && !isEditModeOn {
                     Image(systemName: "checkmark.circle.fill")
@@ -110,10 +128,14 @@ struct BookGrid: View {
                 Text(book.safeTitle)
                     .font(.system(.footnote, design: .serif))
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .truncationMode(.middle)
                 Text(book.safeAuthor)
                     .font(.caption2)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .truncationMode(.middle)
                 
                 Spacer()
             }
@@ -121,21 +143,18 @@ struct BookGrid: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 10)
-        .overlay(
-            !isEditModeOn ? NavigationLink(destination: BookDetailView(book: book)) { RoundedRectangle(cornerRadius: 12).fill(.ultraThinMaterial.opacity(0.01)) } : nil
-        )
         .buttonStyle(.plain)
         .simultaneousGesture(
             TapGesture()
                 .onEnded {
-                    if let shelf, isEditModeOn && isShelf {
+                    if shelf != nil && isEditModeOn && isShelf {
                         withAnimation {
-                            book.removeFromShelves(shelf)
+                            book.removeFromShelves(shelf!)
                             try? moc.save()
                         }
                     }
                     
-                    if let shelf, isEditModeOn && !isShelf {
+                    if shelf == nil && isEditModeOn && !isShelf {
                         withAnimation {
                             moc.delete(book)
                             try? moc.save()

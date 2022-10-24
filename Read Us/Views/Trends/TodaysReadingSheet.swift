@@ -98,7 +98,6 @@ struct TodaysReadingSheet: View {
                     
                     readToday
                     
-                    
                     last7Days
                     
                     ReadingHistorySheet()

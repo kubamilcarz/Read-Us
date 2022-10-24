@@ -5,7 +5,6 @@
 //  Created by Kuba Milcarz on 9/26/22.
 //
 
-import FrameUp
 import SwiftUI
 
 struct UpdateBookProgressSheet: View {
@@ -27,7 +26,7 @@ struct UpdateBookProgressSheet: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                SmartScrollView(.vertical, showsIndicators: true, optionalScrolling: true, shrinkToFit: true) {
+                ScrollView(.vertical) {
                     Group {
                         updateProgressForm
                         
