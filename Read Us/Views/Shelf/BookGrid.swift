@@ -15,20 +15,20 @@ struct BookGrid: View {
     @Binding var isEditModeOn: Bool
     @Binding var isShowingLibraryChoser: Bool
     
-    var isShelf: Bool
-    
     var shelf: Shelf?
     
-    init(books: [Book], isEditModeOn: Binding<Bool>, isShowingLibraryChoser: Binding<Bool>, isShelf: Bool = true, shelf: Shelf? = nil) {
+    init(books: [Book], isEditModeOn: Binding<Bool>, isShowingLibraryChoser: Binding<Bool>, shelf: Shelf? = nil) {
         self.books = books
         self._isEditModeOn = isEditModeOn
         self._isShowingLibraryChoser = isShowingLibraryChoser
-        self.isShelf = isShelf
+        
         self.shelf = shelf
     }
     
     @State private var bookToUpdate: Book?
+    @State private var bookToRemove: Book?
     @State private var isShowingNewShelfSheet = false
+    @State private var isShowingConfirmation = false
     
     @FetchRequest<Shelf>(sortDescriptors: [
         SortDescriptor(\.title)
@@ -37,11 +37,38 @@ struct BookGrid: View {
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 15)], alignment: .leading) {
             ForEach(books) { book in
-                bookCell(book: book)
+                NavigationLink {
+                    BookDetailView(book: book)
+                } label: {
+                    bookCell(book: book)
+                }
+                .tint(.primary)
+                .contextMenu {
+                    bookContextMenu(book: book)
+                }
             }
             
-            if !isEditModeOn && isShelf { addBookButton }
+            if !isEditModeOn && shelf != nil { addBookButton }
         }
+        .confirmationDialog("Are you sure?", isPresented: $isShowingConfirmation, actions: {
+            Button("Cancel", role: .cancel) { }
+            Button("Remove", role: .destructive) {
+                withAnimation {
+                    if let shelf, isEditModeOn {
+                        bookToRemove?.removeFromShelves(shelf)
+                        try? moc.save()
+                    }
+                    
+                    if shelf == nil && isEditModeOn {
+                        if let bookToRemove {
+                            moc.delete(bookToRemove)
+                            try? moc.save()
+                        }
+                    }
+                }
+            }
+        })
+        
         .sheet(item: $bookToUpdate, content: { _ in
             if let bookToUpdate {
                 UpdateBookProgressSheet(book: bookToUpdate)
@@ -92,25 +119,12 @@ struct BookGrid: View {
     private func bookCell(book: Book) -> some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
-                ZStack {
-                    BookPhotoCell(for: book.safePhoto, width: 90)
-                        .overlay(!isEditModeOn ? nil :
-                            ZStack {
-                            RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.7))
-                            
-                            Image(systemName: "trash")
-                                .foregroundColor(.red)
-                            }
-                        )
-                    
-                    if isEditModeOn == false {
-                        NavigationLink(destination: BookDetailView(book: book)) {
-                            RoundedRectangle(cornerRadius: 12).fill(.background).opacity(0.001)
-                        }
-                        .id(book.id)
-                        .frame(width: 60)
-                    }
-                }
+                BookPhotoCell(for: book.safePhoto, width: 90)
+                    .overlay(!isEditModeOn ? nil : ZStack {
+                        RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.7))
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    })
                 
                 if book.isRead && !isEditModeOn {
                     Image(systemName: "checkmark.circle.fill")
@@ -143,32 +157,20 @@ struct BookGrid: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 10)
-        .buttonStyle(.plain)
         .simultaneousGesture(
             TapGesture()
                 .onEnded {
-                    if shelf != nil && isEditModeOn && isShelf {
-                        withAnimation {
-                            book.removeFromShelves(shelf!)
-                            try? moc.save()
-                        }
-                    }
-                    
-                    if shelf == nil && isEditModeOn && !isShelf {
-                        withAnimation {
-                            moc.delete(book)
-                            try? moc.save()
-                        }
+                    if isEditModeOn {
+                        isShowingConfirmation = true
+                        bookToRemove = book
                     }
                 }
         )
         
-        .contextMenu {
-            contextMenu(book: book)
-        }
+        .allowsHitTesting(isEditModeOn)
     }
     
-    private func contextMenu(book: Book) -> some View {
+    private func bookContextMenu(book: Book) -> some View {
         Group {
             Button {
                 book.isReading.toggle()
@@ -229,7 +231,7 @@ struct BookGrid: View {
                 }
             }
             
-            if !isShelf {
+            if shelf == nil {
                 Button(role: .destructive) {
                     withAnimation {
                         moc.delete(book)

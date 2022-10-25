@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct LibraryView: View {
+    @EnvironmentObject var mainVM: MainViewModel
     @Environment(\.managedObjectContext) var moc
     @FetchRequest<Book>(sortDescriptors: []) var books: FetchedResults<Book>
     
     @State private var isShowingNewBookSheet = false
+    @State private var isShowingLibraryChoser = false
     
     @State private var isEditModeOn = false
     @State private var query = ""
@@ -30,8 +32,7 @@ struct LibraryView: View {
                 BookGrid(
                     books: filteredBooks,
                     isEditModeOn: $isEditModeOn,
-                    isShowingLibraryChoser: .constant(false),
-                    isShelf: false
+                    isShowingLibraryChoser: $isShowingLibraryChoser
                 )
                     .padding(.horizontal)
                     .padding(.bottom, 75)
@@ -52,13 +53,12 @@ struct LibraryView: View {
             .sheet(isPresented: $isShowingNewBookSheet) {
                 NewBookSheet()
                     .presentationDragIndicator(.visible)
-//                    .presentationDetents([.fraction(2/3)])
             }
             
             .searchable(text: $query.animation(.easeInOut), placement: .navigationBarDrawer(displayMode: .automatic), prompt: Text("Search Library"))
-            
-            .tint(.ruAccentColor)
+
         }
+        .tint(.ruAccentColor)
     }
     
     private func removeBook(at offsets: IndexSet) {

@@ -150,7 +150,6 @@ struct BookDetailView: View {
         .sheet(isPresented: $isShowingUpdateProgressSheet) {
             UpdateBookProgressSheet(book: book)
                 .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
         }
         
         .onAppear {
@@ -180,8 +179,6 @@ struct BookDetailView: View {
                 moc.refresh(book, mergeChanges: true)
             }
         }
-        
-        .tint(.ruAccentColor)
     }
     
     private var editModeButton: some View {

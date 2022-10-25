@@ -182,9 +182,8 @@ struct ReadingNowView: View {
                 BookDetailView(book: book)
                     .presentationDragIndicator(.visible)
             }
-            
-            .tint(.ruAccentColor)
         }
+        .tint(.ruAccentColor)
     }
 }
 

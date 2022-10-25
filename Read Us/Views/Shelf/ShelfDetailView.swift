@@ -111,7 +111,7 @@ struct ShelfDetailView: View {
                 .padding(30)
                 .padding(.bottom, isEditModeOn ? -20 : 0)
                 
-                BookGrid(books: filteredBooks, isEditModeOn: $isEditModeOn, isShowingLibraryChoser: $isShowingLibraryChoser, isShelf: true, shelf: shelf)
+                BookGrid(books: filteredBooks, isEditModeOn: $isEditModeOn, isShowingLibraryChoser: $isShowingLibraryChoser, shelf: shelf)
                     .padding(.bottom, filteredBooks.count < 5 ? 75 : 0)
                 
                 if filteredBooks.count >= 5 {

@@ -26,5 +26,6 @@ struct TrendsView: View {
             }
             .navigationTitle("Trends")
         }
+        .tint(.ruAccentColor)
     }
 }

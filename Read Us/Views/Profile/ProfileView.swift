@@ -15,6 +15,7 @@ struct ProfileView: View {
             }
             .navigationTitle("Profile")
         }
+        .tint(.ruAccentColor)
     }
 }
 
