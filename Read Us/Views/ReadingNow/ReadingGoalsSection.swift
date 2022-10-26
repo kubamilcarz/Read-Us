@@ -8,16 +8,36 @@
 import SwiftUI
 
 struct ReadingGoalsSection: View {
+    var display: DisplayType
+    
+    init(for display: DisplayType) {
+        self.display = display
+    }
+    
+    enum DisplayType {
+        case readingNow, today
+    }
+    
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: display == .readingNow ? 15 : 30) {
             VStack(spacing: 5) {
-                Text("\(Image(systemName: "flame")) Reading Streak")
-                    .font(.system(.title2, design: .serif))
-                Text("Read every day and finish more books")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 210)
+                if display == .readingNow {
+                    Text("\(Image(systemName: "flame")) Reading Streak")
+                        .font(.system(.title2, design: .serif))
+                    
+                    Text("Read every day and finish more books")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: 210)
+                } else if display == .today {
+                    HStack {
+                        Text("Reading Streak")
+                            .font(.system(.headline, design: .serif))
+                        
+                        Spacer()
+                    }
+                }
             }
             
             HStack(spacing: 30) {

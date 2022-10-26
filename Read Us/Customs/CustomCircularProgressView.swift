@@ -22,15 +22,13 @@ struct CustomCircularProgressView: View {
     var body: some View {
         ZStack(alignment: .center) {
             Circle()
-                .strokeBorder(.secondary, lineWidth: borderWidth)
+                .stroke(.thinMaterial, style: StrokeStyle(lineWidth: borderWidth, lineCap: .round))
+            
             Circle()
                 .trim(from: 0, to: progress)
-                .stroke(lineWidth: borderWidth)
+                .stroke(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .bottomLeading, endPoint: .topTrailing), style: StrokeStyle(lineWidth: borderWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
-                .foregroundColor(Color.ruAccentColor)
-                .frame(width: width, height: width)
         }
-        .padding(width > 30 ? 15 : 0)
         .frame(width: width, height: width)
     }
 }

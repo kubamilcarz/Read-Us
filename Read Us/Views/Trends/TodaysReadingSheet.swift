@@ -40,49 +40,48 @@ struct TodaysReadingSheet: View {
                     pagesRead: entry.safeNumerOfPagesRead
                 ))
             } else {
-                do {
-                    let index = try result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight })!
-                    result[index].pagesRead += entry.safeNumerOfPagesRead
-                } catch {
-                    result.append(
-                        ChartableEntry(date: entry.safeDateAdded.midnight, pagesRead: entry.safeNumerOfPagesRead)
-                    )
-                }
+                let index = try result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight })!
+                result[index].pagesRead += entry.safeNumerOfPagesRead
                 
+//                do {
+//
+//                } catch {
+//                    result.append(
+//                        ChartableEntry(date: entry.safeDateAdded.midnight, pagesRead: entry.safeNumerOfPagesRead)
+//                    )
+//                }
             }
-            
-//            if entry.safeDateAdded.midnight == currentMidnight {
-//                if result.first(where: { $0.date.midnight = currentMidnight })
-//            }
-            
-            
-//            if result[currentMidnight] == nil {
-//                result[currentMidnight] = []
-//            }
-//
-//            if entry.safeDateAdded.midnight == currentMidnight {
-//                result[currentMidnight]!.append(entry)
-//            } else {
-//                currentMidnight = entry.safeDateAdded.midnight
-//            }
-            
-//            for entry in entries {
-//                if result[currentMidnight] == nil {
-//                    result[currentMidnight] = ChartableEntry(pagesRead: 0)
-//                }
-//
-//                if entry.safeDateAdded.midnight == currentMidnight {
-//                    result[currentMidnight]! = ChartableEntry(pagesRead: result[currentMidnight]!.pagesRead + entry.safeNumerOfPagesRead)
-//                } else {
-//                    currentMidnight = entry.safeDateAdded.midnight
-//                }
-//            }
         }
         
         return result
     }
     
     @AppStorage("dailyGoal") var dailyGoal = 20
+    @AppStorage("HidingExcludedEntriesToggle") private var isHidingExcluded = false
+    
+    var readTodayHeadline: String {
+        let diff = dailyGoal - numberOfPagesReadToday
+        
+        if diff > 0 {
+            return String(localized: "Almost There!")
+        } else if diff == 0 {
+            return String(localized: "You Hit Your Goal!")
+        } else {
+            return String(localized: "You Read. A lot!")
+        }
+    }
+    
+    var readTodaySubheadline: String {
+        let diff = dailyGoal - numberOfPagesReadToday
+        
+        if diff > 0 {
+            return String(localized: "Read \(diff) pages more to hit your goal.")
+        } else if diff == 0 {
+            return String(localized: "You read \(dailyGoal) pages.")
+        } else {
+            return String(localized: "And read \(abs(diff)) pages more. A total of \(numberOfPagesReadToday) pages!")
+        }
+    }
     
     var numberOfPagesReadToday: Int {
         var number = 0
@@ -94,16 +93,52 @@ struct TodaysReadingSheet: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 30) {
+                VStack(spacing: 0) {
                     
                     readToday
                     
-                    last7Days
+                    VStack(spacing: 0) {
+                        Rectangle()
+                            .fill(.ultraThinMaterial)
+                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
+                            .frame(height: 30)
+                            .frame(maxWidth: .infinity)
+                            .background(.background)
+                            .padding(.top, -30)
+                            
+                            
+                        last7Days
+                    }
                     
-                    ReadingHistorySheet()
-                        .padding(.top, 200)
+                    VStack(spacing: 0) {
+                        Rectangle()
+                            .fill(.background)
+                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
+                            .frame(height: 30)
+                            .frame(maxWidth: .infinity)
+                            .background(.ultraThinMaterial)
+                            .padding(.top, -30)
+                        
+                        ReadingGoalsSection(for: .today)
+                            .padding(.horizontal)
+                            .padding(.vertical, 30)
+                    }
+                    
+                    VStack(spacing: 0) {
+                        Rectangle()
+                            .fill(.ultraThinMaterial)
+                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
+                            .frame(height: 30)
+                            .frame(maxWidth: .infinity)
+                            .background(.background)
+                            .padding(.top, -30)
+                            
+                            
+                        readingLog
+                    }
                 }
             }
+            .background(.ultraThinMaterial)
             .navigationTitle("Today's Reading")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -116,14 +151,31 @@ struct TodaysReadingSheet: View {
     }
     
     private var readToday: some View {
-        ZStack {
-            CustomCircularProgressView(progress: CGFloat(numberOfPagesReadToday) / CGFloat(dailyGoal), width: 150, borderWidth: 9)
+        VStack(alignment: .trailing, spacing: 0) {
+            HStack(alignment: .top, spacing: 30) {
+                CustomCircularProgressView(
+                    progress: CGFloat(numberOfPagesReadToday) / CGFloat(dailyGoal),
+                    width: 90, borderWidth: 7
+                )
+                
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(readTodayHeadline)
+                        .font(.system(.title2, design: .serif).bold())
+                    Text(readTodaySubheadline)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    HStack { Spacer() }
+                }
+            }
             
-            Text("\(numberOfPagesReadToday) / \(dailyGoal)")
-                .font(.title3)
-                .foregroundColor(.secondary)
+            Button("Update Goal") { }
+                .buttonBorderShape(.capsule)
+                .controlSize(.mini)
+                .buttonStyle(.bordered)
+                .font(.system(size: 10))
         }
-        .padding(.vertical, 30)
+        .padding(30)
     }
     
     private var last7Days: some View {
@@ -140,11 +192,45 @@ struct TodaysReadingSheet: View {
                     x: .value("Date", entry.date, unit: .day),
                     y: .value("Pages Read", entry.pagesRead)
                 )
+                .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
             }
             .frame(minHeight: 250)
             
         }
+        .padding(.vertical, 30)
         .padding(.horizontal)
+        .background(.background)
+    }
+    
+    private var readingLog: some View {
+        VStack(spacing: 15) {
+            HStack {
+                Text("Reading Log")
+                    .font(.system(.headline, design: .serif))
+                
+                Spacer()
+                
+                Button {
+                    withAnimation {
+                        isHidingExcluded.toggle()
+                    }
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
+                }
+                .padding(0)
+                .font(.subheadline)
+                .buttonStyle(.bordered)
+                .clipShape(Circle())
+                .tint(isHidingExcluded ? .ruAccentColor : .secondary)
+            }
+            .padding(.horizontal)
+            
+            ReadingHistorySheet(isSheet: false)
+                .frame(minHeight: 300, maxHeight: 900)
+            
+        }
+        .padding(.vertical, 30)
+        .background(.background)
     }
 }
 

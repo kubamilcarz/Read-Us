@@ -11,6 +11,8 @@ struct ReadingHistorySheet: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
+    var isSheet: Bool = true
+    
     @FetchRequest<Entry>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
     ]) var entries: FetchedResults<Entry>
@@ -69,29 +71,36 @@ struct ReadingHistorySheet: View {
                     }
                 }
             }
+            .scrollContentBackground(isSheet ? .visible : .hidden)
+            
             .navigationTitle("Reading Log")
             .navigationBarTitleDisplayMode(.inline)
-            
+            .navigationBarHidden(!isSheet)
+
             .toolbar {
-                Button("Done") {
-                    dismiss()
+                if isSheet {
+                    Button("Done") {
+                        dismiss()
+                    }
                 }
             }
             
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        withAnimation {
-                            isHidingExcluded.toggle()
+                if isSheet {
+                    ToolbarItem(placement: isSheet ? .navigationBarLeading : .navigationBarTrailing) {
+                        Button {
+                            withAnimation {
+                                isHidingExcluded.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "line.3.horizontal.decrease.circle")
                         }
-                    } label: {
-                        Image(systemName: "line.3.horizontal.decrease.circle")
+                        .padding(0)
+                        .font(.subheadline)
+                        .buttonStyle(.bordered)
+                        .clipShape(Circle())
+                        .tint(isHidingExcluded ? .ruAccentColor : .secondary)
                     }
-                    .padding(0)
-                    .font(.subheadline)
-                    .buttonStyle(.bordered)
-                    .clipShape(Circle())
-                    .tint(isHidingExcluded ? .ruAccentColor : .secondary)
                 }
             }
         }

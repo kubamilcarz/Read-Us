@@ -36,7 +36,7 @@ struct ReadingNowView: View {
     
     @State private var updatingBook: Book?
     @State private var isShowingNewShelfSheet = false
-    @State private var isShowingReadingHistorySheet = false
+    @State private var isShowingReadingHistorySheet = true
     @State private var isBookChooserOpen = false
         
     @AppStorage("dailyGoal") var dailyGoal = 20
@@ -113,7 +113,7 @@ struct ReadingNowView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.top, -15)
                         
-                        ReadingGoalsSection()
+                        ReadingGoalsSection(for: .readingNow)
                             .padding(.vertical, 10)
                             .padding(.bottom, 15)
                     }
