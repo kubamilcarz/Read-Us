@@ -45,25 +45,24 @@ struct ReadingNowView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 15) {
+                    todaysReading
+                        .padding(.horizontal)
                     
-                    BookChart(for: .week)
+                    BookChart(for: .week, withDailyGoal: true)
                         .padding(.horizontal)
                         .frame(height: 250)
                     
-                    BookChart(for: .month)
+                    BookChart(for: .month, withDailyGoal: true)
                         .padding(.horizontal)
                         .frame(height: 250)
                     
                     BookChart(for: .year)
                         .padding(.horizontal)
                         .frame(height: 250)
-                    
+//
                     BookChart(for: .all)
                         .padding(.horizontal)
                         .frame(height: 250)
-                    
-//                    todaysReading
-//                        .padding(.horizontal)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {

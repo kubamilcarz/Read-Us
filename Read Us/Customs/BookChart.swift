@@ -9,18 +9,40 @@ import Charts
 import SwiftUI
 
 struct BookChart: View {
-    @FetchRequest<Entry>(sortDescriptors: [
-        SortDescriptor(\.dateAdded, order: .reverse)
-    ], predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)) var entries: FetchedResults<Entry>
-    
-    var skeleton: [ChartableEntry]
+    @State private var skeleton = [ChartableEntry]()
     @State private var period: ChartPeriod
     var withDailyGoal: Bool
+    var model: BookChartModel
+    
+    @FetchRequest<Entry> var entries: FetchedResults<Entry>
     
     init(for period: ChartPeriod, withDailyGoal: Bool = false) {
         self._period = State(wrappedValue: period)
         self.withDailyGoal = withDailyGoal
-        self.skeleton = BookChartModel.makeSkeleton(for: period)
+        self.model = BookChartModel(for: period)
+        
+        switch period {
+        case .week:
+            _entries = FetchRequest(
+                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)
+            )
+        case .month:
+            _entries = FetchRequest(
+                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (2_629_746) as CVarArg, Date.now as CVarArg)
+            )
+        case .year:
+            _entries = FetchRequest(
+                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
+            )
+        case .all:
+            _entries = FetchRequest(
+                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
+            )
+        }
     }
     
     @AppStorage("dailyGoal") var dailyGoal = 20
@@ -53,6 +75,14 @@ struct BookChart: View {
                     )
                     .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
                 }
+            }
+        }
+        .onAppear {
+            skeleton = model.buildSkeleton(with: entries)
+
+            
+            for bone in skeleton {
+                print("bone \(bone.date.formatted(date: .abbreviated, time: .shortened)) holds \(bone.pagesRead)")
             }
         }
     }
