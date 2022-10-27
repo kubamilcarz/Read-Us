@@ -24,4 +24,18 @@ extension Date {
         let cal = Calendar(identifier: Locale().calendar.identifier)
         return cal.component(.year, from: self)
     }
+    
+    var month: Int {
+        let cal = Calendar(identifier: Locale().calendar.identifier)
+        return cal.component(.month, from: self)
+    }
+    
+    var day: Int {
+        let cal = Calendar(identifier: Locale().calendar.identifier)
+        return cal.component(.day, from: self)
+    }
+    
+    func startOfMonth() -> Date {
+        Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
+    }
 }

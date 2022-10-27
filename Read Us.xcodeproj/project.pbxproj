@@ -50,6 +50,9 @@
 		C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2549290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift */; };
 		C8AD254C290A720600C0B8A1 /* BookDetailReadingStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD254B290A720600C0B8A1 /* BookDetailReadingStatus.swift */; };
 		C8AD254E290A773600C0B8A1 /* BookDetailShelvesBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD254D290A773600C0B8A1 /* BookDetailShelvesBar.swift */; };
+		C8AD2552290AA65F00C0B8A1 /* BookChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2551290AA65F00C0B8A1 /* BookChart.swift */; };
+		C8AD2554290AAF1D00C0B8A1 /* BookChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2553290AAF1D00C0B8A1 /* BookChartModel.swift */; };
+		C8AD2556290AAFA700C0B8A1 /* ChartPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2555290AAFA700C0B8A1 /* ChartPeriod.swift */; };
 		C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89028FD6CE9004DC8FD /* Color.swift */; };
 		C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */; };
 		C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */ = {isa = PBXBuildFile; productRef = C8BCD8BA2900436A004DC8FD /* FrameUp */; };
@@ -110,6 +113,9 @@
 		C8AD2549290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDailyGoalSheet.swift; sourceTree = "<group>"; };
 		C8AD254B290A720600C0B8A1 /* BookDetailReadingStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailReadingStatus.swift; sourceTree = "<group>"; };
 		C8AD254D290A773600C0B8A1 /* BookDetailShelvesBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailShelvesBar.swift; sourceTree = "<group>"; };
+		C8AD2551290AA65F00C0B8A1 /* BookChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChart.swift; sourceTree = "<group>"; };
+		C8AD2553290AAF1D00C0B8A1 /* BookChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChartModel.swift; sourceTree = "<group>"; };
+		C8AD2555290AAFA700C0B8A1 /* ChartPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPeriod.swift; sourceTree = "<group>"; };
 		C8BCD88F28FD6A94004DC8FD /* Read-Us-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Read-Us-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8BCD89028FD6CE9004DC8FD /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReadingEntryView.swift; sourceTree = "<group>"; };
@@ -217,6 +223,8 @@
 				C89985F128E0D051002C678D /* CachedBook.swift */,
 				C899860228E0FA5B002C678D /* ReadingStatus.swift */,
 				C8AD2547290A69EC00C0B8A1 /* ChartableEntry.swift */,
+				C8AD2553290AAF1D00C0B8A1 /* BookChartModel.swift */,
+				C8AD2555290AAFA700C0B8A1 /* ChartPeriod.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -245,6 +253,7 @@
 				C8408B8728ED85E6009D45A3 /* WithoutListInset.swift */,
 				C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */,
 				C86CEDF028F6078400C5EB9A /* BookCenteredGrid.swift */,
+				C8AD2551290AA65F00C0B8A1 /* BookChart.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -387,6 +396,7 @@
 				C86CEDED28F5FE6100C5EB9A /* CornerRadius.swift in Sources */,
 				C89985DF28E0AF92002C678D /* TabBarItem.swift in Sources */,
 				C86A118729015E840003EACD /* TodaysReadingSheet.swift in Sources */,
+				C8AD2552290AA65F00C0B8A1 /* BookChart.swift in Sources */,
 				C8CE889428EEE90A00FCB607 /* Shelf+CoreDataProperties.swift in Sources */,
 				C89985F228E0D051002C678D /* CachedBook.swift in Sources */,
 				C898CE3228E09E970038AAA3 /* Persistence.swift in Sources */,
@@ -394,6 +404,7 @@
 				C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */,
 				C8408B6C28EC8B27009D45A3 /* Entry+CoreDataClass.swift in Sources */,
 				C899860128E0F8A7002C678D /* BookDetailView.swift in Sources */,
+				C8AD2556290AAFA700C0B8A1 /* ChartPeriod.swift in Sources */,
 				C899861B28E1FD73002C678D /* CustomProgressView.swift in Sources */,
 				C898CE2B28E09E960038AAA3 /* ContentView.swift in Sources */,
 				C899861128E1F904002C678D /* StarRatingCell.swift in Sources */,
@@ -419,6 +430,7 @@
 				C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */,
 				C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */,
 				C8408B8828ED85E6009D45A3 /* WithoutListInset.swift in Sources */,
+				C8AD2554290AAF1D00C0B8A1 /* BookChartModel.swift in Sources */,
 				C847069B28E45A29006CC559 /* Date.swift in Sources */,
 				C899860F28E1F623002C678D /* BookPhotoCell.swift in Sources */,
 				C86CEDF128F6078400C5EB9A /* BookCenteredGrid.swift in Sources */,
