@@ -29,7 +29,7 @@ struct BookDetailNotesView: View {
         VStack(spacing: 15) {
             HStack {
                 Text("Notes")
-                    .font(.headline)
+                    .font(.system(.headline, design: .serif))
                 
                 Spacer()
             }
@@ -57,8 +57,8 @@ struct BookDetailNotesView: View {
                 } else {
                     newNoteButton
                 }
-                
-                Divider()
+               
+                if !notes.isEmpty { Divider() } else { HStack { Spacer() } }
                 
                 ForEach(notes) { note in
                     HStack(alignment: .top) {
@@ -123,6 +123,9 @@ struct BookDetailNotesView: View {
                 }
             }
         }
+        .padding()
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+        
         .confirmationDialog("Are you sure?", isPresented: $isShowingDeleteConfirmation) {
             Button("Cancel", role: .cancel) { }
             Button("Remove", role: .destructive) {
