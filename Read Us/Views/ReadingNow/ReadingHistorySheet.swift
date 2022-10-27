@@ -44,28 +44,42 @@ struct ReadingHistorySheet: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(filteredEntries.sorted(by: { $0.key > $1.key }), id: \.key) { key, value in
-                    if isHidingExcluded && value.filter { $0.isVisible }.isEmpty {
+                if filteredEntries.isEmpty {
+                    VStack(spacing: 15) {
+                        Image(systemName: "tray")
+                            .font(.system(size: 44))
                         
-                    } else {
-                        Section {
-                            ForEach(value, id: \.self) { entry in
-                                if isHidingExcluded && entry.isVisible == false {
-                                } else {
-                                    NavigationLink {
-                                        EditReadingEntryView(entry: entry)
-                                    } label: {
-                                        logRow(entry: entry)
+                        Text("No Reading Log")
+                            .font(.system(.headline, design: .serif))
+                        
+                        HStack { Spacer() }
+                    }
+                    .foregroundColor(.secondary)
+                    .padding()
+                } else {
+                    ForEach(filteredEntries.sorted(by: { $0.key > $1.key }), id: \.key) { key, value in
+                        if isHidingExcluded && value.filter { $0.isVisible }.isEmpty {
+                            
+                        } else {
+                            Section {
+                                ForEach(value, id: \.self) { entry in
+                                    if isHidingExcluded && entry.isVisible == false {
+                                    } else {
+                                        NavigationLink {
+                                            EditReadingEntryView(entry: entry)
+                                        } label: {
+                                            logRow(entry: entry)
+                                        }
+                                        .buttonStyle(.plain)
                                     }
-                                    .buttonStyle(.plain)
                                 }
-                            }
-                        } header: {
-                            HStack {
-                                Text("\(key.formatted(date: .long, time: .omitted))")
-                                Spacer()
-                                Text("\(getTotalNumberOfPages(for: value))")
-                                    .bold()
+                            } header: {
+                                HStack {
+                                    Text("\(key.formatted(date: .long, time: .omitted))")
+                                    Spacer()
+                                    Text("\(getTotalNumberOfPages(for: value))")
+                                        .bold()
+                                }
                             }
                         }
                     }

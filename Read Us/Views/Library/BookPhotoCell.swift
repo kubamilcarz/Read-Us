@@ -8,17 +8,23 @@
 import SwiftUI
 
 struct BookPhotoCell: View {
-    var photo: UIImage
+    var photoData: Data?
+    var photo: UIImage?
     var width: CGFloat?
     var minWidth: CGFloat?
+    
+    init(for photo: Data?, width: CGFloat = 70) {
+        self.photoData = photo
+        self.width = width
+    }
     
     init(for photo: UIImage, width: CGFloat = 70) {
         self.photo = photo
         self.width = width
     }
     
-    init(for photo: UIImage, minWidth: CGFloat = 70) {
-        self.photo = photo
+    init(for photo: Data?, minWidth: CGFloat = 70) {
+        self.photoData = photo
         self.minWidth = minWidth
     }
     
@@ -34,10 +40,35 @@ struct BookPhotoCell: View {
         return 10
     }
     
+    var readyImage: some View {
+        Group {
+            if let photo {
+                Image(uiImage: photo)
+            } else {
+                if UIImage(data: photoData ?? Data()) != nil {
+                    Image(uiImage: UIImage(data: photoData ?? Data())!).resizable()
+                } else {
+                    ZStack {
+                        Rectangle().fill(.ultraThinMaterial)
+                        if let width {
+                            Image(systemName: "photo.on.rectangle")
+                                .font(width < 70 ? .body : .title2)
+                                .foregroundColor(.gray.opacity(0.7))
+                        }
+                        if let minWidth {
+                            Image(systemName: "photo.on.rectangle")
+                                .font(minWidth < 70 ? .body : .title2)
+                                .foregroundColor(.gray.opacity(0.7))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     var body: some View {
         if let width {
-            Image(uiImage: photo)
-                .resizable()
+            readyImage
                 .aspectRatio(3/5, contentMode: .fill)
                 .frame(width: width, height: (width*5)/3)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -49,8 +80,7 @@ struct BookPhotoCell: View {
         }
         
         if let minWidth {
-            Image(uiImage: photo)
-                .resizable()
+            readyImage
                 .aspectRatio(3/5, contentMode: .fill)
                 .frame(minWidth: minWidth, minHeight: (minWidth*5)/3)
                 .clipShape(RoundedRectangle(cornerRadius: cornerRadius))

@@ -57,6 +57,7 @@ struct NewBookSheet: View {
                                 RoundedRectangle(cornerRadius: 12)
                                     .stroke(lineWidth: 1)
                                     .foregroundColor(.secondary)
+                                    .padding(1)
                             )
                             
                             VStack(alignment: .leading) {

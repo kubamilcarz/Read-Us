@@ -86,12 +86,12 @@ struct ReadThisYearSection: View {
     }
     
     private func bookCell(book: Book) -> some View {
-        BookPhotoCell(for: book.safePhoto, minWidth: 50)
+        BookPhotoCell(for: book.photo, minWidth: 50)
     }
     
     private var sectionTitle: some View {
         VStack(spacing: 5) {
-            Text("\(year.formatted(.number)) So Far")
+            Text("\(String(year)) So Far")
                 .font(.system(.title2, design: .serif))
             Text("You read **\(filteredBooks.count)** books")
                 .font(.subheadline)

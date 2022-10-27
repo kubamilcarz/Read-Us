@@ -119,7 +119,7 @@ struct BookGrid: View {
     private func bookCell(book: Book) -> some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
-                BookPhotoCell(for: book.safePhoto, width: 90)
+                BookPhotoCell(for: book.photo, width: 90)
                     .overlay(!isEditModeOn ? nil : ZStack {
                         RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.7))
                         Image(systemName: "trash")

@@ -42,7 +42,7 @@ struct ReadingGoalsSection: View {
             
             HStack(spacing: 30) {
                 VStack(spacing: 10) {
-                    Text("102")
+                    Text("0")
                         .font(.system(.title, design: .serif))
                         .bold()
                         .foregroundColor(.ruAccentColor)
@@ -54,7 +54,7 @@ struct ReadingGoalsSection: View {
                 Divider()
                 
                 VStack(spacing: 10) {
-                    Text("16")
+                    Text("0")
                         .font(.system(.title, design: .serif))
                         .bold()
                         .foregroundColor(.ruAccentColor)

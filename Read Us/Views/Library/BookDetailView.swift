@@ -111,7 +111,7 @@ struct BookDetailView: View {
     
     private var bookPhotoEditable: some View {
         ZStack {
-            BookPhotoCell(for: book.safePhoto, width: 100)
+            BookPhotoCell(for: book.photo, width: 100)
             
             if isEditModeOn {
                 Rectangle()

@@ -95,7 +95,7 @@ struct LibraryView: View {
     
     private func bookCell(book: Book) -> some View {
         HStack(alignment: .top) {
-            BookPhotoCell(for: book.safePhoto, width: 70)
+            BookPhotoCell(for: book.photo, width: 70)
             
             VStack(alignment: .leading, spacing: 3) {
                 Text(book.safeTitle)

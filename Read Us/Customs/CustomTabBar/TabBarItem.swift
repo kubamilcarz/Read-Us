@@ -8,14 +8,13 @@
 import SwiftUI
 
 enum TabBarItem: Hashable {
-    case readingNow, library, trends, profile
+    case readingNow, library, trends
     
     var iconName: String {
         switch self {
         case .readingNow: return "book"
         case .library: return "books.vertical"
         case .trends: return "chart.bar"
-        case .profile: return "person.circle"
         }
     }
     
@@ -24,7 +23,6 @@ enum TabBarItem: Hashable {
         case .readingNow: return "Reading Now"
         case .library: return "Library"
         case .trends: return "Trends"
-        case .profile: return "Profile"
         }
     }
     
@@ -33,7 +31,6 @@ enum TabBarItem: Hashable {
         case .readingNow: return .ruAccentColor
         case .library: return .ruAccentColor
         case .trends: return .ruAccentColor
-        case .profile: return .ruAccentColor
         }
     }
 }
