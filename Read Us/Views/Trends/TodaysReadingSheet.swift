@@ -8,12 +8,6 @@
 import Charts
 import SwiftUI
 
-struct ChartableEntry: Identifiable {
-    var id = UUID()
-    var date: Date
-    var pagesRead: Int
-}
-
 struct TodaysReadingSheet: View {
     @Environment(\.dismiss) var dismiss
         
@@ -26,12 +20,14 @@ struct TodaysReadingSheet: View {
         
         if entries.isEmpty { return result }
                 
-        var currentMidnight = entries[0].safeDateAdded.midnight
-        result.append(ChartableEntry(date: currentMidnight, pagesRead: 0))
+        let currentMidnight = entries[0].safeDateAdded.midnight
+        let bufferEntry = ChartableEntry(date: currentMidnight, pagesRead: 0)
+        
+        result.append(bufferEntry)
         
         for entry in entries {
             if result.filter({ $0.date == currentMidnight }).isEmpty {
-                result.append(ChartableEntry(date: currentMidnight, pagesRead: 0))
+                result.append(bufferEntry)
             }
             
             if result.filter({$0.date == entry.safeDateAdded.midnight }).isEmpty {
@@ -40,16 +36,8 @@ struct TodaysReadingSheet: View {
                     pagesRead: entry.safeNumerOfPagesRead
                 ))
             } else {
-                let index = try result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight })!
+                let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight })!
                 result[index].pagesRead += entry.safeNumerOfPagesRead
-                
-//                do {
-//
-//                } catch {
-//                    result.append(
-//                        ChartableEntry(date: entry.safeDateAdded.midnight, pagesRead: entry.safeNumerOfPagesRead)
-//                    )
-//                }
             }
         }
         
@@ -58,6 +46,8 @@ struct TodaysReadingSheet: View {
     
     @AppStorage("dailyGoal") var dailyGoal = 20
     @AppStorage("HidingExcludedEntriesToggle") private var isHidingExcluded = false
+    
+    @State private var isShowingUpdateDailyGoalSheet = false
     
     var readTodayHeadline: String {
         let diff = dailyGoal - numberOfPagesReadToday
@@ -146,6 +136,11 @@ struct TodaysReadingSheet: View {
                     dismiss()
                 }
             }
+            .sheet(isPresented: $isShowingUpdateDailyGoalSheet) {
+                UpdateDailyGoalSheet()
+                    .presentationDetents([.height(200)])
+            }
+            
             .tint(.ruAccentColor)
         }
     }
@@ -169,11 +164,13 @@ struct TodaysReadingSheet: View {
                 }
             }
             
-            Button("Update Goal") { }
-                .buttonBorderShape(.capsule)
-                .controlSize(.mini)
-                .buttonStyle(.bordered)
-                .font(.system(size: 10))
+            Button("Update Goal") {
+                isShowingUpdateDailyGoalSheet = true
+            }
+            .buttonBorderShape(.capsule)
+            .controlSize(.mini)
+            .buttonStyle(.bordered)
+            .font(.system(size: 10))
         }
         .padding(30)
     }
@@ -187,12 +184,24 @@ struct TodaysReadingSheet: View {
                 Spacer()
             }
             
-            Chart(filteredEntries) { entry in
-                BarMark(
-                    x: .value("Date", entry.date, unit: .day),
-                    y: .value("Pages Read", entry.pagesRead)
-                )
-                .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
+            Chart {
+                RuleMark(y: .value("Pages Read", dailyGoal))
+                    .annotation(position: .top, alignment: .trailing) {
+                        Text("Daily Goal")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                            .padding(.trailing, 5)
+                    }
+                    .foregroundStyle(Color.ruAccentColor)
+                    .opacity(0.7)
+                
+                ForEach(filteredEntries) { entry in
+                    BarMark(
+                        x: .value("Date", entry.date, unit: .day),
+                        y: .value("Pages Read", entry.pagesRead)
+                    )
+                    .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
+                }
             }
             .frame(minHeight: 250)
             

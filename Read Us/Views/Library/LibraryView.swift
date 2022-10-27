@@ -34,8 +34,23 @@ struct LibraryView: View {
                     isEditModeOn: $isEditModeOn,
                     isShowingLibraryChoser: $isShowingLibraryChoser
                 )
-                    .padding(.horizontal)
+                .padding(.horizontal)
+                .padding(.bottom, filteredBooks.count >= 9 ? 75 : 0)
+                
+                if filteredBooks.count >= 9 {
+                    VStack(spacing: 5) {
+                        Text("Total")
+                            .font(.caption)
+                            .textCase(.uppercase)
+                            .foregroundColor(.secondary)
+                        Text("\(filteredBooks.count)")
+                            .font(.system(size: 64, design: .serif))
+                            .bold()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(30)
                     .padding(.bottom, 75)
+                }
             }
             .navigationTitle("Library")
             .toolbar {

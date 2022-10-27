@@ -47,6 +47,8 @@
 		C899861128E1F904002C678D /* StarRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899861028E1F904002C678D /* StarRatingCell.swift */; };
 		C899861B28E1FD73002C678D /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899861A28E1FD73002C678D /* CustomProgressView.swift */; };
 		C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C899861C28E1FFAB002C678D /* UpdateBookProgressSheet.swift */; };
+		C8AD2548290A69EC00C0B8A1 /* ChartableEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2547290A69EC00C0B8A1 /* ChartableEntry.swift */; };
+		C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2549290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift */; };
 		C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89028FD6CE9004DC8FD /* Color.swift */; };
 		C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */; };
 		C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */ = {isa = PBXBuildFile; productRef = C8BCD8BA2900436A004DC8FD /* FrameUp */; };
@@ -104,6 +106,8 @@
 		C899861C28E1FFAB002C678D /* UpdateBookProgressSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBookProgressSheet.swift; sourceTree = "<group>"; };
 		C89ADAA628EC7FB000F0F36B /* Read Us.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Read Us.entitlements"; sourceTree = "<group>"; };
 		C89ADAA728EC80AD00F0F36B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C8AD2547290A69EC00C0B8A1 /* ChartableEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartableEntry.swift; sourceTree = "<group>"; };
+		C8AD2549290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDailyGoalSheet.swift; sourceTree = "<group>"; };
 		C8BCD88F28FD6A94004DC8FD /* Read-Us-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Read-Us-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8BCD89028FD6CE9004DC8FD /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReadingEntryView.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 				C898CE3F28E0A9CF0038AAA3 /* MainViewModel.swift */,
 				C89985F128E0D051002C678D /* CachedBook.swift */,
 				C899860228E0FA5B002C678D /* ReadingStatus.swift */,
+				C8AD2547290A69EC00C0B8A1 /* ChartableEntry.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 			children = (
 				C89985ED28E0CADE002C678D /* TrendsView.swift */,
 				C86A118629015E840003EACD /* TodaysReadingSheet.swift */,
+				C8AD2549290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift */,
 			);
 			path = Trends;
 			sourceTree = "<group>";
@@ -397,6 +403,7 @@
 				C899861128E1F904002C678D /* StarRatingCell.swift in Sources */,
 				C899860328E0FA5B002C678D /* ReadingStatus.swift in Sources */,
 				C89985F028E0CAE9002C678D /* ProfileView.swift in Sources */,
+				C8AD2548290A69EC00C0B8A1 /* ChartableEntry.swift in Sources */,
 				C89985DD28E0AEC5002C678D /* CustomTabBarView.swift in Sources */,
 				C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */,
 				C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */,
@@ -410,6 +417,7 @@
 				C8408B6E28EC8B27009D45A3 /* Quote+CoreDataClass.swift in Sources */,
 				C89985EA28E0CAC5002C678D /* ReadingNowView.swift in Sources */,
 				C8408B8628ED8341009D45A3 /* NewShelfSheet.swift in Sources */,
+				C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */,
 				C8408B6F28EC8B27009D45A3 /* Quote+CoreDataProperties.swift in Sources */,
 				C8408B7928EC8C35009D45A3 /* Book+CoreDataProperties.swift in Sources */,
 				C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */,
@@ -567,7 +575,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kubamilcarz.Read-Us";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -603,7 +611,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kubamilcarz.Read-Us";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
