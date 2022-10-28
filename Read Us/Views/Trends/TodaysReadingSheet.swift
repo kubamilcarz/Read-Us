@@ -15,35 +15,6 @@ struct TodaysReadingSheet: View {
         SortDescriptor(\.dateAdded, order: .reverse)
     ], predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)) var entries: FetchedResults<Entry>
     
-    var filteredEntries: [ChartableEntry] {
-        var result: [ChartableEntry] = []
-        
-        if entries.isEmpty { return result }
-                
-        let currentMidnight = entries[0].safeDateAdded.midnight
-        let bufferEntry = ChartableEntry(date: currentMidnight, pagesRead: 0)
-        
-        result.append(bufferEntry)
-        
-        for entry in entries {
-            if result.filter({ $0.date == currentMidnight }).isEmpty {
-                result.append(bufferEntry)
-            }
-            
-            if result.filter({$0.date == entry.safeDateAdded.midnight }).isEmpty {
-                result.append(ChartableEntry(
-                    date: entry.safeDateAdded.midnight,
-                    pagesRead: entry.safeNumerOfPagesRead
-                ))
-            } else {
-                let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight })!
-                result[index].pagesRead += entry.safeNumerOfPagesRead
-            }
-        }
-        
-        return result
-    }
-    
     @AppStorage("dailyGoal") var dailyGoal = 20
     @AppStorage("HidingExcludedEntriesToggle") private var isHidingExcluded = false
     
@@ -184,26 +155,9 @@ struct TodaysReadingSheet: View {
                 Spacer()
             }
             
-            Chart {
-                RuleMark(y: .value("Pages Read", dailyGoal))
-                    .annotation(position: .top, alignment: .trailing) {
-                        Text("Daily Goal")
-                            .foregroundColor(.secondary)
-                            .font(.caption)
-                            .padding(.trailing, 5)
-                    }
-                    .foregroundStyle(Color.ruAccentColor)
-                    .opacity(0.7)
-                
-                ForEach(filteredEntries) { entry in
-                    BarMark(
-                        x: .value("Date", entry.date, unit: .day),
-                        y: .value("Pages Read", entry.pagesRead)
-                    )
-                    .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
-                }
-            }
-            .frame(minHeight: 250)
+            BookChart(for: .week, withDailyGoal: true)
+                .padding(.horizontal)
+                .frame(height: 250)
             
         }
         .padding(.vertical, 30)

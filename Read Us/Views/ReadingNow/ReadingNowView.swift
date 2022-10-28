@@ -48,22 +48,6 @@ struct ReadingNowView: View {
                     todaysReading
                         .padding(.horizontal)
                     
-                    BookChart(for: .week, withDailyGoal: true)
-                        .padding(.horizontal)
-                        .frame(height: 250)
-                    
-                    BookChart(for: .month, withDailyGoal: true)
-                        .padding(.horizontal)
-                        .frame(height: 250)
-                    
-                    BookChart(for: .year)
-                        .padding(.horizontal)
-                        .frame(height: 250)
-//
-                    BookChart(for: .all)
-                        .padding(.horizontal)
-                        .frame(height: 250)
-                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             if books.isEmpty {
