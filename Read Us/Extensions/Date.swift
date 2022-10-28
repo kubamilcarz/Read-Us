@@ -38,4 +38,8 @@ extension Date {
     func startOfMonth() -> Date {
         Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
     }
+    
+    func startOfYear() -> Date {
+        Calendar.current.date(from: Calendar.current.dateComponents([.year], from: Calendar.current.startOfDay(for: self)))!
+    }
 }

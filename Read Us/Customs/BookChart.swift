@@ -24,22 +24,22 @@ struct BookChart: View {
         switch period {
         case .week:
             _entries = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)
             )
         case .month:
             _entries = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (2_629_746) as CVarArg, Date.now as CVarArg)
             )
         case .year:
             _entries = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
             )
         case .all:
             _entries = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded)],
+                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
             )
         }
@@ -78,7 +78,11 @@ struct BookChart: View {
             }
         }
         .onAppear {
-            skeleton = model.buildSkeleton(with: entries)
+            if entries.isEmpty {
+                skeleton = model.buildSkeleton(with: entries, startingYear: Date.now.year)
+            } else {
+                skeleton = model.buildSkeleton(with: entries, startingYear: entries.first!.safeDateAdded.year)
+            }
 
             
             for bone in skeleton {

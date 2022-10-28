@@ -14,15 +14,15 @@ class BookChartModel {
         self.period = period
     }
     
-    func buildSkeleton(with entries: FetchedResults<Entry>) -> [ChartableEntry] {
-        var skeleton = makeSkeleton()
+    func buildSkeleton(with entries: FetchedResults<Entry>, startingYear: Int) -> [ChartableEntry] {
+        var skeleton = makeSkeleton(startingYear: startingYear)
         skeleton = populate(skeleton: skeleton, with: entries)
         
         return skeleton
     }
     
     // MARK: - makes empty (in values) skeleton of a chart
-    private func makeSkeleton() -> [ChartableEntry] {
+    private func makeSkeleton(startingYear: Int) -> [ChartableEntry] {
         var skeleton = [ChartableEntry]()
         
         switch period {
@@ -38,7 +38,7 @@ class BookChartModel {
         case .year:
             skeleton = self.makeChartables(itemCount: 12)
         case .all:
-            skeleton = self.makeChartables(itemCount: 5, startingYear: 2018)
+            skeleton = self.makeChartables(itemCount: Date.now.year - startingYear == 0 ? 1 : Date.now.year - startingYear > 0 ? Date.now.year - startingYear : 1, startingYear: startingYear)
         }
         
         return skeleton
@@ -112,7 +112,7 @@ class BookChartModel {
             }
         case .all:
             for entry in entries {
-                if let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.startOfMonth() }) {
+                if let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.startOfYear() }) {
                     result[index].pagesRead += entry.safeNumerOfPagesRead
                 }
             }
