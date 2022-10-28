@@ -155,7 +155,7 @@ struct TodaysReadingSheet: View {
                 Spacer()
             }
             
-            BookChart(for: .week, withDailyGoal: true)
+            BookChart(for: .week, show: .constant(.pages), withDailyGoal: .constant(true))
                 .padding(.horizontal)
                 .frame(height: 250)
             

@@ -10,5 +10,5 @@ import Foundation
 struct ChartableEntry: Identifiable {
     var id = UUID()
     var date: Date
-    var pagesRead: Int
+    var value: Int // either pages count or book count
 }
