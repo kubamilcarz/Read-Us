@@ -64,6 +64,7 @@
 		C8CE889628EF2CCD00FCB607 /* BookChooserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */; };
 		C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */; };
 		C8ECAF9B290FFAD3002011EF /* ReadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9A290FFAD3002011EF /* ReadView.swift */; };
+		C8ECAF9E290FFB6C002011EF /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +128,7 @@
 		C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChooserSheet.swift; sourceTree = "<group>"; };
 		C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircularProgressView.swift; sourceTree = "<group>"; };
 		C8ECAF9A290FFAD3002011EF /* ReadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadView.swift; sourceTree = "<group>"; };
+		C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 		C898CE3C28E0A0730038AAA3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C8ECAF9C290FFB64002011EF /* Settings */,
 				C8ECAF99290FFAAE002011EF /* MindfulReading */,
 				C8408B8428ED8333009D45A3 /* Shelf */,
 				C89985E428E0CAA4002C678D /* ReadingNow */,
@@ -317,6 +320,14 @@
 				C8ECAF9A290FFAD3002011EF /* ReadView.swift */,
 			);
 			path = MindfulReading;
+			sourceTree = "<group>";
+		};
+		C8ECAF9C290FFB64002011EF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,6 +445,7 @@
 				C898CE2928E09E960038AAA3 /* Read_UsApp.swift in Sources */,
 				C86CEDEB28F5F95800C5EB9A /* BookGrid.swift in Sources */,
 				C8408B6E28EC8B27009D45A3 /* Quote+CoreDataClass.swift in Sources */,
+				C8ECAF9E290FFB6C002011EF /* SettingsSheet.swift in Sources */,
 				C89985EA28E0CAC5002C678D /* ReadingNowView.swift in Sources */,
 				C8408B8628ED8341009D45A3 /* NewShelfSheet.swift in Sources */,
 				C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */,

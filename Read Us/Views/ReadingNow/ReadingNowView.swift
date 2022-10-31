@@ -38,6 +38,7 @@ struct ReadingNowView: View {
     @State private var isShowingNewShelfSheet = false
     @State private var isShowingReadingHistorySheet = false
     @State private var isBookChooserOpen = false
+    @State private var isShowingSettingsSheet = false
         
     @AppStorage("dailyGoal") var dailyGoal = 20
     
@@ -178,9 +179,17 @@ struct ReadingNowView: View {
                     .presentationDragIndicator(.visible)
             }
             
+            .sheet(isPresented: $isShowingSettingsSheet) {
+                SettingsSheet()
+            }
+            
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)
                     .presentationDragIndicator(.visible)
+            }
+            
+            .toolbar {
+                profileButton
             }
         }
         .tint(.ruAccentColor)
@@ -188,6 +197,14 @@ struct ReadingNowView: View {
 }
 
 extension ReadingNowView {
+    private var profileButton: some View {
+        Button {
+            isShowingSettingsSheet = true
+        } label: {
+            Label("Profile", systemImage: "person.circle")
+        }
+    }
+    
     private var listsSection: some View {
         VStack(alignment: .leading, spacing: 15) {
             HStack {
