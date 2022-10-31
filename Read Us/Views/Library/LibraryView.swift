@@ -5,6 +5,7 @@
 //  Created by Kuba Milcarz on 9/25/22.
 //
 
+import CodeScanner
 import SwiftUI
 
 struct LibraryView: View {
@@ -14,6 +15,8 @@ struct LibraryView: View {
     
     @State private var isShowingNewBookSheet = false
     @State private var isShowingLibraryChoser = false
+    
+    @State private var isShowingISBNCodeScanner = false
     
     @State private var isEditModeOn = false
     @State private var query = ""
@@ -70,6 +73,10 @@ struct LibraryView: View {
                     .presentationDragIndicator(.visible)
             }
             
+            .sheet(isPresented: $isShowingISBNCodeScanner) {
+                ScanBookSheet()
+            }
+            
             .searchable(text: $query.animation(.easeInOut), placement: .navigationBarDrawer(displayMode: .automatic), prompt: Text("Search Library"))
 
         }
@@ -85,11 +92,27 @@ struct LibraryView: View {
     }
     
     private var navBarAddButton: some View {
-        Button {
-            isShowingNewBookSheet = true
+        Menu {
+            Button {
+                isShowingNewBookSheet = true
+            } label: {
+                Label("Manually", systemImage: "pencil")
+                    .symbolRenderingMode(.hierarchical)
+            }
+            
+            Button {
+                isShowingISBNCodeScanner = true
+            } label: {
+                Label("Scan Code", systemImage: "barcode.viewfinder")
+                    .symbolRenderingMode(.hierarchical)
+            }
         } label: {
-            Label("Add Book", systemImage: "plus.circle.fill")
-                .symbolRenderingMode(.hierarchical)
+            Button {
+                isShowingNewBookSheet = true
+            } label: {
+                Label("Add Book", systemImage: "plus.circle.fill")
+                    .symbolRenderingMode(.hierarchical)
+            }
         }
     }
     

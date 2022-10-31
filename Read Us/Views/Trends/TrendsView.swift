@@ -16,7 +16,7 @@ struct TrendsView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 0) {
-                    trendsTypePickers
+//                    trendsTypePickers
                     
                     if trendsDataType == .pages {
                         BookieSection(.background) {
@@ -88,6 +88,14 @@ struct TrendsView: View {
                     withDailyGoal = false
                 }
             }
+            
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        trendsTypePickers
+                    }
+                }
+            }
         }
         .tint(.ruAccentColor)
     }
@@ -102,7 +110,5 @@ struct TrendsView: View {
         .pickerStyle(.segmented)
         .frame(maxWidth: 210)
         .padding(.horizontal)
-        .padding(.bottom, 30)
-        .padding(.top, 10)
     }
 }

@@ -53,6 +53,9 @@
 		C8AD2552290AA65F00C0B8A1 /* BookChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2551290AA65F00C0B8A1 /* BookChart.swift */; };
 		C8AD2554290AAF1D00C0B8A1 /* BookChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2553290AAF1D00C0B8A1 /* BookChartModel.swift */; };
 		C8AD2556290AAFA700C0B8A1 /* ChartPeriod+TrendsDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD2555290AAFA700C0B8A1 /* ChartPeriod+TrendsDataType.swift */; };
+		C8B452FB291056E900F2F141 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = C8B452FA291056E900F2F141 /* CodeScanner */; };
+		C8B452FD29105C4600F2F141 /* ScanBookSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B452FC29105C4600F2F141 /* ScanBookSheet.swift */; };
+		C8B453002910613400F2F141 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C8B452FF2910613400F2F141 /* SwiftyJSON */; };
 		C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89028FD6CE9004DC8FD /* Color.swift */; };
 		C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */; };
 		C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */ = {isa = PBXBuildFile; productRef = C8BCD8BA2900436A004DC8FD /* FrameUp */; };
@@ -119,6 +122,7 @@
 		C8AD2551290AA65F00C0B8A1 /* BookChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChart.swift; sourceTree = "<group>"; };
 		C8AD2553290AAF1D00C0B8A1 /* BookChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChartModel.swift; sourceTree = "<group>"; };
 		C8AD2555290AAFA700C0B8A1 /* ChartPeriod+TrendsDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChartPeriod+TrendsDataType.swift"; sourceTree = "<group>"; };
+		C8B452FC29105C4600F2F141 /* ScanBookSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanBookSheet.swift; sourceTree = "<group>"; };
 		C8BCD88F28FD6A94004DC8FD /* Read-Us-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Read-Us-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C8BCD89028FD6CE9004DC8FD /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		C8BCD89228FD89A8004DC8FD /* EditReadingEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReadingEntryView.swift; sourceTree = "<group>"; };
@@ -138,6 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8B453002910613400F2F141 /* SwiftyJSON in Frameworks */,
+				C8B452FB291056E900F2F141 /* CodeScanner in Frameworks */,
 				C8BCD8BB2900436A004DC8FD /* FrameUp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +309,7 @@
 				C8BCD8BC29004C71004DC8FD /* BookDetailNotesView.swift */,
 				C8AD254B290A720600C0B8A1 /* BookDetailReadingStatus.swift */,
 				C8AD254D290A773600C0B8A1 /* BookDetailShelvesBar.swift */,
+				C8B452FC29105C4600F2F141 /* ScanBookSheet.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -351,6 +358,8 @@
 			name = "Read Us";
 			packageProductDependencies = (
 				C8BCD8BA2900436A004DC8FD /* FrameUp */,
+				C8B452FA291056E900F2F141 /* CodeScanner */,
+				C8B452FF2910613400F2F141 /* SwiftyJSON */,
 			);
 			productName = "Read Us";
 			productReference = C898CE2528E09E960038AAA3 /* Read Us.app */;
@@ -382,6 +391,8 @@
 			mainGroup = C898CE1C28E09E960038AAA3;
 			packageReferences = (
 				C8BCD8B92900436A004DC8FD /* XCRemoteSwiftPackageReference "FrameUp" */,
+				C8B452F9291056E900F2F141 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				C8B452FE2910613400F2F141 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = C898CE2628E09E960038AAA3 /* Products */;
 			projectDirPath = "";
@@ -439,6 +450,7 @@
 				C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */,
 				C8ECAF9B290FFAD3002011EF /* ReadView.swift in Sources */,
 				C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */,
+				C8B452FD29105C4600F2F141 /* ScanBookSheet.swift in Sources */,
 				C8408B6D28EC8B27009D45A3 /* Entry+CoreDataProperties.swift in Sources */,
 				C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */,
 				C8AD254E290A773600C0B8A1 /* BookDetailShelvesBar.swift in Sources */,
@@ -603,6 +615,7 @@
 				INFOPLIST_FILE = "Read-Us-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Bookie;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to camera to import books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -639,6 +652,7 @@
 				INFOPLIST_FILE = "Read-Us-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Bookie;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to camera to import books";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -683,6 +697,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C8B452F9291056E900F2F141 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		C8B452FE2910613400F2F141 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		C8BCD8B92900436A004DC8FD /* XCRemoteSwiftPackageReference "FrameUp" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ryanlintott/FrameUp";
@@ -694,6 +724,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C8B452FA291056E900F2F141 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8B452F9291056E900F2F141 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		C8B452FF2910613400F2F141 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8B452FE2910613400F2F141 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
 		C8BCD8BA2900436A004DC8FD /* FrameUp */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C8BCD8B92900436A004DC8FD /* XCRemoteSwiftPackageReference "FrameUp" */;

@@ -12,9 +12,9 @@ struct NewBookSheet: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    @State private var title = ""
-    @State private var author = ""
-    @State private var pages = ""
+    @State private var title: String
+    @State private var author: String
+    @State private var pages: String
     @State private var startedReadingDate = Date.now
     @State private var finishedReadingDate = Date.now
     @State private var notes = ""
@@ -24,6 +24,25 @@ struct NewBookSheet: View {
     @State private var uiImage: UIImage?
     
     @State private var didFinish = false
+    
+    @Binding var cachedBook: CachedBook
+    
+    init() {
+        self._cachedBook = Binding(projectedValue: .constant(CachedBook(title: "", author: "", isbn10: "", isbn13: "", photo: Data(), numberOfPages: "")))
+        
+        self._title = State(wrappedValue: "")
+        self._author = State(wrappedValue: "")
+        self._pages = State(wrappedValue: "")
+    }
+    
+    init(for cachedBook: Binding<CachedBook>) {
+        self._cachedBook = Binding(projectedValue: cachedBook)
+        
+        self._title = State(wrappedValue: cachedBook.title.wrappedValue)
+        self._author = State(wrappedValue: cachedBook.author.wrappedValue)
+        self._pages = State(wrappedValue: cachedBook.numberOfPages.wrappedValue)
+        self._uiImage = State(wrappedValue: UIImage(data: cachedBook.photo.wrappedValue))
+    }
     
     var saveImpossible: Bool {
         Int(pages) == nil || title.isEmpty || author.isEmpty
@@ -38,17 +57,19 @@ struct NewBookSheet: View {
                             ZStack {
                                 if let uiImage {
                                     BookPhotoCell(for: uiImage, width: 100)
-                                } else {
-                                    Rectangle()
-                                        .fill(.ultraThinMaterial)
-                                        .opacity(0.8)
-                                    
-                                    PhotosPicker(selection: $photoSelection) {
-                                        Image(systemName: "photo.on.rectangle")
-                                            .font(.title)
-                                            .foregroundColor(.primary)
-                                    }
                                 }
+                                
+                                Rectangle()
+                                    .fill(.ultraThinMaterial)
+                                    .opacity(0.3)
+                                
+                                PhotosPicker(selection: $photoSelection) {
+                                    Image(systemName: "photo.on.rectangle")
+                                        .font(.title)
+                                        .foregroundColor(.primary)
+                                }
+                                
+                            
                             }
                             .aspectRatio(3/5, contentMode: .fill)
                             .frame(width: 100)
@@ -134,6 +155,13 @@ struct NewBookSheet: View {
                 }
             }
             
+            .onChange(of: cachedBook, perform: { _ in
+                title = cachedBook.title
+                author = cachedBook.author
+                pages = cachedBook.numberOfPages
+                uiImage = UIImage(data: cachedBook.photo)
+            })
+            
             .onChange(of: startedReadingDate) { newValue in
                 finishedReadingDate = newValue + 604_800
             }
@@ -156,11 +184,5 @@ struct NewBookSheet: View {
         
         try? moc.save()
         dismiss()
-    }
-}
-
-struct NewBookSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        NewBookSheet()
     }
 }
