@@ -19,6 +19,8 @@ struct ContentView: View {
                 .tabBarItem(tab: .library, selection: $mainVM.tabSelection)
             TrendsView()
                 .tabBarItem(tab: .trends, selection: $mainVM.tabSelection)
+            ReadView()
+                .tabBarItem(tab: .read, selection: $mainVM.tabSelection)
         }
         .environmentObject(mainVM)
         .tint(.ruAccentColor)

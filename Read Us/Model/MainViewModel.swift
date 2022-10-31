@@ -9,7 +9,7 @@ import CoreData
 import SwiftUI
 
 class MainViewModel: ObservableObject {
-    @Published var tabSelection: TabBarItem = .trends
+    @Published var tabSelection: TabBarItem = .readingNow
     
     func getCurrentPage(for book: Book) -> Int {
         Int(book.safeEntries.sorted { $0.safeDateAdded > $1.safeDateAdded }.first?.currentPage ?? 0)
