@@ -19,16 +19,7 @@ struct TrendsView: View {
                     trendsTypePickers
                     
                     if trendsDataType == .pages {
-                        VStack(spacing: 0) {
-                            Rectangle()
-                                .fill(.ultraThinMaterial)
-                                .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                                .frame(height: 30)
-                                .frame(maxWidth: .infinity)
-                                .background(.background)
-                                .padding(.top, -30)
-                            
-                            
+                        BookieSection(.background) {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("Last 7 Days")
@@ -38,20 +29,11 @@ struct TrendsView: View {
                                 }
                                 
                                 BookChart(for: .week, show: $trendsDataType, withDailyGoal: $withDailyGoal)
+                                    .frame(minHeight: 250)
                             }
-                            .padding()
-                            .background(.background)
                         }
                         
-                        VStack(spacing: 0) {
-                            Rectangle()
-                                .fill(.background)
-                                .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                                .frame(height: 30)
-                                .frame(maxWidth: .infinity)
-                                .background(.ultraThinMaterial)
-                                .padding(.top, -30)
-                            
+                        BookieSection(.ultraThinMaterial) {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("This Month")
@@ -61,21 +43,12 @@ struct TrendsView: View {
                                 }
                                 
                                 BookChart(for: .month, show: $trendsDataType, withDailyGoal: $withDailyGoal)
+                                    .frame(minHeight: 250)
                             }
-                            .padding()
                         }
-                        
                     }
                     
-                    VStack(spacing: 0) {
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                            .frame(height: 30)
-                            .frame(maxWidth: .infinity)
-                            .background(.background)
-                            .padding(.top, -30)
-                            
+                    BookieSection(.background) {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("This Year")
@@ -85,20 +58,11 @@ struct TrendsView: View {
                             }
                             
                             BookChart(for: .year, show: $trendsDataType, withDailyGoal: .constant(false))
+                                .frame(minHeight: 250)
                         }
-                        .padding()
-                        .background(.background)
                     }
                     
-                    VStack(spacing: 0) {
-                        Rectangle()
-                            .fill(.background)
-                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                            .frame(height: 30)
-                            .frame(maxWidth: .infinity)
-                            .background(.ultraThinMaterial)
-                            .padding(.top, -30)
-                        
+                    BookieSection(.ultraThinMaterial) {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("All")
@@ -109,18 +73,9 @@ struct TrendsView: View {
                             
                             BookChart(for: .all, show: $trendsDataType, withDailyGoal: .constant(false))
                         }
-                        .padding()
                     }
                     
-                    VStack(spacing: 0) {
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                            .frame(height: 30)
-                            .frame(maxWidth: .infinity)
-                            .background(.background)
-                            .padding(.top, -30)
-                    }
+                    BookieSection(.background) { }
                 }
                 .padding(.bottom, 75)
             }
@@ -138,18 +93,16 @@ struct TrendsView: View {
     }
     
     private var trendsTypePickers: some View {
-        HStack {
-            
-            Picker("Choose Type of Data", selection: $trendsDataType.animation(.easeInOut)) {
-                ForEach(TrendsDataType.allCases, id: \.self) { dataType in
-                    Text(dataType.rawValue)
-                        .tag(dataType)
-                }
+        Picker("Choose Type of Data", selection: $trendsDataType.animation(.easeInOut)) {
+            ForEach(TrendsDataType.allCases, id: \.self) { dataType in
+                Text(dataType.rawValue)
+                    .tag(dataType)
             }
-            .pickerStyle(.segmented)
-            .frame(maxWidth: 210)
-            .padding(.horizontal)
-            .padding(.bottom, 30)
         }
+        .pickerStyle(.segmented)
+        .frame(maxWidth: 210)
+        .padding(.horizontal)
+        .padding(.bottom, 30)
+        .padding(.top, 10)
     }
 }

@@ -32,7 +32,7 @@ struct BookChart: View {
             )
             
             _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
+                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
                 predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)
             )
         case .month:
@@ -42,7 +42,7 @@ struct BookChart: View {
             )
             
             _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
+                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
                 predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (2_629_746) as CVarArg, Date.now as CVarArg)
             )
         case .year:
@@ -52,23 +52,38 @@ struct BookChart: View {
             )
             
             _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
+                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
                 predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (31_556_952)  as CVarArg, Date.now as CVarArg)
             )
         case .all:
             _entries = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
-                predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
+                sortDescriptors: [SortDescriptor(\.dateAdded, order: .forward)]
             )
             
             _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
-                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
+                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .forward)]
             )
         }
     }
     
+    var startingYear: Int {
+        Date.now.year
+    }
+    
     @AppStorage("dailyGoal") var dailyGoal = 20
+    
+    var chartUnit: Calendar.Component {
+        switch period {
+        case .week:
+            return .day
+        case .month:
+            return .day
+        case .year:
+            return .month
+        case .all:
+            return .year
+        }
+    }
     
     var body: some View {
         Chart {
@@ -84,54 +99,63 @@ struct BookChart: View {
                     .opacity(0.7)
             }
             
-            ForEach(skeleton) { entry in
-                if period != .all {
+            if period != .all {
+                ForEach(skeleton) { entry in
                     BarMark(
-                        x: .value("Date", entry.date, unit: period == .week || period == .month ? .day : (period == .year ? .month : .year)),
-                        y: .value("Pages Read", entry.value)
-                    )
-                    .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
-                } else {
-                    BarMark(
-                        x: .value("Pages Read", entry.value),
-                        y: .value("Date", entry.date, unit: period == .week || period == .month ? .day : (period == .year ? .month : .year))
+                        x: .value("Date", entry.date, unit: chartUnit),
+                        y: .value("Pages Read", entry.value),
+                        width: .ratio(0.8)
                     )
                     .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
                 }
+            } else {
+                ForEach(skeleton) { entry in
+                    BarMark(
+                        x: .value("Pages Read", entry.value),
+                        y: .value("Date", entry.date, unit: chartUnit)
+                    )
+                    .foregroundStyle(LinearGradient(colors: [.orange, .ruAccentColor], startPoint: .topTrailing, endPoint: .bottomLeading))
+                    .annotation(position: .trailing, alignment: .trailing, spacing: 5) {
+                        Text("\(entry.value)")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
-        
-            
         }
-        .frame(minHeight: 250)
+        .frame(minHeight: 80)
+        .padding(.bottom, 30)
+        
         .onAppear {
             switch dataType {
             case .pages:
                 if entries.isEmpty {
-                    skeleton = model.buildSkeleton(with: entries, startingYear: Date.now.year)
+                    skeleton = model.buildSkeleton(with: entries, startingYear: startingYear)
                 } else {
                     skeleton = model.buildSkeleton(with: entries, startingYear: entries.first!.safeDateAdded.year)
                 }
             case .bookCount:
                 if books.isEmpty {
-                    skeleton = model.buildSkeleton(with: books, startingYear: Date.now.year)
+                    skeleton = model.buildSkeleton(with: books, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: books, startingYear: entries.first!.safeDateAdded.year)
+                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.safeFinishedReadingOn.year)
                 }
             }
         }
+        
         .onChange(of: dataType) { _ in
             switch dataType {
             case .pages:
                 if entries.isEmpty {
-                    skeleton = model.buildSkeleton(with: entries, startingYear: Date.now.year)
+                    skeleton = model.buildSkeleton(with: entries, startingYear: startingYear)
                 } else {
                     skeleton = model.buildSkeleton(with: entries, startingYear: entries.first!.safeDateAdded.year)
                 }
             case .bookCount:
                 if books.isEmpty {
-                    skeleton = model.buildSkeleton(with: books, startingYear: Date.now.year)
+                    skeleton = model.buildSkeleton(with: books, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: books, startingYear: entries.first!.safeDateAdded.year)
+                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.safeFinishedReadingOn.year)
                 }
             }
         }

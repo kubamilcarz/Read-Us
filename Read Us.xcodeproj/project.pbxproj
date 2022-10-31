@@ -65,6 +65,7 @@
 		C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */; };
 		C8ECAF9B290FFAD3002011EF /* ReadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9A290FFAD3002011EF /* ReadView.swift */; };
 		C8ECAF9E290FFB6C002011EF /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */; };
+		C8ECAFA0290FFD0A002011EF /* BookieSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9F290FFD0A002011EF /* BookieSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +130,7 @@
 		C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircularProgressView.swift; sourceTree = "<group>"; };
 		C8ECAF9A290FFAD3002011EF /* ReadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadView.swift; sourceTree = "<group>"; };
 		C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
+		C8ECAF9F290FFD0A002011EF /* BookieSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookieSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +262,7 @@
 				C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */,
 				C86CEDF028F6078400C5EB9A /* BookCenteredGrid.swift */,
 				C8AD2551290AA65F00C0B8A1 /* BookChart.swift */,
+				C8ECAF9F290FFD0A002011EF /* BookieSection.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				C8408B8C28EDA1EC009D45A3 /* ReadingHistorySheet.swift in Sources */,
 				C8408B7028EC8B27009D45A3 /* Book+CoreDataClass.swift in Sources */,
 				C86CEDEF28F602FE00C5EB9A /* ReadThisYearSection.swift in Sources */,
+				C8ECAFA0290FFD0A002011EF /* BookieSection.swift in Sources */,
 				C898CE2928E09E960038AAA3 /* Read_UsApp.swift in Sources */,
 				C86CEDEB28F5F95800C5EB9A /* BookGrid.swift in Sources */,
 				C8408B6E28EC8B27009D45A3 /* Quote+CoreDataClass.swift in Sources */,

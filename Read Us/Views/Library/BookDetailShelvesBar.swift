@@ -26,13 +26,13 @@ struct BookDetailShelvesBar: View {
                 HStack(spacing: 10) {
                     ForEach(shelves) { shelf in
                         Text(shelf.safeTitle)
-                            .font(.subheadline)
+                            .font(.caption)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 8)
                             .foregroundStyle(book.safeShelves.contains(shelf) ? Color.ruAccentColor : .secondary)
-                            .background(.secondary.opacity(0.3), in: RoundedRectangle(cornerRadius: 9))
+                            .background(.secondary.opacity(0.3), in: Capsule())
                             .overlay(book.safeShelves.contains(shelf) ?
-                                     RoundedRectangle(cornerRadius: 9).stroke(Color.ruAccentColor, lineWidth: 1).padding(1)
+                                     Capsule().stroke(Color.ruAccentColor, lineWidth: 1).padding(1)
                                      : nil)
                         
                             .onTapGesture {

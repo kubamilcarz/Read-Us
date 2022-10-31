@@ -47,7 +47,7 @@ class BookChartModel {
         case .year:
             skeleton = self.makeChartables(itemCount: 12)
         case .all:
-            skeleton = self.makeChartables(itemCount: Date.now.year - startingYear == 0 ? 1 : Date.now.year - startingYear > 0 ? Date.now.year - startingYear : 1, startingYear: startingYear)
+            skeleton = self.makeChartables(itemCount: Date.now.year - startingYear == 0 ? 1 : Date.now.year - startingYear > 0 ? Date.now.year - startingYear + 1 : 1, startingYear: startingYear)
         }
         
         return skeleton
