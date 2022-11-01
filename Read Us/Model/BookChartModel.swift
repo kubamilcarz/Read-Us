@@ -135,7 +135,7 @@ class BookChartModel {
             result = []
         case .month:
             for book in books {
-                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished ?? Date.now
+                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first?.date_finished ?? Date.now
                 
                 if let index = result.firstIndex(where: { $0.date == latestReadDate.midnight }) {
                     result[index].value += 1
@@ -143,7 +143,7 @@ class BookChartModel {
             }
         case .year:
             for book in books {
-                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished ?? Date.now
+                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first?.date_finished ?? Date.now
                 
                 if let index = result.firstIndex(where: { $0.date == latestReadDate.startOfYear() }) {
                     result[index].value += 1
@@ -151,7 +151,7 @@ class BookChartModel {
             }
         case .all:
             for book in books {
-                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished ?? Date.now
+                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first?.date_finished ?? Date.now
                 
                 if let index = result.firstIndex(where: { $0.date == latestReadDate.startOfYear() }) {
                     result[index].value += 1

@@ -63,9 +63,15 @@ struct BookDetailNotesView: View {
                 ForEach(notes) { note in
                     HStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: 3) {
-                            Text(note.date_added.formatted())
-                                .foregroundColor(.secondary)
-                                .font(.caption)
+                            HStack {
+                                Text(note.date_added.formatted())
+                                    .foregroundColor(.secondary)
+                                    .font(.caption)
+                                
+                                Text("p. \(note.page_number)")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
                             
                             Group {
                                 if editingNote == note {

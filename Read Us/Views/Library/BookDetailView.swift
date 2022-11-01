@@ -194,7 +194,7 @@ struct BookDetailView: View {
                     book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     if book.isRead && !book.isReading {
-                        let latestRead = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first
+                        let latestRead = mainVM.getLatestBookReading(for: book)
                         
                         latestRead?.dateStarted = startDate
                         latestRead?.dateFinished = finishDate

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StarRatingCell: View {
+    @EnvironmentObject var mainVM: MainViewModel
     @Environment(\.managedObjectContext) var moc
     
     var book: Book
@@ -16,7 +17,7 @@ struct StarRatingCell: View {
     init(for book: Book) {
         self.book = book
         
-        let bookReadings = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished })
+        let bookReadings = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished })
         
         self._rating = State(wrappedValue: bookReadings.first?.rating_int ?? 0)
     }
@@ -27,7 +28,11 @@ struct StarRatingCell: View {
                 Image(systemName: "star\(star <= rating ? ".fill" : "")")
                     .imageScale(.small)
                     .onTapGesture {
-                        changeRating(to: star)
+                        if star == rating {
+                            changeRating(to: 0)
+                        } else {
+                            changeRating(to: star)
+                        }
                     }
             }
         }
@@ -48,7 +53,7 @@ struct StarRatingCell: View {
             book.addToBookReadings(newReading)
         } else {
             // get the latest, and change it
-            book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.rating = Int64(newRating)
+            mainVM.getLatestBookReading(for: book)?.rating = Int64(newRating)
         }
         
         try? moc.save()

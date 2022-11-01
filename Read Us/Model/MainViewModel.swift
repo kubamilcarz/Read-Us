@@ -11,6 +11,14 @@ import SwiftUI
 class MainViewModel: ObservableObject {
     @Published var tabSelection: TabBarItem = .readingNow
     
+    func getLatestBookReading(for book: Book) -> BookReading? {
+        book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first
+    }
+    
+    func getCurrentBookReading(for book: Book) -> BookReading? {
+        book.bookReadingsArray.first(where: { $0.isReading && $0.dateFinished == nil && !$0.countToStats })
+    }
+    
     func getCurrentPage(for book: Book) -> Int {
         Int(book.bookUpdatesArray.sorted { $0.date_added > $1.date_added }.first?.currentPage ?? 0)
     }
@@ -38,6 +46,19 @@ class MainViewModel: ObservableObject {
         try? moc.save()
     }
     
+    func startNewRead(moc: NSManagedObjectContext, for book: Book) {
+        resetProgress(moc: moc, for: book)
+        
+        let newReading = BookReading(context: moc)
+        newReading.id = UUID()
+        newReading.book = book
+        newReading.dateStarted = Date.now
+        newReading.isReading = true
+        newReading.countToStats = false
+        
+        try? moc.save()
+    }
+    
     func resetProgress(moc: NSManagedObjectContext, for book: Book) {
         for update in book.bookUpdatesArray.filter( { $0.isVisible } ) {
             update.isVisible = false
@@ -60,6 +81,12 @@ class MainViewModel: ObservableObject {
     
     func finish(moc: NSManagedObjectContext, book: Book) {
         resetProgress(moc: moc, for: book)
+        
+        let latestRead = getCurrentBookReading(for: book)!
+        latestRead.isReading = false
+        latestRead.dateFinished = Date.now
+        latestRead.countToStats = true
+        
         book.isRead = true
         book.isReading = false
         
