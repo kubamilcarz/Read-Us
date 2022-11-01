@@ -18,6 +18,12 @@ struct UpdateBookProgressSheet: View {
     @State private var numberOfPagesToAdd = ""
     @State private var numberOfPagesToAddInt: Double = 0
     @State private var note = ""
+    @State private var isFinished = false
+    
+    @State private var startedDate = Date.now
+    @State private var finishedDate = Date.now
+    @State private var review = ""
+    @State private var rating = 0
     
     var updateDisabled: Bool {
         Int(numberOfPagesToAddInt) == mainVM.getCurrentPage(for: book) || Int(numberOfPagesToAddInt) > book.number_of_pages || numberOfPagesToAddInt < 0
@@ -27,35 +33,95 @@ struct UpdateBookProgressSheet: View {
         NavigationView {
             VStack(alignment: .leading) {
                 ScrollView(.vertical) {
-                    Group {
-                        updateProgressForm
-                        
-                        ZStack(alignment: .topLeading) {
-                            TextEditor(text: $note)
-                                .frame(minHeight: 120, maxHeight: 160)
-                                .padding(5)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(lineWidth: 1)
-                                        .foregroundColor(.secondary)
-                                        .opacity(0.7)
-                                        .zIndex(6)
-                                )
-                                .padding(2)
+                    if isFinished == false {
+                        Group {
+                            updateProgressForm
                             
-                            if note.count == 0 {
-                                Text("Add a note")
-                                    .foregroundStyle(.secondary)
-                                    .allowsHitTesting(false)
-                                    .offset(x: 11, y: 14)
+                            ZStack(alignment: .topLeading) {
+                                TextEditor(text: $note)
+                                    .frame(minHeight: 120, maxHeight: 160)
+                                    .padding(5)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(lineWidth: 1)
+                                            .foregroundColor(.secondary)
+                                            .opacity(0.7)
+                                            .zIndex(6)
+                                    )
+                                    .padding(2)
+                                
+                                if note.count == 0 {
+                                    Text("Add a note")
+                                        .foregroundStyle(.secondary)
+                                        .allowsHitTesting(false)
+                                        .offset(x: 11, y: 14)
+                                }
                             }
                         }
+                        .background(.background)
+                        .transition(.push(from: isFinished ? SwiftUI.Edge.leading : SwiftUI.Edge.trailing))
+                    } else {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("Reading Dates")
+                                
+                                Spacer()
+                                
+                                DatePicker("Started on", selection: $startedDate, in: ...finishedDate, displayedComponents: .date)
+                                    .labelsHidden()
+                                
+                                Text(" - ")
+                                    .foregroundColor(.secondary)
+                                
+                                DatePicker("Finished on", selection: $finishedDate, in: startedDate..., displayedComponents: .date)
+                                    .labelsHidden()
+                            }
+                            
+                            HStack {
+                                Text("Rating")
+                                
+                                Spacer()
+                                
+                                StarRatingCell(for: $rating)
+                            }
+                            .padding(.vertical)
+                            
+                            ZStack(alignment: .topLeading) {
+                                TextEditor(text: $review)
+                                    .frame(minHeight: 120, maxHeight: 160)
+                                    .padding(5)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .stroke(lineWidth: 1)
+                                            .foregroundColor(.secondary)
+                                            .opacity(0.7)
+                                            .zIndex(6)
+                                    )
+                                    .padding(2)
+                                
+                                if review.count == 0 {
+                                    Text("Write a review")
+                                        .foregroundStyle(.secondary)
+                                        .allowsHitTesting(false)
+                                        .offset(x: 11, y: 14)
+                                }
+                            }
+                        }
+                        .background(.background)
+                        .transition(.push(from: isFinished ? SwiftUI.Edge.leading : SwiftUI.Edge.trailing))
                     }
                 }
                 .padding()
                 
                 HStack(spacing: 15) {
-                    Button(action: finishBook) {
+                    Button {
+                        if isFinished {
+                            finishBook()
+                        } else {
+                            withAnimation { isFinished = true }
+                        }
+                        
+                    } label: {
                         Text("Finish")
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 7)
@@ -63,19 +129,21 @@ struct UpdateBookProgressSheet: View {
                     }
                     .buttonStyle(.bordered)
                     
-                    Button(action: updateProgress) {
-                        Text("Update")
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 7)
+                    if !isFinished {
+                        Button(action: updateProgress) {
+                            Text("Update")
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 7)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(updateDisabled)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(updateDisabled)
                 }
                 .controlSize(.small)
                 .tint(.ruAccentColor)
                 .padding([.horizontal, .bottom])
             }
-            .navigationTitle("Update Progress")
+            .navigationTitle(isFinished ? "Book Finished" : "Update Progress")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button {
@@ -86,6 +154,17 @@ struct UpdateBookProgressSheet: View {
                         .clipShape(Circle())
                 }
                 .tint(.secondary)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if isFinished {
+                        Button {
+                            withAnimation { isFinished = false }
+                        } label: {
+                            Label("Go Back", systemImage: "arrow.left")
+                        }
+                    }
+                }
             }
         }
         .onAppear {
@@ -145,8 +224,15 @@ struct UpdateBookProgressSheet: View {
     
     private func finishBook() {
         withAnimation {
+            let currentRead = mainVM.getCurrentBookReading(for: book)
+            currentRead?.review = review
+            currentRead?.rating = Int64(rating)
+            currentRead?.dateStarted = startedDate
+            currentRead?.dateFinished = finishedDate
+            
             mainVM.finish(moc: moc, book: book)
-            dismiss()
         }
+        
+        dismiss()
     }
 }

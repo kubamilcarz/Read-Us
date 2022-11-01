@@ -82,10 +82,12 @@ class MainViewModel: ObservableObject {
     func finish(moc: NSManagedObjectContext, book: Book) {
         resetProgress(moc: moc, for: book)
         
-        let latestRead = getCurrentBookReading(for: book)!
-        latestRead.isReading = false
-        latestRead.dateFinished = Date.now
-        latestRead.countToStats = true
+        let currentRead = getCurrentBookReading(for: book)
+        currentRead?.isReading = false
+        if currentRead?.dateFinished == nil {
+            currentRead?.dateFinished = Date.now
+        }
+        currentRead?.countToStats = true
         
         book.isRead = true
         book.isReading = false
