@@ -10,21 +10,19 @@ import SwiftUI
 
 struct ReadThisYearSection: View {
     @FetchRequest<Book>(sortDescriptors: [
-        SortDescriptor(\.finishedReadingOn, order: .reverse),
         SortDescriptor(\.title)
     ], predicate: NSPredicate(format: "isRead == true")) var books: FetchedResults<Book>
     
     @State private var year: Int
     
     var filteredBooks: [Book] {
-        books.filter { $0.safeFinishedReadingOn.year == year }
+        books.filter { $0.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished.year == year }
     }
     
     init(for year: Int) {
         self._year = State(wrappedValue: year)
         
         _books = FetchRequest<Book>(sortDescriptors: [
-            SortDescriptor(\.finishedReadingOn, order: .reverse),
             SortDescriptor(\.title)
         ], predicate: NSPredicate(format: "isRead == true"))
     }
@@ -86,7 +84,7 @@ struct ReadThisYearSection: View {
     }
     
     private func bookCell(book: Book) -> some View {
-        BookPhotoCell(for: book.photo, minWidth: 50)
+        BookPhotoCell(for: book.cover, minWidth: 50)
     }
     
     private var sectionTitle: some View {

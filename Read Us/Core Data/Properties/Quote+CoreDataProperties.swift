@@ -2,7 +2,7 @@
 //  Quote+CoreDataProperties.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 10/4/22.
+//  Created by Kuba Milcarz on 11/1/22.
 //
 //
 
@@ -19,13 +19,14 @@ extension Quote {
     @NSManaged public var content: String?
     @NSManaged public var dateAdded: Date?
     @NSManaged public var id: UUID?
-    @NSManaged public var pageNumber: Int16
+    @NSManaged public var pageNumber: Int64
     @NSManaged public var book: Book?
-    
-    public var safeContent: String { content ?? "Untitled" }
-    public var safeDateAdded: Date { dateAdded ?? Date.now }
-    public var safePageNumber: Int { Int(pageNumber) }
+    @NSManaged public var session: Session?
 
+    public var content_string: String { content ?? "" }
+    public var date_added: Date { dateAdded ?? Date.now }
+    public var page_number: Int { Int(pageNumber) }
+    
 }
 
 extension Quote : Identifiable {

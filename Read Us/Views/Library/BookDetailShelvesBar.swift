@@ -25,19 +25,19 @@ struct BookDetailShelvesBar: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     ForEach(shelves) { shelf in
-                        Text(shelf.safeTitle)
+                        Text(shelf.title_string)
                             .font(.caption)
                             .padding(.vertical, 5)
                             .padding(.horizontal, 8)
-                            .foregroundStyle(book.safeShelves.contains(shelf) ? Color.ruAccentColor : .secondary)
+                            .foregroundStyle(book.shelvesArray.contains(shelf) ? Color.ruAccentColor : .secondary)
                             .background(.secondary.opacity(0.3), in: Capsule())
-                            .overlay(book.safeShelves.contains(shelf) ?
+                            .overlay(book.shelvesArray.contains(shelf) ?
                                      Capsule().stroke(Color.ruAccentColor, lineWidth: 1).padding(1)
                                      : nil)
                         
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 0.3)) {
-                                    if book.safeShelves.contains(shelf) {
+                                    if book.shelvesArray.contains(shelf) {
                                         // remove
                                         book.removeFromShelves(shelf)
                                     } else {

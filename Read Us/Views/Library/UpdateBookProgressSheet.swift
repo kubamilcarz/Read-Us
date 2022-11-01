@@ -20,7 +20,7 @@ struct UpdateBookProgressSheet: View {
     @State private var note = ""
     
     var updateDisabled: Bool {
-        Int(numberOfPagesToAddInt) == mainVM.getCurrentPage(for: book) || Int(numberOfPagesToAddInt) > book.safeNumberOfPages || numberOfPagesToAddInt < 0
+        Int(numberOfPagesToAddInt) == mainVM.getCurrentPage(for: book) || Int(numberOfPagesToAddInt) > book.number_of_pages || numberOfPagesToAddInt < 0
     }
     
     var body: some View {
@@ -102,7 +102,7 @@ struct UpdateBookProgressSheet: View {
     
     private var updateProgressForm: some View {
         VStack(spacing: 15) {
-            Slider(value: $numberOfPagesToAddInt, in: 0 ... Double(book.safeNumberOfPages), step: 1) { _ in
+            Slider(value: $numberOfPagesToAddInt, in: 0 ... Double(book.number_of_pages), step: 1) { _ in
                 withAnimation {
                     numberOfPagesToAdd = String(Int(numberOfPagesToAddInt))
                 }
@@ -126,7 +126,7 @@ struct UpdateBookProgressSheet: View {
     private func updateProgress() {
         withAnimation {
             if let pages = Int(numberOfPagesToAdd) {
-                if pages >= book.safeNumberOfPages {
+                if pages >= book.number_of_pages {
                     // book should be marked as read
                     mainVM.finish(moc: moc, book: book)
                 } else if pages <= 0 {

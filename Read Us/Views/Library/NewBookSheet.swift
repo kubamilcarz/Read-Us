@@ -173,14 +173,21 @@ struct NewBookSheet: View {
         newBook.id = UUID()
         newBook.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         newBook.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
-        newBook.numberOfPages = Int16(Int(pages.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0)
-        newBook.notes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
-        newBook.startedReadingOn = startedReadingDate
-        newBook.isRead = didFinish
-        newBook.finishedReadingOn = finishedReadingDate
-        newBook.photo = uiImage?.jpegData(compressionQuality: 1.0) ?? Data()
+        newBook.numberOfPages = Int64(Int(pages.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0)
         
-        newBook.tags = tags.lowercased().components(separatedBy: ", ").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        let newBookReading = BookReading(context: moc)
+            newBookReading.id = UUID()
+            newBookReading.isReading = !didFinish
+            newBookReading.countToStats = true
+            newBookReading.dateStarted = startedReadingDate
+            newBookReading.dateFinished = finishedReadingDate
+        newBookReading.book = newBook
+        
+        newBook.isRead = didFinish
+        newBook.isReading = !didFinish
+        newBook.cover = uiImage?.jpegData(compressionQuality: 1.0) ?? Data()
+        
+        // TODO: Add Tags
         
         try? moc.save()
         dismiss()

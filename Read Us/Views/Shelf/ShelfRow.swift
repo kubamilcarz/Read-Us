@@ -14,16 +14,16 @@ struct ShelfRow: View {
         HStack(spacing: 15) {
             if let shelf {
                 VStack {
-                    Image(systemName: shelf.safeIcon)
+                    Image(systemName: shelf.icon_string)
                         .font(.title)
                         .foregroundColor(.secondary)
                 }
                 .frame(maxWidth: 44)
                 
                 VStack(alignment: .leading) {
-                    Text(shelf.safeTitle)
+                    Text(shelf.title_string)
                         .font(.system(.headline, design: .serif))
-                    Text("\(shelf.safeBooks.count) book(s)")
+                    Text("\(shelf.booksArray.count) book(s)")
                         .foregroundColor(.secondary)
                         .font(.footnote)
                 }

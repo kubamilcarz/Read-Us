@@ -19,7 +19,7 @@ struct ShelfDetailView: View {
     
     
     var filteredBooks: [Book] {
-        books.filter { $0.safeShelves.contains(shelf) }
+        books.filter { $0.shelvesArray.contains(shelf) }
     }
     
     @State private var isEditModeOn = false
@@ -73,20 +73,20 @@ struct ShelfDetailView: View {
                             }
                         }
                     } else {
-                        Image(systemName: shelf.safeIcon)
+                        Image(systemName: shelf.icon_string)
                             .font(.system(size: 60).bold())
                             .foregroundColor(.secondary)
                     }
                     
                     VStack(alignment: .center, spacing: 5) {
                         if isEditModeOn {
-                            TextField(shelf.safeTitle, text: $title)
+                            TextField(shelf.title_string, text: $title)
                                 .font(.system(.title, design: .serif))
                                 .frame(maxWidth: 240)
                                 .multilineTextAlignment(.center)
                                 .textFieldStyle(.roundedBorder)
                             
-                            TextField(shelf.safeSubtitle, text: $subtitle, axis: .vertical)
+                            TextField(shelf.subtitle_string, text: $subtitle, axis: .vertical)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: 170)
@@ -94,12 +94,12 @@ struct ShelfDetailView: View {
                                 .multilineTextAlignment(.center)
                                 .textFieldStyle(.roundedBorder)
                         } else {
-                            Text(shelf.safeTitle)
+                            Text(shelf.title_string)
                                 .font(.system(.title, design: .serif))
                                 .multilineTextAlignment(.center)
                             
-                            if shelf.safeSubtitle.isEmpty == false {
-                                Text(shelf.safeSubtitle)
+                            if shelf.subtitle_string.isEmpty == false {
+                                Text(shelf.subtitle_string)
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: 170)
@@ -131,7 +131,7 @@ struct ShelfDetailView: View {
             .padding(.horizontal)
             .padding(.bottom, 75)
         }
-        .navigationTitle(shelf.safeTitle)
+        .navigationTitle(shelf.title_string)
         .navigationBarTitleDisplayMode(.inline)
         
         .sheet(isPresented: $isShowingLibraryChoser) {
@@ -148,9 +148,9 @@ struct ShelfDetailView: View {
         }
         
         .onAppear {
-            title = shelf.safeTitle
-            subtitle = shelf.safeSubtitle
-            icon = shelf.safeIcon
+            title = shelf.title_string
+            subtitle = shelf.subtitle_string
+            icon = shelf.icon_string
         }
         
         .onChange(of: isEditModeOn) { _ in

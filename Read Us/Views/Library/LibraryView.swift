@@ -26,7 +26,7 @@ struct LibraryView: View {
             return books.compactMap { $0 }
         }
         
-        return books.filter { $0.safeTitle.lowercased().contains(query.lowercased()) || $0.safeAuthor.lowercased().contains(query.lowercased()) }
+        return books.filter { $0.title_string.lowercased().contains(query.lowercased()) || $0.author_string.lowercased().contains(query.lowercased()) }
     }
     
     var body: some View {
@@ -118,12 +118,12 @@ struct LibraryView: View {
     
     private func bookCell(book: Book) -> some View {
         HStack(alignment: .top) {
-            BookPhotoCell(for: book.photo, width: 70)
+            BookPhotoCell(for: book.cover, width: 70)
             
             VStack(alignment: .leading, spacing: 3) {
-                Text(book.safeTitle)
+                Text(book.title_string)
                     .font(.system(.headline, design: .serif))
-                Text(book.safeAuthor)
+                Text(book.author_string)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }

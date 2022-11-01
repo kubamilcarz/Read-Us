@@ -15,7 +15,7 @@ struct BookChart: View {
     @Binding var withDailyGoal: Bool
     private var model: BookChartModel
     
-    @FetchRequest<Entry> private var entries: FetchedResults<Entry>
+    @FetchRequest<BookUpdate> private var bookUpdates: FetchedResults<BookUpdate>
     @FetchRequest<Book> private var books: FetchedResults<Book>
     
     init(for period: ChartPeriod, show dataType: Binding<TrendsDataType>, withDailyGoal: Binding<Bool>) {
@@ -26,44 +26,46 @@ struct BookChart: View {
         
         switch period {
         case .week:
-            _entries = FetchRequest(
+            _bookUpdates = FetchRequest(
                 sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)
             )
             
-            _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
-                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)
-            )
+//            _books = FetchRequest(
+//                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
+//                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)
+//            )
         case .month:
-            _entries = FetchRequest(
+            _bookUpdates = FetchRequest(
                 sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (2_629_746) as CVarArg, Date.now as CVarArg)
             )
             
-            _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
-                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (2_629_746) as CVarArg, Date.now as CVarArg)
-            )
+//            _books = FetchRequest(
+//                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
+//                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (2_629_746) as CVarArg, Date.now as CVarArg)
+//            )
         case .year:
-            _entries = FetchRequest(
+            _bookUpdates = FetchRequest(
                 sortDescriptors: [SortDescriptor(\.dateAdded, order: .reverse)],
                 predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (31_556_952) as CVarArg, Date.now as CVarArg)
             )
             
-            _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
-                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (31_556_952)  as CVarArg, Date.now as CVarArg)
-            )
+//            _books = FetchRequest(
+//                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .reverse)],
+//                predicate: NSPredicate(format: "(finishedReadingOn >= %@) AND (finishedReadingOn < %@)", Date.now.midnight - (31_556_952)  as CVarArg, Date.now as CVarArg)
+//            )
         case .all:
-            _entries = FetchRequest(
+            _bookUpdates = FetchRequest(
                 sortDescriptors: [SortDescriptor(\.dateAdded, order: .forward)]
             )
             
-            _books = FetchRequest(
-                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .forward)]
-            )
+//            _books = FetchRequest(
+//                sortDescriptors: [SortDescriptor(\.finishedReadingOn, order: .forward)]
+//            )
         }
+        
+        _books = FetchRequest(sortDescriptors: [])
     }
     
     var startingYear: Int {
@@ -129,16 +131,16 @@ struct BookChart: View {
         .onAppear {
             switch dataType {
             case .pages:
-                if entries.isEmpty {
-                    skeleton = model.buildSkeleton(with: entries, startingYear: startingYear)
+                if bookUpdates.isEmpty {
+                    skeleton = model.buildSkeleton(with: bookUpdates, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: entries, startingYear: entries.first!.safeDateAdded.year)
+                    skeleton = model.buildSkeleton(with: bookUpdates, startingYear: bookUpdates.first!.date_added.year)
                 }
             case .bookCount:
                 if books.isEmpty {
                     skeleton = model.buildSkeleton(with: books, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.safeFinishedReadingOn.year)
+                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.bookReadingsArray.first?.date_finished.year ?? Date.now.year)
                 }
             }
         }
@@ -146,16 +148,16 @@ struct BookChart: View {
         .onChange(of: dataType) { _ in
             switch dataType {
             case .pages:
-                if entries.isEmpty {
-                    skeleton = model.buildSkeleton(with: entries, startingYear: startingYear)
+                if bookUpdates.isEmpty {
+                    skeleton = model.buildSkeleton(with: bookUpdates, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: entries, startingYear: entries.first!.safeDateAdded.year)
+                    skeleton = model.buildSkeleton(with: bookUpdates, startingYear: bookUpdates.first!.date_added.year)
                 }
             case .bookCount:
                 if books.isEmpty {
                     skeleton = model.buildSkeleton(with: books, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.safeFinishedReadingOn.year)
+                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.bookReadingsArray.first?.date_finished.year ?? Date.now.year)
                 }
             }
         }

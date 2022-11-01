@@ -36,8 +36,8 @@ struct BookDetailView: View {
     }
     
     // determine overlays
-    var stoppedReading: Bool { book.isReading == false && book.isRead == false && book.safeEntries.isEmpty == false }
-    var isNewBook: Bool { book.isReading == false && book.isRead == false && book.safeEntries.isEmpty }
+    var stoppedReading: Bool { book.isReading == false && book.isRead == false && book.bookUpdatesArray.isEmpty == false }
+    var isNewBook: Bool { book.isReading == false && book.isRead == false && book.bookUpdatesArray.isEmpty }
     
     var body: some View {
         ScrollView {
@@ -81,11 +81,11 @@ struct BookDetailView: View {
         }
         
         .onAppear {
-            title = book.safeTitle
-            author = book.safeAuthor
+            title = book.title_string
+            author = book.author_string
             
-            startDate = book.safeStartedReadingOn
-            finishDate = book.safeFinishedReadingOn
+            startDate = book.bookReadingsArray.first?.date_started ?? Date.now
+            finishDate = book.bookReadingsArray.first?.date_finished ?? Date.now
         }
         
         .onChange(of: photoSelection) { newValue in
@@ -94,7 +94,7 @@ struct BookDetailView: View {
                     uiImage = image
                     photo = Image(uiImage: image)
                     
-                    book.photo = uiImage?.jpegData(compressionQuality: 1.0) ?? Data()
+                    book.cover = uiImage?.jpegData(compressionQuality: 1.0) ?? Data()
                     
                     try? moc.save()
                     
@@ -111,7 +111,7 @@ struct BookDetailView: View {
     
     private var bookPhotoEditable: some View {
         ZStack {
-            BookPhotoCell(for: book.photo, width: 100)
+            BookPhotoCell(for: book.cover, width: 100)
             
             if isEditModeOn {
                 Rectangle()
@@ -139,17 +139,17 @@ struct BookDetailView: View {
         VStack(alignment: .leading, spacing: 3) {
             Group {
                 if isEditModeOn {
-                    TextField(book.safeTitle, text: $title)
+                    TextField(book.title_string, text: $title)
                         .textFieldStyle(.roundedBorder)
-                } else { Text(book.safeTitle) }
+                } else { Text(book.title_string) }
             }
             .font(.system(.title3, design: .serif)).bold()
             
             Group {
                 if isEditModeOn {
-                    TextField(book.safeAuthor, text: $author)
+                    TextField(book.author_string, text: $author)
                         .textFieldStyle(.roundedBorder)
-                } else { Text(book.safeAuthor) }
+                } else { Text(book.author_string) }
             }
             .font(.subheadline)
             .foregroundStyle(.secondary)
@@ -194,8 +194,13 @@ struct BookDetailView: View {
                     book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     if book.isRead && !book.isReading {
-                        book.startedReadingOn = startDate
-                        book.finishedReadingOn = finishDate
+                        let latestRead = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first
+                        
+                        latestRead?.dateStarted = startDate
+                        latestRead?.dateFinished = finishDate
+                        
+//                        book.startedReadingOn = startDate
+//                        book.finishedReadingOn = finishDate
                     }
                     try? moc.save()
                 }

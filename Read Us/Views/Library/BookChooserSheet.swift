@@ -40,7 +40,7 @@ struct BookChooserSheet: View {
             return filBooks
         }
         
-        return filBooks.filter { $0.safeTitle.lowercased().contains(query.lowercased()) || $0.safeAuthor.lowercased().contains(query.lowercased()) }
+        return filBooks.filter { $0.title_string.lowercased().contains(query.lowercased()) || $0.author_string.lowercased().contains(query.lowercased()) }
     }
     
     var body: some View {
@@ -62,17 +62,17 @@ struct BookChooserSheet: View {
     
     private func row(book: Book) -> some View {
         HStack(spacing: 15) {
-            Image(systemName: readingNow != nil ? (book.isReading ? "checkmark.circle.fill" : "circle") : shelf?.safeBooks.contains(book) ?? false ? "checkmark.circle.fill" : "circle")
-                .foregroundColor(readingNow != nil ? (book.isReading ? .ruAccentColor : .secondary) :  shelf?.safeBooks.contains(book) ?? false ? .ruAccentColor : .secondary)
+            Image(systemName: readingNow != nil ? (book.isReading ? "checkmark.circle.fill" : "circle") : shelf?.booksArray.contains(book) ?? false ? "checkmark.circle.fill" : "circle")
+                .foregroundColor(readingNow != nil ? (book.isReading ? .ruAccentColor : .secondary) :  shelf?.booksArray.contains(book) ?? false ? .ruAccentColor : .secondary)
                 .symbolRenderingMode(.hierarchical)
             
             VStack(alignment: .leading) {
-                Text(book.safeTitle)
+                Text(book.title_string)
                     .font(.system(.subheadline, design: .serif))
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
-                Text(book.safeAuthor)
+                Text(book.author_string)
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
@@ -84,7 +84,7 @@ struct BookChooserSheet: View {
         .padding(.vertical, 2)
         .onTapGesture {
             if let shelf {
-                if shelf.safeBooks.contains(book) {
+                if shelf.booksArray.contains(book) {
                     shelf.removeFromBooks(book)
                 } else {
                     shelf.addToBooks(book)

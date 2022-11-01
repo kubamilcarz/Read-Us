@@ -119,7 +119,7 @@ struct BookGrid: View {
     private func bookCell(book: Book) -> some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
-                BookPhotoCell(for: book.photo, width: 90)
+                BookPhotoCell(for: book.cover, width: 90)
                     .overlay(!isEditModeOn ? nil : ZStack {
                         RoundedRectangle(cornerRadius: 12).fill(.black.opacity(0.7))
                         Image(systemName: "trash")
@@ -133,18 +133,19 @@ struct BookGrid: View {
                 }
                 
                 if book.isRead == false && book.isReading && !isEditModeOn {
-                    CustomCircularProgressView(progress: CGFloat((book.safeEntries.filter({ $0.isVisible }).first?.safeCurrentPage ?? 0)) / CGFloat(book.safeNumberOfPages), width: 13)
+                    CustomCircularProgressView(progress: CGFloat((book.bookUpdatesArray.filter({ $0.isVisible }).first?.current_page ?? 0)) / CGFloat(book.number_of_pages), width: 13)
                         .padding(5)
                 }
             }
             
             VStack {
-                Text(book.safeTitle)
+                Text(book.title_string)
                     .font(.system(.footnote, design: .serif))
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .truncationMode(.middle)
-                Text(book.safeAuthor)
+                
+                Text(book.author_string)
                     .font(.caption2)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -203,7 +204,7 @@ struct BookGrid: View {
                 
                 ForEach(shelves) { shelf in
                     Button {
-                        if book.safeShelves.contains(shelf) {
+                        if book.shelvesArray.contains(shelf) {
                             book.removeFromShelves(shelf)
                         } else {
                             book.addToShelves(shelf)
@@ -212,7 +213,7 @@ struct BookGrid: View {
                         try? moc.save()
                         
                     } label: {
-                        Label(shelf.safeTitle, systemImage: "\(shelf.safeIcon)\(book.safeShelves.contains(shelf) ? ".fill" : "")")
+                        Label(shelf.title_string, systemImage: "\(shelf.icon_string)\(book.shelvesArray.contains(shelf) ? ".fill" : "")")
                     }
                 }
                 

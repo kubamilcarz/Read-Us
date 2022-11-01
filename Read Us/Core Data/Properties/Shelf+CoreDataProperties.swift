@@ -2,7 +2,7 @@
 //  Shelf+CoreDataProperties.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 10/6/22.
+//  Created by Kuba Milcarz on 11/1/22.
 //
 //
 
@@ -21,17 +21,15 @@ extension Shelf {
     @NSManaged public var subtitle: String?
     @NSManaged public var title: String?
     @NSManaged public var books: NSSet?
-
-    public var safeTitle: String { title ?? "Untitled" }
-        
-    public var safeSubtitle: String { subtitle ?? "" }
     
-    public var safeIcon: String { icon ?? "books.vertical.circle" }
+    public var icon_string: String { icon ?? "" }
+    public var subtitle_string: String { subtitle ?? "" }
+    public var title_string: String { title ?? "" }
     
-    public var safeBooks: [Book] {
+    public var booksArray: [Book] {
         Array(books as? Set<Book> ?? [])
     }
-    
+
 }
 
 // MARK: Generated accessors for books

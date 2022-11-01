@@ -13,17 +13,17 @@ struct BookDetailNotesView: View {
     
     var book: Book
     
-    var notes: [Entry] {
-        book.safeEntries.filter { $0.safeNotes.isEmpty == false }.sorted(by: { $0.safeDateAdded > $1.safeDateAdded })
+    var notes: [Note] {
+        book.notesArray.filter { $0.content_string.isEmpty == false }.sorted(by: { $0.date_added > $1.date_added })
     }
     
-    @State private var editingNote: Entry?
+    @State private var editingNote: Note?
     @State private var content = ""
     
     @State private var isCreatingNewNote = false
     @State private var isShowingDeleteConfirmation = false
     
-    @State private var deletingNote: Entry?
+    @State private var deletingNote: Note?
     
     var body: some View {
         VStack(spacing: 15) {
@@ -63,17 +63,17 @@ struct BookDetailNotesView: View {
                 ForEach(notes) { note in
                     HStack(alignment: .top) {
                         VStack(alignment: .leading, spacing: 3) {
-                            Text(note.safeDateAdded.formatted())
+                            Text(note.date_added.formatted())
                                 .foregroundColor(.secondary)
                                 .font(.caption)
                             
                             Group {
                                 if editingNote == note {
-                                    TextField(note.safeNotes, text: $content, axis: .vertical)
+                                    TextField(note.content_string, text: $content, axis: .vertical)
                                         .textFieldStyle(.roundedBorder)
                                         .lineLimit(1...5)
                                         .onSubmit {
-                                            note.notes = content
+                                            note.content = content
                                             
                                             try? moc.save()
                                             
@@ -81,7 +81,7 @@ struct BookDetailNotesView: View {
                                             editingNote = nil
                                         }
                                 } else {
-                                    Text(note.safeNotes)
+                                    Text(note.content_string)
                                 }
                             }
                             .font(.system(.subheadline, design: .serif))
@@ -94,10 +94,10 @@ struct BookDetailNotesView: View {
                             Button {
                                 if editingNote != note {
                                     editingNote = note
-                                    content = note.safeNotes
+                                    content = note.content_string
                                 } else {
                                     // save and clear variable
-                                    note.notes = content
+                                    note.content = content
                                     
                                     try? moc.save()
                                     
@@ -153,14 +153,13 @@ struct BookDetailNotesView: View {
     
     private func addNote() {
         withAnimation(.easeInOut) {
-            let newEntry = Entry(context: moc)
-            newEntry.id = UUID()
-            newEntry.dateAdded = Date.now
-            newEntry.numberOfPages = 0
-            newEntry.currentPage = Int16(mainVM.getCurrentPage(for: book))
-            newEntry.notes = content.trimmingCharacters(in: .whitespacesAndNewlines)
-            newEntry.isVisible = false
-            newEntry.book = book
+            let newNote = Note(context: moc)
+            newNote.id = UUID()
+            newNote.dateAdded = Date.now
+            newNote.pageNumber = Int64(mainVM.getCurrentPage(for: book))
+            newNote.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
+
+            newNote.book = book
             
             try? moc.save()
             

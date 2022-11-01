@@ -13,26 +13,26 @@ struct ReadingHistorySheet: View {
     
     var isSheet: Bool = true
     
-    @FetchRequest<Entry>(sortDescriptors: [
+    @FetchRequest<BookUpdate>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
-    ]) var entries: FetchedResults<Entry>
+    ]) var updates: FetchedResults<BookUpdate>
     
-    var filteredEntries: [Date: [Entry]] {
-        var result: [Date: [Entry]] = [:]
+    var filteredEntries: [Date: [BookUpdate]] {
+        var result: [Date: [BookUpdate]] = [:]
         
-        if entries.isEmpty { return result }
+        if updates.isEmpty { return result }
                 
-        var currentMidnight = entries[0].safeDateAdded.midnight
+        var currentMidnight = updates[0].date_added.midnight
         
-        for entry in entries {
+        for update in updates {
             if result[currentMidnight] == nil {
                 result[currentMidnight] = []
             }
             
-            if entry.safeDateAdded.midnight == currentMidnight {
-                result[currentMidnight]!.append(entry)
+            if update.date_added.midnight == currentMidnight {
+                result[currentMidnight]!.append(update)
             } else {
-                currentMidnight = entry.safeDateAdded.midnight
+                currentMidnight = update.date_added.midnight
             }
         }
         
@@ -59,16 +59,16 @@ struct ReadingHistorySheet: View {
                 } else {
                     ForEach(filteredEntries.sorted(by: { $0.key > $1.key }), id: \.key) { key, value in
                         if isHidingExcluded && value.filter { $0.isVisible }.isEmpty {
-                            
+                            Text("")
                         } else {
                             Section {
-                                ForEach(value, id: \.self) { entry in
-                                    if isHidingExcluded && entry.isVisible == false {
+                                ForEach(value, id: \.self) { update in
+                                    if isHidingExcluded && update.isVisible == false {
                                     } else {
                                         NavigationLink {
-                                            EditReadingEntryView(entry: entry)
+                                            EditReadingEntryView(update: update)
                                         } label: {
-                                            logRow(entry: entry)
+                                            logRow(update: update)
                                         }
                                         .buttonStyle(.plain)
                                     }
@@ -120,24 +120,24 @@ struct ReadingHistorySheet: View {
         }
     }
     
-    private func logRow(entry: Entry) -> some View {
+    private func logRow(update: BookUpdate) -> some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(entry.safeDateAdded.formatted(date: .omitted, time: .shortened))
+                Text(update.date_added.formatted(date: .omitted, time: .shortened))
                     .font(.subheadline)
-                Text(entry.book?.safeTitle ?? "Unknown Book")
+                Text(update.book?.title_string ?? "Unknown Book")
                     .foregroundColor(.secondary)
                     .font(.system(.caption, design: .serif))
             }
             Spacer()
-            Text("**\(entry.safeNumerOfPagesRead)** page(s)")
+            Text("**\(update.number_of_pages)** page(s)")
                 .font(.caption)
                 .bold()
         }
-        .opacity(entry.isVisible ? 1 : 0.3)
+        .opacity(update.isVisible ? 1 : 0.3)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button {
-                entry.isVisible.toggle()
+                update.isVisible.toggle()
                 try? moc.save()
             } label: {
                 Label("Exclude", systemImage: "square.3.stack.3d.slash")
@@ -145,7 +145,7 @@ struct ReadingHistorySheet: View {
             .tint(.ruAccentColor)
             
             Button {
-                moc.delete(entry)
+                moc.delete(update)
                 try? moc.save()
             } label: {
                 Label("Remove", systemImage: "minus.circle")
@@ -154,11 +154,11 @@ struct ReadingHistorySheet: View {
         }
     }
     
-    private func getTotalNumberOfPages(for entries: [Entry]) -> Int {
+    private func getTotalNumberOfPages(for updates: [BookUpdate]) -> Int {
         var result = 0
         
-        for entry in entries.filter({ $0.isVisible }) {
-            result += entry.safeNumerOfPagesRead
+        for update in updates.filter({ $0.isVisible }) {
+            result += update.number_of_pages
         }
         
         return result

@@ -16,9 +16,9 @@ class BookChartModel {
         self.dataType = dataType
     }
     
-    func buildSkeleton(with entries: FetchedResults<Entry>, startingYear: Int) -> [ChartableEntry] {
+    func buildSkeleton(with bookUpdates: FetchedResults<BookUpdate>, startingYear: Int) -> [ChartableEntry] {
         var skeleton = makeSkeleton(startingYear: startingYear)
-        skeleton = populate(skeleton: skeleton, with: entries)
+        skeleton = populate(skeleton: skeleton, with: bookUpdates)
         
         return skeleton
     }
@@ -93,32 +93,32 @@ class BookChartModel {
     }
     
     // MARK: - Populate with Entries
-    private func populate(skeleton: [ChartableEntry], with entries: FetchedResults<Entry>) -> [ChartableEntry] {
+    private func populate(skeleton: [ChartableEntry], with bookUpdates: FetchedResults<BookUpdate>) -> [ChartableEntry] {
         var result = skeleton
         
         switch period {
         case .week:
-            for entry in entries {
-                if let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight }) {
-                    result[index].value += entry.safeNumerOfPagesRead
+            for update in bookUpdates {
+                if let index = result.firstIndex(where: { $0.date == update.date_added.midnight }) {
+                    result[index].value += update.number_of_pages
                 }
             }
         case .month:
-            for entry in entries {
-                if let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.midnight }) {
-                    result[index].value += entry.safeNumerOfPagesRead
+            for update in bookUpdates {
+                if let index = result.firstIndex(where: { $0.date == update.date_added.midnight }) {
+                    result[index].value += update.number_of_pages
                 }
             }
         case .year:
-            for entry in entries {
-                if let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.startOfMonth() }) {
-                    result[index].value += entry.safeNumerOfPagesRead
+            for update in bookUpdates {
+                if let index = result.firstIndex(where: { $0.date == update.date_added.startOfMonth() }) {
+                    result[index].value += update.number_of_pages
                 }
             }
         case .all:
-            for entry in entries {
-                if let index = result.firstIndex(where: { $0.date == entry.safeDateAdded.startOfYear() }) {
-                    result[index].value += entry.safeNumerOfPagesRead
+            for update in bookUpdates {
+                if let index = result.firstIndex(where: { $0.date == update.date_added.startOfYear() }) {
+                    result[index].value += update.number_of_pages
                 }
             }
         }
@@ -135,19 +135,25 @@ class BookChartModel {
             result = []
         case .month:
             for book in books {
-                if let index = result.firstIndex(where: { $0.date == book.safeFinishedReadingOn.midnight }) {
+                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished ?? Date.now
+                
+                if let index = result.firstIndex(where: { $0.date == latestReadDate.midnight }) {
                     result[index].value += 1
                 }
             }
         case .year:
             for book in books {
-                if let index = result.firstIndex(where: { $0.date == book.safeFinishedReadingOn.startOfYear() }) {
+                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished ?? Date.now
+                
+                if let index = result.firstIndex(where: { $0.date == latestReadDate.startOfYear() }) {
                     result[index].value += 1
                 }
             }
         case .all:
             for book in books {
-                if let index = result.firstIndex(where: { $0.date == book.safeFinishedReadingOn.startOfYear() }) {
+                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished ?? Date.now
+                
+                if let index = result.firstIndex(where: { $0.date == latestReadDate.startOfYear() }) {
                     result[index].value += 1
                 }
             }

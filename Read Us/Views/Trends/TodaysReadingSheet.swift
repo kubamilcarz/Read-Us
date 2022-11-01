@@ -11,9 +11,9 @@ import SwiftUI
 struct TodaysReadingSheet: View {
     @Environment(\.dismiss) var dismiss
         
-    @FetchRequest<Entry>(sortDescriptors: [
+    @FetchRequest<BookUpdate>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
-    ], predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)) var entries: FetchedResults<Entry>
+    ], predicate: NSPredicate(format: "(isVisible == true) AND (dateAdded >= %@) AND (dateAdded < %@)", Date.now.midnight - (604_800) as CVarArg, Date.now as CVarArg)) var entries: FetchedResults<BookUpdate>
     
     @AppStorage("dailyGoal") var dailyGoal = 20
     @AppStorage("HidingExcludedEntriesToggle") private var isHidingExcluded = false
@@ -46,7 +46,7 @@ struct TodaysReadingSheet: View {
     
     var numberOfPagesReadToday: Int {
         var number = 0
-        _ = entries.filter({ $0.safeDateAdded.midnight == Date().midnight && $0.isVisible }).map { number += $0.safeNumerOfPagesRead }
+        _ = entries.filter({ $0.date_added.midnight == Date().midnight && $0.isVisible }).map { number += $0.number_of_pages }
         
         return number
     }
@@ -194,11 +194,5 @@ struct TodaysReadingSheet: View {
         }
         .padding(.vertical, 30)
         .background(.background)
-    }
-}
-
-struct TodaysReadingSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        TodaysReadingSheet()
     }
 }

@@ -2,7 +2,7 @@
 //  Book+CoreDataClass.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 10/4/22.
+//  Created by Kuba Milcarz on 11/1/22.
 //
 //
 

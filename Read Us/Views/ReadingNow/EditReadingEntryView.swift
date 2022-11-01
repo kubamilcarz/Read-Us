@@ -11,7 +11,7 @@ struct EditReadingEntryView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
     
-    var entry: Entry
+    var update: BookUpdate
     
     @State private var errorMessage: String?
     @State private var pageCount = ""
@@ -35,7 +35,7 @@ struct EditReadingEntryView: View {
                 HStack {
                     Text("Number of pages")
                     Spacer()
-                    TextField("\(entry.safeNumerOfPagesRead)", text: $pageCount)
+                    TextField("\(update.number_of_pages)", text: $pageCount)
                         .keyboardType(.numberPad)
                         .textFieldStyle(.roundedBorder)
                         .frame(maxWidth: 70)
@@ -57,12 +57,13 @@ struct EditReadingEntryView: View {
             Button {
                 if Int(pageCount) != nil {
                     if Int(pageCount) ?? 0 < 0 {
-                        entry.numberOfPages = 0
+                        update.numberOfPages = 0
                     } else {
-                        entry.numberOfPages = Int16(Int(pageCount) ?? 0)
+                        update.numberOfPages = Int64(Int(pageCount) ?? 0)
                     }
                     
-                    entry.notes = note.trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    update.note?.content = note.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     try? moc.save()
                     
@@ -81,10 +82,10 @@ struct EditReadingEntryView: View {
             .tint(.ruAccentColor)
             .withoutListInset()
         }
-        .navigationTitle(entry.safeDateAdded.formatted(date: .abbreviated, time: .shortened))
+        .navigationTitle(update.date_added.formatted(date: .abbreviated, time: .shortened))
         .onAppear {
-            pageCount = String(entry.safeNumerOfPagesRead)
-            note = entry.safeNotes
+            pageCount = String(update.number_of_pages)
+            note = update.note?.content_string ?? ""
         }
     }
 }

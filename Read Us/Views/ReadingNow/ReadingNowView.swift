@@ -15,21 +15,21 @@ struct ReadingNowView: View {
         SortDescriptor(\.dateAdded, order: .reverse)
     ], predicate: NSPredicate(format: "isReading == true")) var books: FetchedResults<Book>
     
-    @FetchRequest<Entry>(sortDescriptors: [
+    @FetchRequest<BookUpdate>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
-    ]) var entries: FetchedResults<Entry>
+    ]) var updates: FetchedResults<BookUpdate>
     
     @FetchRequest<Shelf>(sortDescriptors: [
         SortDescriptor(\.title)
     ]) var shelves: FetchedResults<Shelf>
     
-    var filteredEntries: [Entry] {
-        entries.filter { $0.safeDateAdded.midnight == Date().midnight && $0.isVisible }
+    var filteredEntries: [BookUpdate] {
+        updates.filter { $0.date_added.midnight == Date().midnight && $0.isVisible }
     }
     
     var numberOfPagesReadToday: Int {
         var number = 0
-        _ = filteredEntries.map { number += $0.safeNumerOfPagesRead }
+        _ = filteredEntries.map { number += $0.number_of_pages }
         
         return number
     }
@@ -251,9 +251,9 @@ extension ReadingNowView {
     private func bookRow(book: Book) -> some View {
         HStack(spacing: 10) {
             VStack(alignment: .leading) {
-                Text(book.safeTitle)
+                Text(book.title_string)
                     .font(.system(.headline, design: .serif))
-                Text(book.safeAuthor)
+                Text(book.author_string)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -264,7 +264,7 @@ extension ReadingNowView {
                 Circle()
                     .fill(.ultraThinMaterial)
                 
-                Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.safeNumberOfPages)) * 100) / 100.0, format: .percent)
+                Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.number_of_pages)) * 100) / 100.0, format: .percent)
                     .font(.footnote)
                 
                 Circle()
@@ -292,7 +292,7 @@ extension ReadingNowView {
         .frame(maxWidth: .infinity, maxHeight: 70)
         .background(
             ZStack {
-                Image(uiImage: book.safePhoto)
+                Image(uiImage: book.cover_image)
                     .resizable()
                     .scaledToFill()
                     .blur(radius: 10)
@@ -307,10 +307,10 @@ extension ReadingNowView {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(book.safeTitle)
+                    Text(book.title_string)
                         .font(.system(.headline, design: .serif))
                     
-                    Text(book.safeAuthor)
+                    Text(book.author_string)
                         .font(.footnote)
                         .foregroundColor(.secondary)
                 }
@@ -322,7 +322,7 @@ extension ReadingNowView {
                     Circle()
                         .fill(.ultraThinMaterial)
                     
-                    Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.safeNumberOfPages)) * 100) / 100.0, format: .percent)
+                    Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.number_of_pages)) * 100) / 100.0, format: .percent)
                         .font(.footnote)
                 }
                 .frame(width: 44, height: 44)
@@ -352,7 +352,7 @@ extension ReadingNowView {
         .frame(minHeight: 160)
         .background(
             ZStack {
-                Image(uiImage: book.safePhoto)
+                Image(uiImage: book.cover_image)
                     .resizable()
                     .scaledToFill()
                     .blur(radius: 10)
@@ -395,7 +395,7 @@ extension ReadingNowView {
                 
                 ForEach(shelves) { shelf in
                     Button {
-                        if book.safeShelves.contains(shelf) {
+                        if book.shelvesArray.contains(shelf) {
                             book.removeFromShelves(shelf)
                         } else {
                             book.addToShelves(shelf)
@@ -404,7 +404,7 @@ extension ReadingNowView {
                         try? moc.save()
                         
                     } label: {
-                        Label(shelf.safeTitle, systemImage: "\(shelf.safeIcon)\(book.safeShelves.contains(shelf) ? ".fill" : "")")
+                        Label(shelf.title_string, systemImage: "\(shelf.icon_string)\(book.shelvesArray.contains(shelf) ? ".fill" : "")")
                     }
                 }
                 

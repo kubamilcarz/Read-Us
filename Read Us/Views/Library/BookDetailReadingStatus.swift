@@ -14,11 +14,15 @@ struct BookDetailReadingStatus: View {
     var book: Book
     
     // determine overlays
-    var stoppedReading: Bool { book.isReading == false && book.isRead == false && book.safeEntries.isEmpty == false }
-    var isNewBook: Bool { book.isReading == false && book.isRead == false && book.safeEntries.isEmpty }
+    var stoppedReading: Bool { book.isReading == false && book.isRead == false && book.bookUpdatesArray.isEmpty == false }
+    var isNewBook: Bool { book.isReading == false && book.isRead == false && book.bookUpdatesArray.isEmpty }
+    
+    var latestReadDate: BookReading? {
+        book.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first
+    }
     
     var readingTime: Double {
-        Double(book.safeFinishedReadingOn.timeIntervalSince(book.safeStartedReadingOn)) / 86_400
+        Double(Double(latestReadDate?.date_finished.timeIntervalSince(latestReadDate?.date_started ?? Date.now) ?? 0) / 86_400)
     }
     
     var body: some View {
@@ -66,7 +70,7 @@ struct BookDetailReadingStatus: View {
             } else if book.isRead {
                 VStack {
                     VStack {
-                        Text("You read this book on \(book.safeFinishedReadingOn.formatted(date: .abbreviated, time: .omitted))")
+                        Text("You read this book on \((latestReadDate?.date_finished ?? Date.now).formatted(date: .abbreviated, time: .omitted))")
                         Text("Read in \(Int(readingTime)) days")
                     }
                     .font(.caption2)
