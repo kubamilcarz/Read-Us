@@ -10,8 +10,7 @@ import SwiftUI
 struct NewShelfSheet: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
-    
-    static let icons = ["book", "book.circle", "books.vertical", "books.vertical.circle", "book.closed", "character.book.closed", "text.book.closed", "bookmark", "heart", "star", "moon", "pencil"]
+    @EnvironmentObject var dataManager: DataManager
     
     @State private var chosenIcon = "book"
     @State private var title = ""
@@ -30,7 +29,7 @@ struct NewShelfSheet: View {
                 Section {
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 70))], spacing: 15) {
-                            ForEach(NewShelfSheet.icons, id: \.self) { icon in
+                            ForEach(DataManager.shelfIcons, id: \.self) { icon in
                                 Button {
                                     chosenIcon = icon
                                 } label: {
@@ -73,13 +72,7 @@ struct NewShelfSheet: View {
     }
     
     private func saveShelf() {
-        let newShelf = Shelf(context: moc)
-        newShelf.id = UUID()
-        newShelf.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
-        newShelf.subtitle = subtitle.trimmingCharacters(in: .whitespaces)
-        newShelf.icon = chosenIcon
-        
-        try? moc.save()
+        dataManager.add(shelf: Shelf(context: moc), moc: moc, title: title, subtitle: subtitle, icon: chosenIcon)
         
         dismiss()
     }

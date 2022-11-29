@@ -10,7 +10,7 @@ import SwiftUI
 
 struct BookDetailView: View {
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     
     var book: Book
     
@@ -31,7 +31,7 @@ struct BookDetailView: View {
         if book.isRead {
             return 1.0
         } else {
-            return CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages)
+            return CGFloat(dataManager.getCurrentPage(for: book)) / CGFloat(book.numberOfPages)
         }
     }
     
@@ -62,9 +62,9 @@ struct BookDetailView: View {
                 
                 BookDetailShelvesBar(book: book)
                 
-                if !book.isReading {
+//                if !book.isReading {
                     BookDetailReadingStatus(book: book)
-                }
+//                }
                 
                 BookDetailNotesView(book: book)
             }
@@ -194,7 +194,7 @@ struct BookDetailView: View {
                     book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
                     
                     if book.isRead && !book.isReading {
-                        let latestRead = mainVM.getLatestBookReading(for: book)
+                        let latestRead = dataManager.getLatestBookReading(for: book)
                         
                         latestRead?.dateStarted = startDate
                         latestRead?.dateFinished = finishDate

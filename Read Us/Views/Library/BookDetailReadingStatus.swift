@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookDetailReadingStatus: View {
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     
     var book: Book
     
@@ -18,7 +18,7 @@ struct BookDetailReadingStatus: View {
     var isNewBook: Bool { book.isReading == false && book.isRead == false && book.bookUpdatesArray.isEmpty }
     
     var latestReadDate: BookReading? {
-        mainVM.getLatestBookReading(for: book)
+        dataManager.getLatestBookReading(for: book)
     }
     
     var readingTime: Double {
@@ -31,83 +31,119 @@ struct BookDetailReadingStatus: View {
     
     var body: some View {
         VStack {
-            if isNewBook {
-                VStack {
-                    Text("Start reading this book")
-                        .font(.caption2)
-                        .multilineTextAlignment(.center)
-                    HStack {
-                        Button("Read Later") {
-                            
-                        }
-                        .font(.system(size: 12))
+            VStack {
+                Text("Start reading this book")
+                    .font(.caption2)
+                    .multilineTextAlignment(.center)
+                HStack {
+                    Button("Read Later") {
                         
-                        Button("Start") {
-                            book.isReading = true
-                            try? moc.save()
-                        }
-                        .font(.system(size: 12))
                     }
-                    .buttonStyle(.bordered)
-                    .controlSize(.mini)
-                }
-            } else if stoppedReading {
-                VStack {
-                    Text("You stopped reading this book")
-                        .font(.caption2)
-                        .multilineTextAlignment(.center)
-                    HStack {
-                        Button("Cancel", role: .destructive) {
-                            mainVM.resetProgress(moc: moc, for: book)
-                        }
-                        .font(.system(size: 12))
-                        
-                        Button("Resume") {
-                            book.isReading = true
-                            try? moc.save()
-                        }
-                        .font(.system(size: 12))
-                    }
-                    .buttonStyle(.bordered)
-                    .controlSize(.mini)
-                }
-            } else if book.isRead {
-                VStack {
-                    if book.bookReadingsArray.count == 1 {
-                        VStack {
-                            Text("You read this book on \((latestReadDate?.date_finished ?? Date.now).formatted(date: .abbreviated, time: .omitted))")
-                            Text("Read in \(Int(readingTime)) days")
-                        }
-                        .font(.caption2)
-                        .multilineTextAlignment(.center)
-                    } else if book.bookReadingsArray.count > 1 {
-                        VStack {
-                            ForEach(book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished })) { reading in
-                                HStack {
-                                    Text("You read this book on \(reading.date_finished.formatted(date: .abbreviated, time: .shortened))")
-                                    
-                                    Spacer()
-                                    
-                                    Text("it took you \(getReadingTime(for: reading))")
-                                }
-                            }
-                        }
-                    }
+                    .font(.system(size: 12))
                     
-                    
-                    Button("Read Again") {
-                        mainVM.startNewRead(moc: moc, for: book)
+                    Button("Start") {
+                        book.isReading = true
+                        try? moc.save()
                     }
+                    .font(.system(size: 12))
                 }
-                .font(.system(size: 12))
                 .buttonStyle(.bordered)
                 .controlSize(.mini)
             }
             
+            VStack {
+                Text("You stopped reading this book")
+                    .font(.caption2)
+                    .multilineTextAlignment(.center)
+                HStack {
+                    Button("Cancel", role: .destructive) {
+                        dataManager.resetProgress(moc: moc, for: book)
+                    }
+                    .font(.system(size: 12))
+                    
+                    Button("Resume") {
+                        book.isReading = true
+                        try? moc.save()
+                    }
+                    .font(.system(size: 12))
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
+            }
+            
+            VStack {
+                HStack {
+                    Text("Readings")
+                        .font(.system(.headline, design: .serif))
+                    
+                    Spacer()
+                    
+                    HStack {
+                        if dataManager.getCurrentBookReading(for: book) == nil {
+                            Button("Read Again") {
+                                dataManager.startNewRead(moc: moc, for: book)
+                            }
+                        }
+                        
+                        if book.bookReadingsArray.filter({ $0.dateFinished == nil }).isEmpty {
+                            Button("Add") {
+                                
+                            }
+                            .font(.system(size: 10))
+                            .controlSize(.mini)
+                            .buttonStyle(.bordered)
+                            .buttonBorderShape(.capsule)
+                        }
+                    }
+                }
+                
+                Divider()
+                
+                VStack(alignment: .leading) {
+                    ForEach(book.bookReadingsArray.sorted(by: { $0.date_started > $1.date_started })) { reading in
+                        HStack(alignment: .top, spacing: 8) {
+                            Image(systemName: reading.dateFinished == nil ? "circle" : "checkmark.circle.fill")
+                                .foregroundColor(reading.dateFinished == nil ? .secondary : .ruAccentColor)
+                            
+                            VStack(alignment: .leading, spacing: 3) {
+                                HStack {
+                                    if reading.dateFinished == nil {
+                                        // finsih date exists exist == book still being read
+                                        
+                                        Text("\(reading.date_started.formatted(date: .abbreviated, time: .omitted)) - Now")
+                                            .font(.system(.caption2, design: .serif))
+                                            .foregroundColor(.secondary)
+                                        
+                                        Spacer()
+                                    } else {
+                                        Text("\(reading.date_started.formatted(date: .abbreviated, time: .omitted)) - \(reading.date_finished.formatted(date: .abbreviated, time: .omitted))")
+                                            .font(.system(.caption2, design: .serif))
+                                            .foregroundColor(.secondary)
+                                        
+                                        Spacer()
+                                        
+                                        StarRatingCell(for: .constant(reading.rating_int))
+                                            .allowsHitTesting(false)
+                                    }
+                                }
+                                
+                                if reading.dateFinished != nil && reading.review_string.count > 0 {
+                                    Text(reading.review_string)
+                                        .font(.caption)
+                                }
+                            }
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .font(.system(size: 12))
+            .buttonStyle(.bordered)
+            .controlSize(.mini)
         }
-        .aspectRatio(3/2, contentMode: .fill)
+//        .aspectRatio(3/2, contentMode: .fill)
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: 160)
+//        .frame(maxWidth: .infinity, maxHeight: 160)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
         .clipped()
     }

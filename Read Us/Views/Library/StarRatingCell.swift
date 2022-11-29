@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StarRatingCell: View {
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     @Environment(\.managedObjectContext) var moc
     
     var book: Book?
@@ -45,6 +45,11 @@ struct StarRatingCell: View {
         }
         .accessibilityElement()
         .accessibility(hint: Text("You rated this book with \(rating) stars"))
+        .onAppear {
+            if book == nil {
+                rating = bindedRating
+            }
+        }
     }
     
     private func changeRating(to newRating: Int) {
@@ -54,24 +59,29 @@ struct StarRatingCell: View {
                 let newReading = BookReading(context: moc)
                 newReading.id = UUID()
                 newReading.rating = Int64(newRating)
+                newReading.dateStarted = Date.now
                 newReading.dateFinished = Date.now
                 newReading.isReading = false
                 newReading.countToStats = false
                 
                 book.addToBookReadings(newReading)
+                
+                try? moc.save()
             } else {
                 // get the latest, and change it
-                mainVM.getLatestBookReading(for: book)?.rating = Int64(newRating)
+                dataManager.getLatestBookReading(for: book)?.rating = Int64(newRating)
+                
+                try? moc.save()
             }
         } else {
             // no book chosen
             bindedRating = newRating
         }
         
-        try? moc.save()
-        
         withAnimation {
             rating = newRating
         }
+        
+        try? moc.save()
     }
 }

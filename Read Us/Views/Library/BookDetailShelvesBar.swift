@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookDetailShelvesBar: View {
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     
     @FetchRequest<Shelf>(sortDescriptors: [
         SortDescriptor(\.title)
@@ -18,6 +18,12 @@ struct BookDetailShelvesBar: View {
     var book: Book
     
     var body: some View {
+        if !shelves.isEmpty {
+            content
+        }
+    }
+    
+    var content: some View {
         HStack {
             Text("Shelves")
                 .font(.system(.headline, design: .serif))

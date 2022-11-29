@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ReadingNowView: View {
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     @Environment(\.managedObjectContext) var moc
     
     @FetchRequest<Book>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
     ], predicate: NSPredicate(format: "isReading == true")) var books: FetchedResults<Book>
+    
+    @FetchRequest<BookReading>(sortDescriptors: [
+        SortDescriptor(\.dateStarted, order: .reverse)
+    ]) var readings: FetchedResults<BookReading>
     
     @FetchRequest<BookUpdate>(sortDescriptors: [
         SortDescriptor(\.dateAdded, order: .reverse)
@@ -49,6 +53,34 @@ struct ReadingNowView: View {
                     todaysReading
                         .padding(.horizontal)
                     
+                    ScrollView(.vertical) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            ForEach(readings) { reading in
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(reading.book?.title_string ?? "Unknown")
+                                            .font(.headline)
+                                        Text("\(reading.book?.author_string ?? "Unknown") (cp: \(dataManager.getCurrentPage(for: reading.book ?? Book())))")
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
+                                    }
+                                    
+                                    Spacer()
+                                    
+                                    VStack(alignment: .trailing) {
+                                        Text(reading.date_started.formatted(date: .abbreviated, time: .standard))
+                                        Text(reading.date_finished.formatted(date: .abbreviated, time: .standard))
+                                    }
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                }
+                                .strikethrough(reading.dateFinished != nil)
+                                .opacity(reading.dateFinished != nil ? 0.6 : 1)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }.frame(maxHeight: 200)
+                        
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             if books.isEmpty {
@@ -264,7 +296,7 @@ extension ReadingNowView {
                 Circle()
                     .fill(.ultraThinMaterial)
                 
-                Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.number_of_pages)) * 100) / 100.0, format: .percent)
+                Text(dataManager.getCurrentProgress(for: book, inPercentage: true), format: .percent)
                     .font(.footnote)
                 
                 Circle()
@@ -272,7 +304,7 @@ extension ReadingNowView {
                     .foregroundStyle(.tertiary)
                 
                 Circle()
-                    .trim(from: 0, to: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
+                    .trim(from: 0, to: CGFloat(dataManager.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
                     .stroke(lineWidth: 3)
                     .foregroundColor(Color.ruAccentColor)
                     .rotationEffect(.degrees(-90))
@@ -322,7 +354,7 @@ extension ReadingNowView {
                     Circle()
                         .fill(.ultraThinMaterial)
                     
-                    Text(round((Double(mainVM.getCurrentPage(for: book))/Double(book.number_of_pages)) * 100) / 100.0, format: .percent)
+                    Text(round((Double(dataManager.getCurrentPage(for: book))/Double(book.number_of_pages)) * 100) / 100.0, format: .percent)
                         .font(.footnote)
                 }
                 .frame(width: 44, height: 44)
@@ -331,7 +363,7 @@ extension ReadingNowView {
             Spacer()
             
             VStack(alignment: .trailing) {
-                CustomProgressView(value: CGFloat(mainVM.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
+                CustomProgressView(value: CGFloat(dataManager.getCurrentPage(for: book)) / CGFloat(book.numberOfPages))
                 
                 Button {
                     updatingBook = book
@@ -378,7 +410,7 @@ extension ReadingNowView {
             
             Button {
                 withAnimation {
-                    mainVM.finish(moc: moc, book: book)
+                    dataManager.finish(moc: moc, book: book)
                 }
             } label: {
                 Label("Finish", systemImage: "flag")
@@ -416,8 +448,7 @@ extension ReadingNowView {
             
             Button(role: .destructive) {
                 withAnimation {
-                    book.isReading = false
-                    try? moc.save()
+                    dataManager.pauseCurrentReading(moc: moc, for: book)
                 }
             } label: {
                 Text("Stop Reading")

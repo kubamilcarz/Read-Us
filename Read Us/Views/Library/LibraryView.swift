@@ -9,7 +9,7 @@ import CodeScanner
 import SwiftUI
 
 struct LibraryView: View {
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     @Environment(\.managedObjectContext) var moc
     @FetchRequest<Book>(sortDescriptors: []) var books: FetchedResults<Book>
     

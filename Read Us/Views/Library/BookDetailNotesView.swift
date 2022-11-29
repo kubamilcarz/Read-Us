@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BookDetailNotesView: View {
     @Environment(\.managedObjectContext) var moc
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     
     var book: Book
     
@@ -42,7 +42,7 @@ struct BookDetailNotesView: View {
                             .font(.caption)
                         
                         HStack {
-                            TextField("What would you like to say?", text: $content, axis: .vertical)
+                            TextField("What are your thoughts?", text: $content, axis: .vertical)
                                 .font(.system(.subheadline, design: .serif))
                                 .textFieldStyle(.roundedBorder)
                                 .lineLimit(1...5)
@@ -162,7 +162,7 @@ struct BookDetailNotesView: View {
             let newNote = Note(context: moc)
             newNote.id = UUID()
             newNote.dateAdded = Date.now
-            newNote.pageNumber = Int64(mainVM.getCurrentPage(for: book))
+            newNote.pageNumber = Int64(dataManager.getCurrentPage(for: book))
             newNote.content = content.trimmingCharacters(in: .whitespacesAndNewlines)
 
             newNote.book = book

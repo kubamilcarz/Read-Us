@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct UpdateBookProgressSheet: View {
-    @EnvironmentObject var mainVM: MainViewModel
+    @EnvironmentObject var dataManager: DataManager
     
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
@@ -26,7 +26,7 @@ struct UpdateBookProgressSheet: View {
     @State private var rating = 0
     
     var updateDisabled: Bool {
-        Int(numberOfPagesToAddInt) == mainVM.getCurrentPage(for: book) || Int(numberOfPagesToAddInt) > book.number_of_pages || numberOfPagesToAddInt < 0
+        Int(numberOfPagesToAddInt) == dataManager.getCurrentPage(for: book) || Int(numberOfPagesToAddInt) > book.number_of_pages || numberOfPagesToAddInt < 0
     }
     
     var body: some View {
@@ -168,8 +168,10 @@ struct UpdateBookProgressSheet: View {
             }
         }
         .onAppear {
-            numberOfPagesToAdd = "\(mainVM.getCurrentPage(for: book))"
-            numberOfPagesToAddInt = Double(mainVM.getCurrentPage(for: book))
+            numberOfPagesToAdd = "\(dataManager.getCurrentPage(for: book))"
+            numberOfPagesToAddInt = Double(dataManager.getCurrentPage(for: book))
+            
+            startedDate = dataManager.getCurrentBookReading(for: book)?.date_started ?? Date.now
         }
         .onChange(of: numberOfPagesToAddInt) { _ in
             numberOfPagesToAdd = String(Int(numberOfPagesToAddInt))
@@ -207,14 +209,14 @@ struct UpdateBookProgressSheet: View {
             if let pages = Int(numberOfPagesToAdd) {
                 if pages >= book.number_of_pages {
                     // book should be marked as read
-                    mainVM.finish(moc: moc, book: book)
+                    dataManager.finish(moc: moc, book: book)
                 } else if pages <= 0 {
                     // book has 50 pages
                     // was at 20
                     // updated to -30
-                    mainVM.updateProgress(moc: moc, for: book, pages: 0, notes: note)
+                    dataManager.updateProgress(moc: moc, for: book, pages: 0, notes: note)
                 } else {
-                    mainVM.updateProgress(moc: moc, for: book, pages: pages, notes: note)
+                    dataManager.updateProgress(moc: moc, for: book, pages: pages, notes: note)
                 }
                 
                 dismiss()
@@ -224,13 +226,15 @@ struct UpdateBookProgressSheet: View {
     
     private func finishBook() {
         withAnimation {
-            let currentRead = mainVM.getCurrentBookReading(for: book)
-            currentRead?.review = review
-            currentRead?.rating = Int64(rating)
-            currentRead?.dateStarted = startedDate
-            currentRead?.dateFinished = finishedDate
-            
-            mainVM.finish(moc: moc, book: book)
+            if dataManager.getCurrentBookReading(for: book) != nil {
+                let currentRead = dataManager.getCurrentBookReading(for: book)!
+                currentRead.review = review
+                currentRead.rating = Int64(rating)
+                currentRead.dateStarted = startedDate
+                currentRead.dateFinished = finishedDate
+                
+                dataManager.finish(moc: moc, book: book)
+            }
         }
         
         dismiss()

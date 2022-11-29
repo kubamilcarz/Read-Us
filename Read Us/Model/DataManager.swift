@@ -8,19 +8,18 @@
 import CoreData
 import SwiftUI
 
-class MainViewModel: ObservableObject {
+class DataManager: ObservableObject {
     @Published var tabSelection: TabBarItem = .readingNow
-    
-    func getLatestBookReading(for book: Book) -> BookReading? {
-        book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first
-    }
-    
-    func getCurrentBookReading(for book: Book) -> BookReading? {
-        book.bookReadingsArray.first(where: { $0.isReading && $0.dateFinished == nil && !$0.countToStats })
-    }
-    
-    func getCurrentPage(for book: Book) -> Int {
-        Int(book.bookUpdatesArray.sorted { $0.date_added > $1.date_added }.first?.currentPage ?? 0)
+
+    func pauseCurrentReading(moc: NSManagedObjectContext, for book: Book) {
+        // check if the book is curerntly being read
+        if let currentReading = getCurrentBookReading(for: book) {
+            book.isReading = false
+            
+            currentReading.isReading = false
+            currentReading.countToStats = false
+            try? moc.save()
+        }
     }
     
     func updateProgress(moc: NSManagedObjectContext, for book: Book, pages numberOfPages: Int, notes: String = "") {
@@ -38,10 +37,25 @@ class MainViewModel: ObservableObject {
         newNote.book = book
         newNote.bookUpdate = newUpdate
         
+        updateBookReading(moc: moc, for: book)
+        
         newUpdate.isVisible = true
         newUpdate.countToStats = true
         
         book.addToBookUpdates(newUpdate)
+        
+        try? moc.save()
+    }
+    
+    func updateBookReading(moc: NSManagedObjectContext, for book: Book) {
+        guard getCurrentBookReading(for: book) == nil else { return }
+        
+        let newBookReading = BookReading(context: moc)
+        newBookReading.id = UUID()
+        newBookReading.countToStats = true
+        newBookReading.dateStarted = Date.now
+        newBookReading.isReading = true
+        newBookReading.book = book
         
         try? moc.save()
     }
@@ -59,7 +73,7 @@ class MainViewModel: ObservableObject {
         try? moc.save()
     }
     
-    func resetProgress(moc: NSManagedObjectContext, for book: Book) {
+    func resetProgress(moc: NSManagedObjectContext, for book: Book, resetBookToReading: Bool = true) {
         for update in book.bookUpdatesArray.filter( { $0.isVisible } ) {
             update.isVisible = false
         }
@@ -73,21 +87,21 @@ class MainViewModel: ObservableObject {
         newUpdate.countToStats = false
         
         book.addToBookUpdates(newUpdate)
-        book.isRead = false
-        book.isReading = true
+        if resetBookToReading {
+            book.isRead = false
+            book.isReading = true
+        }
         
         try? moc.save()
     }
     
     func finish(moc: NSManagedObjectContext, book: Book) {
-        resetProgress(moc: moc, for: book)
+        resetProgress(moc: moc, for: book, resetBookToReading: false)
         
-        let currentRead = getCurrentBookReading(for: book)
-        currentRead?.isReading = false
-        if currentRead?.dateFinished == nil {
-            currentRead?.dateFinished = Date.now
-        }
-        currentRead?.countToStats = true
+        getCurrentBookReading(for: book)?.isReading = false
+        getCurrentBookReading(for: book)?.countToStats = true
+        getCurrentBookReading(for: book)?.dateFinished = getCurrentBookReading(for: book)?.dateFinished ?? Date.now
+        
         
         book.isRead = true
         book.isReading = false

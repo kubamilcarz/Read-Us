@@ -11,19 +11,20 @@ import SwiftUI
 struct NewBookSheet: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var dataManager: DataManager
     
     @State private var title: String
     @State private var author: String
     @State private var pages: String
-    @State private var startedReadingDate = Date.now
-    @State private var finishedReadingDate = Date.now
+//    @State private var startedReadingDate = Date.now
+//    @State private var finishedReadingDate = Date.now
     @State private var notes = ""
     @State private var tags = ""
     @State private var photoSelection: PhotosPickerItem?
     @State private var photo: Image?
     @State private var uiImage: UIImage?
     
-    @State private var didFinish = false
+//    @State private var didFinish = false
     
     @Binding var cachedBook: CachedBook
     
@@ -106,16 +107,16 @@ struct NewBookSheet: View {
                         .listRowBackground(ZStack { })
                         
                     }
-                    Section {
-                        DatePicker("Start Date", selection: $startedReadingDate, in: ...Date.now, displayedComponents: .date)
-                        
-                        Toggle(isOn: $didFinish.animation()) {
-                            Text("Did you finish?")
-                        }
-                        if didFinish {
-                            DatePicker("Finish Date", selection: $finishedReadingDate, in: startedReadingDate..., displayedComponents: .date)
-                        }
-                    }
+//                    Section {
+//                        DatePicker("Start Date", selection: $startedReadingDate, in: ...Date.now, displayedComponents: .date)
+//
+//                        Toggle(isOn: $didFinish.animation()) {
+//                            Text("Did you finish?")
+//                        }
+//                        if didFinish {
+//                            DatePicker("Finish Date", selection: $finishedReadingDate, in: startedReadingDate..., displayedComponents: .date)
+//                        }
+//                    }
                     
                     Section {
                         TextField("Tags (comma separated)", text: $tags)
@@ -162,9 +163,9 @@ struct NewBookSheet: View {
                 uiImage = UIImage(data: cachedBook.photo)
             })
             
-            .onChange(of: startedReadingDate) { newValue in
-                finishedReadingDate = newValue + 604_800
-            }
+//            .onChange(of: startedReadingDate) { newValue in
+//                finishedReadingDate = newValue + 604_800
+//            }
         }
     }
     
@@ -174,18 +175,14 @@ struct NewBookSheet: View {
         newBook.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         newBook.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
         newBook.numberOfPages = Int64(Int(pages.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0)
-        
-        let newBookReading = BookReading(context: moc)
-            newBookReading.id = UUID()
-            newBookReading.isReading = !didFinish
-            newBookReading.countToStats = true
-            newBookReading.dateStarted = startedReadingDate
-            newBookReading.dateFinished = finishedReadingDate
-        newBookReading.book = newBook
-        
-        newBook.isRead = didFinish
-        newBook.isReading = !didFinish
         newBook.cover = uiImage?.jpegData(compressionQuality: 1.0) ?? Data()
+        
+//        if !didFinish {
+//            dataManager.startNewRead(moc: moc, for: newBook)
+//        }
+        
+//        newBook.isRead = didFinish
+//        newBook.isReading = !didFinish
         
         // TODO: Add Tags
         

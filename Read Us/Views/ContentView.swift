@@ -9,20 +9,20 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {    
-    @StateObject var mainVM = MainViewModel()
+    @StateObject var dataManager = DataManager()
     
     var body: some View {
-        CustomTabBarContainerView(selection: $mainVM.tabSelection) {
+        CustomTabBarContainerView(selection: $dataManager.tabSelection) {
             ReadingNowView()
-                .tabBarItem(tab: .readingNow, selection: $mainVM.tabSelection)
+                .tabBarItem(tab: .readingNow, selection: $dataManager.tabSelection)
             LibraryView()
-                .tabBarItem(tab: .library, selection: $mainVM.tabSelection)
+                .tabBarItem(tab: .library, selection: $dataManager.tabSelection)
             TrendsView()
-                .tabBarItem(tab: .trends, selection: $mainVM.tabSelection)
+                .tabBarItem(tab: .trends, selection: $dataManager.tabSelection)
             ReadView()
-                .tabBarItem(tab: .read, selection: $mainVM.tabSelection)
+                .tabBarItem(tab: .read, selection: $dataManager.tabSelection)
         }
-        .environmentObject(mainVM)
+        .environmentObject(dataManager)
         .tint(.ruAccentColor)
     }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BookGrid: View {
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var dataManager: DataManager
     
     var books: [Book]
     
@@ -175,10 +176,13 @@ struct BookGrid: View {
         Group {
             Button {
                 book.isReading.toggle()
-                if book.isReading == true {
-                    book.isRead = false
-                }
                 try? moc.save()
+                
+                if book.isReading == true {
+                    dataManager.startNewRead(moc: moc, for: book)
+                } else {
+                    dataManager.pauseCurrentReading(moc: moc, for: book)
+                }
             } label: {
                 Label("\(book.isReading ? "Stop Reading" : "Start Reading")", systemImage: book.isReading ? "book" : "book.closed")
             }

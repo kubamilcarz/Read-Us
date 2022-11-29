@@ -10,6 +10,7 @@ import SwiftUI
 struct ShelfDetailView: View {
     @Environment(\.presentationMode) var presentionMode
     @Environment(\.managedObjectContext) var moc
+    @EnvironmentObject var dataManager: DataManager
     
     var shelf: Shelf
     
@@ -40,7 +41,7 @@ struct ShelfDetailView: View {
                                     Rectangle().fill(.clear)
                                         .frame(width: 100)
                                     
-                                    ForEach(NewShelfSheet.icons, id: \.self) { sysIcon in
+                                    ForEach(DataManager.shelfIcons, id: \.self) { sysIcon in
                                         Image(systemName: sysIcon)
                                             .font(.system(size: sysIcon == icon ? 60 : 30).bold())
                                             .foregroundColor(sysIcon == icon ? .ruAccentColor : .secondary)
@@ -154,13 +155,7 @@ struct ShelfDetailView: View {
         }
         
         .onChange(of: isEditModeOn) { _ in
-            shelf.title = title
-            shelf.subtitle = subtitle
-            shelf.icon = icon
-            
-            if moc.hasChanges {
-                try? moc.save()
-            }
+            dataManager.update(shelf: shelf, moc: moc, title: title, subtitle: subtitle, icon: icon)
         }
     }
 }
