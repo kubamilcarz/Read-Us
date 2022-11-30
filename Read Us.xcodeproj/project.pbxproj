@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C826E6C8293754B500AFEF6E /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6C7293754B500AFEF6E /* UIDevice.swift */; };
+		C826E6CA2937553000AFEF6E /* DeveloperReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */; };
 		C8277D6B28F067B10078C9FD /* ReadingGoalsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */; };
 		C83F5434292B971800B120D0 /* BookDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83F5433292B971800B120D0 /* BookDelegate.swift */; };
 		C83F5437292B9B6000B120D0 /* ShelfDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83F5436292B9B6000B120D0 /* ShelfDelegate.swift */; };
@@ -82,6 +84,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C826E6C7293754B500AFEF6E /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperReadingHistory.swift; sourceTree = "<group>"; };
 		C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingGoalsSection.swift; sourceTree = "<group>"; };
 		C83F5433292B971800B120D0 /* BookDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDelegate.swift; sourceTree = "<group>"; };
 		C83F5436292B9B6000B120D0 /* ShelfDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				C847069A28E45A29006CC559 /* Date.swift */,
 				C86CEDEC28F5FE6100C5EB9A /* CornerRadius.swift */,
 				C8BCD89028FD6CE9004DC8FD /* Color.swift */,
+				C826E6C7293754B500AFEF6E /* UIDevice.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 				C89985E628E0CAAF002C678D /* Library */,
 				C89985E728E0CAB6002C678D /* Trends */,
 				C898CE2A28E09E960038AAA3 /* ContentView.swift */,
+				C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -509,6 +515,7 @@
 				C8533FCB2911743B00A99774 /* Shelf+CoreDataProperties.swift in Sources */,
 				C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */,
 				C8533FF0291179E600A99774 /* Book+CoreDataClass.swift in Sources */,
+				C826E6C8293754B500AFEF6E /* UIDevice.swift in Sources */,
 				C8ECAF9B290FFAD3002011EF /* ReadView.swift in Sources */,
 				C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */,
 				C8B452FD29105C4600F2F141 /* ScanBookSheet.swift in Sources */,
@@ -536,6 +543,7 @@
 				C8533FEB291179E600A99774 /* BookReading+CoreDataProperties.swift in Sources */,
 				C86CEDF128F6078400C5EB9A /* BookCenteredGrid.swift in Sources */,
 				C8533FC12911743B00A99774 /* Tag+CoreDataProperties.swift in Sources */,
+				C826E6CA2937553000AFEF6E /* DeveloperReadingHistory.swift in Sources */,
 				C89985EE28E0CADE002C678D /* TrendsView.swift in Sources */,
 				C8533FEC291179E600A99774 /* Note+CoreDataClass.swift in Sources */,
 				C83F5437292B9B6000B120D0 /* ShelfDelegate.swift in Sources */,
@@ -688,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6;
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kubamilcarz.Read-Us";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -725,7 +733,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.6;
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kubamilcarz.Read-Us";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

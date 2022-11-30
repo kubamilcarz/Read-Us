@@ -18,7 +18,7 @@ struct UpdateBookProgressSheet: View {
     @State private var numberOfPagesToAdd = ""
     @State private var numberOfPagesToAddInt: Double = 0
     @State private var note = ""
-    @State private var isFinished = false
+    @State private var isFinishedButtonClicked = false
     
     @State private var startedDate = Date.now
     @State private var finishedDate = Date.now
@@ -33,7 +33,7 @@ struct UpdateBookProgressSheet: View {
         NavigationView {
             VStack(alignment: .leading) {
                 ScrollView(.vertical) {
-                    if isFinished == false {
+                    if isFinishedButtonClicked == false {
                         Group {
                             updateProgressForm
                             
@@ -59,7 +59,7 @@ struct UpdateBookProgressSheet: View {
                             }
                         }
                         .background(.background)
-                        .transition(.push(from: isFinished ? SwiftUI.Edge.leading : SwiftUI.Edge.trailing))
+                        .transition(.push(from: isFinishedButtonClicked ? SwiftUI.Edge.leading : SwiftUI.Edge.trailing))
                     } else {
                         VStack(alignment: .leading) {
                             HStack {
@@ -108,17 +108,17 @@ struct UpdateBookProgressSheet: View {
                             }
                         }
                         .background(.background)
-                        .transition(.push(from: isFinished ? SwiftUI.Edge.leading : SwiftUI.Edge.trailing))
+                        .transition(.push(from: isFinishedButtonClicked ? SwiftUI.Edge.leading : SwiftUI.Edge.trailing))
                     }
                 }
                 .padding()
                 
                 HStack(spacing: 15) {
                     Button {
-                        if isFinished {
+                        if isFinishedButtonClicked {
                             finishBook()
                         } else {
-                            withAnimation { isFinished = true }
+                            withAnimation { isFinishedButtonClicked = true }
                         }
                         
                     } label: {
@@ -129,7 +129,7 @@ struct UpdateBookProgressSheet: View {
                     }
                     .buttonStyle(.bordered)
                     
-                    if !isFinished {
+                    if !isFinishedButtonClicked {
                         Button(action: updateProgress) {
                             Text("Update")
                                 .frame(maxWidth: .infinity)
@@ -143,7 +143,7 @@ struct UpdateBookProgressSheet: View {
                 .tint(.ruAccentColor)
                 .padding([.horizontal, .bottom])
             }
-            .navigationTitle(isFinished ? "Book Finished" : "Update Progress")
+            .navigationTitle(isFinishedButtonClicked ? "Book Finished" : "Update Progress")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button {
@@ -157,9 +157,9 @@ struct UpdateBookProgressSheet: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if isFinished {
+                    if isFinishedButtonClicked {
                         Button {
-                            withAnimation { isFinished = false }
+                            withAnimation { isFinishedButtonClicked = false }
                         } label: {
                             Label("Go Back", systemImage: "arrow.left")
                         }
@@ -226,15 +226,14 @@ struct UpdateBookProgressSheet: View {
     
     private func finishBook() {
         withAnimation {
-            if dataManager.getCurrentBookReading(for: book) != nil {
-                let currentRead = dataManager.getCurrentBookReading(for: book)!
-                currentRead.review = review
-                currentRead.rating = Int64(rating)
-                currentRead.dateStarted = startedDate
-                currentRead.dateFinished = finishedDate
-                
-                dataManager.finish(moc: moc, book: book)
-            }
+            let currentRead = dataManager.getCurrentBookReading(for: book)
+            currentRead?.review = review
+            currentRead?.rating = Int64(rating)
+            currentRead?.dateStarted = startedDate
+            currentRead?.dateFinished = finishedDate
+            currentRead?.isReading = false
+            
+            dataManager.finish(moc: moc, book: book)
         }
         
         dismiss()

@@ -42,8 +42,7 @@ struct BookDetailReadingStatus: View {
                     .font(.system(size: 12))
                     
                     Button("Start") {
-                        book.isReading = true
-                        try? moc.save()
+                        dataManager.startNewRead(moc: moc, for: book)
                     }
                     .font(.system(size: 12))
                 }
@@ -62,8 +61,7 @@ struct BookDetailReadingStatus: View {
                     .font(.system(size: 12))
                     
                     Button("Resume") {
-                        book.isReading = true
-                        try? moc.save()
+                        dataManager.unpauseCurrentReading(moc: moc, for: book)
                     }
                     .font(.system(size: 12))
                 }
@@ -87,7 +85,7 @@ struct BookDetailReadingStatus: View {
                         
                         if book.bookReadingsArray.filter({ $0.dateFinished == nil }).isEmpty {
                             Button("Add") {
-                                
+                                #warning("Show Sheet with Option to back log your past readings")
                             }
                             .font(.system(size: 10))
                             .controlSize(.mini)
@@ -108,8 +106,6 @@ struct BookDetailReadingStatus: View {
                             VStack(alignment: .leading, spacing: 3) {
                                 HStack {
                                     if reading.dateFinished == nil {
-                                        // finsih date exists exist == book still being read
-                                        
                                         Text("\(reading.date_started.formatted(date: .abbreviated, time: .omitted)) - Now")
                                             .font(.system(.caption2, design: .serif))
                                             .foregroundColor(.secondary)

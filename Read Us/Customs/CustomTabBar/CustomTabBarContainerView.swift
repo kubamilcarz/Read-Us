@@ -24,6 +24,7 @@ struct CustomTabBarContainerView<Content: View>: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             CustomTabBarView(tabs: tabs, selection: $selection)
+                .padding(.bottom, UIDevice.current.hasNotch ? 0 : 15)
         }
         .onPreferenceChange(TabBarItemsPreferenceKey.self) { value in
             self.tabs = value

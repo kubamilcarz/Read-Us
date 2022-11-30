@@ -22,6 +22,17 @@ class DataManager: ObservableObject {
         }
     }
     
+    func unpauseCurrentReading(moc: NSManagedObjectContext, for book: Book) {
+        // check if the book is curerntly being read
+        if let currentReading = getCurrentBookReading(for: book) {
+            book.isReading = true
+            
+            currentReading.isReading = true
+            currentReading.countToStats = false
+            try? moc.save()
+        }
+    }
+    
     func updateProgress(moc: NSManagedObjectContext, for book: Book, pages numberOfPages: Int, notes: String = "") {
         let newUpdate = BookUpdate(context: moc)
         
