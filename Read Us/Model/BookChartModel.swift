@@ -23,9 +23,9 @@ class BookChartModel {
         return skeleton
     }
     
-    func buildSkeleton(with books: FetchedResults<Book>, startingYear: Int) -> [ChartableEntry] {
+    func buildSkeleton(with bookReadings: FetchedResults<BookReading>, startingYear: Int) -> [ChartableEntry] {
         var skeleton = makeSkeleton(startingYear: startingYear)
-        skeleton = populate(skeleton: skeleton, with: books)
+        skeleton = populate(skeleton: skeleton, with: bookReadings)
         
         return skeleton
     }
@@ -127,33 +127,29 @@ class BookChartModel {
     }
     
     // MARK: - Populate with Books
-    private func populate(skeleton: [ChartableEntry], with books: FetchedResults<Book>) -> [ChartableEntry] {
+    private func populate(skeleton: [ChartableEntry], with bookReadings: FetchedResults<BookReading>) -> [ChartableEntry] {
         var result = skeleton
+        
+        let filteredReadings = bookReadings.filter { $0.dateFinished != nil }.sorted { $0.date_finished > $1.date_finished }
         
         switch period {
         case .week:
             result = []
         case .month:
-            for book in books {
-                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first?.date_finished ?? Date.now
-                
-                if let index = result.firstIndex(where: { $0.date == latestReadDate.midnight }) {
+            for reading in filteredReadings {
+                if let index = result.firstIndex(where: { $0.date == reading.date_finished.midnight }) {
                     result[index].value += 1
                 }
             }
         case .year:
-            for book in books {
-                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first?.date_finished ?? Date.now
-                
-                if let index = result.firstIndex(where: { $0.date == latestReadDate.startOfYear() }) {
+            for reading in filteredReadings {
+                if let index = result.firstIndex(where: { $0.date == reading.date_finished.startOfYear() }) {
                     result[index].value += 1
                 }
             }
         case .all:
-            for book in books {
-                let latestReadDate = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished }).first?.date_finished ?? Date.now
-                
-                if let index = result.firstIndex(where: { $0.date == latestReadDate.startOfYear() }) {
+            for reading in filteredReadings {
+                if let index = result.firstIndex(where: { $0.date == reading.date_finished.startOfYear() }) {
                     result[index].value += 1
                 }
             }

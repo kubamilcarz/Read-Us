@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C826E6C8293754B500AFEF6E /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6C7293754B500AFEF6E /* UIDevice.swift */; };
 		C826E6CA2937553000AFEF6E /* DeveloperReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */; };
+		C826E6CC2937566300AFEF6E /* BookDetailReadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6CB2937566300AFEF6E /* BookDetailReadings.swift */; };
 		C8277D6B28F067B10078C9FD /* ReadingGoalsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */; };
 		C83F5434292B971800B120D0 /* BookDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83F5433292B971800B120D0 /* BookDelegate.swift */; };
 		C83F5437292B9B6000B120D0 /* ShelfDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83F5436292B9B6000B120D0 /* ShelfDelegate.swift */; };
@@ -78,7 +79,7 @@
 		C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8CE888D28EEE8D000FCB607 /* readUs.xcdatamodeld */; };
 		C8CE889628EF2CCD00FCB607 /* BookChooserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */; };
 		C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */; };
-		C8ECAF9B290FFAD3002011EF /* ReadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9A290FFAD3002011EF /* ReadView.swift */; };
+		C8ECAF9B290FFAD3002011EF /* BookLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9A290FFAD3002011EF /* BookLogView.swift */; };
 		C8ECAF9E290FFB6C002011EF /* SettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */; };
 		C8ECAFA0290FFD0A002011EF /* BookieSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9F290FFD0A002011EF /* BookieSection.swift */; };
 /* End PBXBuildFile section */
@@ -86,6 +87,7 @@
 /* Begin PBXFileReference section */
 		C826E6C7293754B500AFEF6E /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperReadingHistory.swift; sourceTree = "<group>"; };
+		C826E6CB2937566300AFEF6E /* BookDetailReadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailReadings.swift; sourceTree = "<group>"; };
 		C8277D6A28F067B10078C9FD /* ReadingGoalsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingGoalsSection.swift; sourceTree = "<group>"; };
 		C83F5433292B971800B120D0 /* BookDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDelegate.swift; sourceTree = "<group>"; };
 		C83F5436292B9B6000B120D0 /* ShelfDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShelfDelegate.swift; sourceTree = "<group>"; };
@@ -156,7 +158,7 @@
 		C8CE888E28EEE8D000FCB607 /* readUs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = readUs.xcdatamodel; sourceTree = "<group>"; };
 		C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChooserSheet.swift; sourceTree = "<group>"; };
 		C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircularProgressView.swift; sourceTree = "<group>"; };
-		C8ECAF9A290FFAD3002011EF /* ReadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadView.swift; sourceTree = "<group>"; };
+		C8ECAF9A290FFAD3002011EF /* BookLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogView.swift; sourceTree = "<group>"; };
 		C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSheet.swift; sourceTree = "<group>"; };
 		C8ECAF9F290FFD0A002011EF /* BookieSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookieSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,7 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				C8ECAF9C290FFB64002011EF /* Settings */,
-				C8ECAF99290FFAAE002011EF /* MindfulReading */,
+				C8ECAF99290FFAAE002011EF /* BookLog */,
 				C8408B8428ED8333009D45A3 /* Shelf */,
 				C89985E428E0CAA4002C678D /* ReadingNow */,
 				C89985E628E0CAAF002C678D /* Library */,
@@ -370,6 +372,7 @@
 				C8AD254B290A720600C0B8A1 /* BookDetailReadingStatus.swift */,
 				C8AD254D290A773600C0B8A1 /* BookDetailShelvesBar.swift */,
 				C8B452FC29105C4600F2F141 /* ScanBookSheet.swift */,
+				C826E6CB2937566300AFEF6E /* BookDetailReadings.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -384,12 +387,12 @@
 			path = Trends;
 			sourceTree = "<group>";
 		};
-		C8ECAF99290FFAAE002011EF /* MindfulReading */ = {
+		C8ECAF99290FFAAE002011EF /* BookLog */ = {
 			isa = PBXGroup;
 			children = (
-				C8ECAF9A290FFAD3002011EF /* ReadView.swift */,
+				C8ECAF9A290FFAD3002011EF /* BookLogView.swift */,
 			);
-			path = MindfulReading;
+			path = BookLog;
 			sourceTree = "<group>";
 		};
 		C8ECAF9C290FFB64002011EF /* Settings */ = {
@@ -516,7 +519,7 @@
 				C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */,
 				C8533FF0291179E600A99774 /* Book+CoreDataClass.swift in Sources */,
 				C826E6C8293754B500AFEF6E /* UIDevice.swift in Sources */,
-				C8ECAF9B290FFAD3002011EF /* ReadView.swift in Sources */,
+				C8ECAF9B290FFAD3002011EF /* BookLogView.swift in Sources */,
 				C8BCD89328FD89A8004DC8FD /* EditReadingEntryView.swift in Sources */,
 				C8B452FD29105C4600F2F141 /* ScanBookSheet.swift in Sources */,
 				C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */,
@@ -532,6 +535,7 @@
 				C89985EA28E0CAC5002C678D /* ReadingNowView.swift in Sources */,
 				C8408B8628ED8341009D45A3 /* NewShelfSheet.swift in Sources */,
 				C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */,
+				C826E6CC2937566300AFEF6E /* BookDetailReadings.swift in Sources */,
 				C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */,
 				C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */,
 				C8533FF1291179E600A99774 /* Book+CoreDataProperties.swift in Sources */,

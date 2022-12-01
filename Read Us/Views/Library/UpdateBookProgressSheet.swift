@@ -172,6 +172,8 @@ struct UpdateBookProgressSheet: View {
             numberOfPagesToAddInt = Double(dataManager.getCurrentPage(for: book))
             
             startedDate = dataManager.getCurrentBookReading(for: book)?.date_started ?? Date.now
+            
+            rating = dataManager.getCurrentBookReading(for: book)?.rating_int ?? 0
         }
         .onChange(of: numberOfPagesToAddInt) { _ in
             numberOfPagesToAdd = String(Int(numberOfPagesToAddInt))

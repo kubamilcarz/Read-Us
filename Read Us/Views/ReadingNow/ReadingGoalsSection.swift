@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ReadingGoalsSection: View {
+    
+    @FetchRequest<BookUpdate>(sortDescriptors: [
+        SortDescriptor(\.dateAdded)
+    ]) var updates: FetchedResults<BookUpdate>
+    
     var display: DisplayType
     
     init(for display: DisplayType) {
@@ -16,6 +21,26 @@ struct ReadingGoalsSection: View {
     
     enum DisplayType {
         case readingNow, today
+    }
+    
+    private var readingStreakInDays: Int {
+//        var days: [Date] = []
+        var longestStreak = 0
+        let twentyFourInSeconds = 86400.0
+        
+        var lastIteratingUpdate: Date = updates.first?.date_added ?? Date.now.midnight
+        
+        for update in updates {
+            let currentIteratingUpdate = update.date_added.midnight
+            
+            if currentIteratingUpdate.timeIntervalSince(lastIteratingUpdate) == twentyFourInSeconds {
+                longestStreak += 1
+            }
+
+            lastIteratingUpdate = currentIteratingUpdate
+        }
+        
+        return longestStreak
     }
     
     var body: some View {
@@ -42,7 +67,7 @@ struct ReadingGoalsSection: View {
             
             HStack(spacing: 30) {
                 VStack(spacing: 10) {
-                    Text("0")
+                    Text("\(readingStreakInDays)")
                         .font(.system(.title, design: .serif))
                         .bold()
                         .foregroundColor(.ruAccentColor)
@@ -51,17 +76,17 @@ struct ReadingGoalsSection: View {
                         .foregroundColor(.secondary)
                 }
                 
-                Divider()
-                
-                VStack(spacing: 10) {
-                    Text("0")
-                        .font(.system(.title, design: .serif))
-                        .bold()
-                        .foregroundColor(.ruAccentColor)
-                    Text("Weeks in a Row")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
+//                Divider()
+//                
+//                VStack(spacing: 10) {
+//                    Text("0")
+//                        .font(.system(.title, design: .serif))
+//                        .bold()
+//                        .foregroundColor(.ruAccentColor)
+//                    Text("Weeks in a Row")
+//                        .font(.subheadline)
+//                        .foregroundColor(.secondary)
+//                }
             }
             .frame(maxHeight: 70)
             .padding(.vertical)

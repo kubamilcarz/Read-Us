@@ -19,8 +19,8 @@ struct ContentView: View {
                 .tabBarItem(tab: .library, selection: $dataManager.tabSelection)
             TrendsView()
                 .tabBarItem(tab: .trends, selection: $dataManager.tabSelection)
-            ReadView()
-                .tabBarItem(tab: .read, selection: $dataManager.tabSelection)
+            BookLogView()
+                .tabBarItem(tab: .bookLog, selection: $dataManager.tabSelection)
         }
         .environmentObject(dataManager)
         .tint(.ruAccentColor)

@@ -118,13 +118,12 @@ struct NewBookSheet: View {
 //                        }
 //                    }
                     
-                    Section {
-                        TextField("Tags (comma separated)", text: $tags)
-                        
-                        TextField("Notes", text: $notes, axis: .vertical)
-                            .lineLimit(1...10)
-                        
-                    }
+//                    Section {
+//                        TextField("Tags (comma separated)", text: $tags)
+//
+//                        TextField("Notes", text: $notes, axis: .vertical)
+//                            .lineLimit(1...10)
+//                    }
                 }
                 .onSubmit {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

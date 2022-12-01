@@ -30,117 +30,54 @@ struct BookDetailReadingStatus: View {
     }
     
     var body: some View {
-        VStack {
+        if ((book.bookReadingsArray.isEmpty && !book.isReading) || !(dataManager.getLatestBookReading(for: book)?.isReading ?? false)) {
             VStack {
-                Text("Start reading this book")
-                    .font(.caption2)
-                    .multilineTextAlignment(.center)
-                HStack {
-                    Button("Read Later") {
-                        
-                    }
-                    .font(.system(size: 12))
-                    
-                    Button("Start") {
-                        dataManager.startNewRead(moc: moc, for: book)
-                    }
-                    .font(.system(size: 12))
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.mini)
-            }
-            
-            VStack {
-                Text("You stopped reading this book")
-                    .font(.caption2)
-                    .multilineTextAlignment(.center)
-                HStack {
-                    Button("Cancel", role: .destructive) {
-                        dataManager.resetProgress(moc: moc, for: book)
-                    }
-                    .font(.system(size: 12))
-                    
-                    Button("Resume") {
-                        dataManager.unpauseCurrentReading(moc: moc, for: book)
-                    }
-                    .font(.system(size: 12))
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.mini)
-            }
-            
-            VStack {
-                HStack {
-                    Text("Readings")
-                        .font(.system(.headline, design: .serif))
-                    
-                    Spacer()
-                    
-                    HStack {
-                        if dataManager.getCurrentBookReading(for: book) == nil {
-                            Button("Read Again") {
+                if book.bookReadingsArray.isEmpty && !book.isReading {
+                    VStack {
+                        Text("Start reading this book")
+                            .font(.caption2)
+                            .multilineTextAlignment(.center)
+                        HStack {
+                            Button("Read Later") {
+                                
+                            }
+                            .font(.system(size: 12))
+                            
+                            Button("Start") {
                                 dataManager.startNewRead(moc: moc, for: book)
                             }
+                            .font(.system(size: 12))
                         }
-                        
-                        if book.bookReadingsArray.filter({ $0.dateFinished == nil }).isEmpty {
-                            Button("Add") {
-                                #warning("Show Sheet with Option to back log your past readings")
-                            }
-                            .font(.system(size: 10))
-                            .controlSize(.mini)
-                            .buttonStyle(.bordered)
-                            .buttonBorderShape(.capsule)
-                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
                     }
                 }
                 
-                Divider()
-                
-                VStack(alignment: .leading) {
-                    ForEach(book.bookReadingsArray.sorted(by: { $0.date_started > $1.date_started })) { reading in
-                        HStack(alignment: .top, spacing: 8) {
-                            Image(systemName: reading.dateFinished == nil ? "circle" : "checkmark.circle.fill")
-                                .foregroundColor(reading.dateFinished == nil ? .secondary : .ruAccentColor)
+                if dataManager.getLatestBookReading(for: book)?.isReading == false {
+                    VStack {
+                        Text("You stopped reading this book")
+                            .font(.caption2)
+                            .multilineTextAlignment(.center)
+                        HStack {
+                            Button("Cancel", role: .destructive) {
+                                dataManager.resetProgress(moc: moc, for: book)
+                            }
+                            .font(.system(size: 12))
                             
-                            VStack(alignment: .leading, spacing: 3) {
-                                HStack {
-                                    if reading.dateFinished == nil {
-                                        Text("\(reading.date_started.formatted(date: .abbreviated, time: .omitted)) - Now")
-                                            .font(.system(.caption2, design: .serif))
-                                            .foregroundColor(.secondary)
-                                        
-                                        Spacer()
-                                    } else {
-                                        Text("\(reading.date_started.formatted(date: .abbreviated, time: .omitted)) - \(reading.date_finished.formatted(date: .abbreviated, time: .omitted))")
-                                            .font(.system(.caption2, design: .serif))
-                                            .foregroundColor(.secondary)
-                                        
-                                        Spacer()
-                                        
-                                        StarRatingCell(for: .constant(reading.rating_int))
-                                            .allowsHitTesting(false)
-                                    }
-                                }
-                                
-                                if reading.dateFinished != nil && reading.review_string.count > 0 {
-                                    Text(reading.review_string)
-                                        .font(.caption)
-                                }
+                            Button("Resume") {
+                                dataManager.unpauseCurrentReading(moc: moc, for: book)
                             }
+                            .font(.system(size: 12))
                         }
+                        .buttonStyle(.bordered)
+                        .controlSize(.mini)
                     }
                 }
-                .frame(maxWidth: .infinity)
             }
-            .font(.system(size: 12))
-            .buttonStyle(.bordered)
-            .controlSize(.mini)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
+            .clipped()
         }
-//        .aspectRatio(3/2, contentMode: .fill)
-        .padding()
-//        .frame(maxWidth: .infinity, maxHeight: 160)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
-        .clipped()
     }
 }

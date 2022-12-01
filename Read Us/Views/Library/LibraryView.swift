@@ -32,44 +32,62 @@ struct LibraryView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                BookGrid(
-                    books: filteredBooks,
-                    isEditModeOn: $isEditModeOn,
-                    isShowingLibraryChoser: $isShowingLibraryChoser
-                )
-                .padding(.horizontal)
-                .padding(.bottom, filteredBooks.count >= 9 ? 75 : 0)
-                
-                if filteredBooks.count >= 9 {
-                    VStack(spacing: 5) {
-                        Text("Total")
-                            .font(.caption)
-                            .textCase(.uppercase)
-                            .foregroundColor(.secondary)
-                        Text("\(filteredBooks.count)")
-                            .font(.system(size: 64, design: .serif))
-                            .bold()
+                if books.isEmpty {
+                    GeometryReader { geo in
+                        VStack(spacing: 15) {
+                            Image(systemName: "tray.fill")
+                                .font(.largeTitle)
+                                .padding(.top, 100)
+                            
+                            Text("No Books")
+                                .font(.title)
+                        }
+                        .foregroundStyle(.secondary)
+//                        .frame(width: geo.size.width, height: geo.size.height)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(30)
-                    .padding(.bottom, 75)
+                } else {
+                    BookGrid(
+                        books: filteredBooks,
+                        isEditModeOn: $isEditModeOn,
+                        isShowingLibraryChoser: $isShowingLibraryChoser
+                    )
+                    .padding(.horizontal)
+                    .padding(.bottom, filteredBooks.count >= 9 ? 125 : 0)
+                    
+                    if filteredBooks.count >= 9 {
+                        VStack(spacing: 5) {
+                            Text("Total")
+                                .font(.caption)
+                                .textCase(.uppercase)
+                                .foregroundColor(.secondary)
+                            Text("\(filteredBooks.count)")
+                                .font(.system(size: 64, design: .serif))
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(30)
+                        .padding(.bottom, 75)
+                    }
                 }
             }
             .navigationTitle("Library")
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(isEditModeOn ? "Done" : "Edit") {
-                        withAnimation {
-                            isEditModeOn.toggle()
+                    if !books.isEmpty {
+                        Button(isEditModeOn ? "Done" : "Edit") {
+                            withAnimation {
+                                isEditModeOn.toggle()
+                            }
                         }
+                        .tint(.ruAccentColor)
                     }
-                    .tint(.ruAccentColor)
                     navBarAddButton
                         .tint(.ruAccentColor)
                 }
             }
             .sheet(isPresented: $isShowingNewBookSheet) {
                 NewBookSheet()
+                    .presentationDetents([.medium])
                     .presentationDragIndicator(.visible)
             }
             
@@ -97,14 +115,12 @@ struct LibraryView: View {
                 isShowingNewBookSheet = true
             } label: {
                 Label("Manually", systemImage: "pencil")
-                    .symbolRenderingMode(.hierarchical)
             }
             
             Button {
                 isShowingISBNCodeScanner = true
             } label: {
                 Label("Scan Code", systemImage: "barcode.viewfinder")
-                    .symbolRenderingMode(.hierarchical)
             }
         } label: {
             Button {

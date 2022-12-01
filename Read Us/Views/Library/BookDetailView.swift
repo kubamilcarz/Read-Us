@@ -62,9 +62,9 @@ struct BookDetailView: View {
                 
                 BookDetailShelvesBar(book: book)
                 
-//                if !book.isReading {
-                    BookDetailReadingStatus(book: book)
-//                }
+                BookDetailReadingStatus(book: book)
+                
+                BookDetailReadings(book: book)
                 
                 BookDetailNotesView(book: book)
             }

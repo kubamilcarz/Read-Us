@@ -27,7 +27,8 @@ struct ScanBookSheet: View {
     var body: some View {
         if status == .scanning {
             ZStack(alignment: .topTrailing) {
-                CodeScannerView(codeTypes: [.qr, .ean13, .code128], scanMode: .once, showViewfinder: true, simulatedData: "8328716801") { response in
+//                CodeScannerView(codeTypes: [.qr, .ean13, .code128], scanMode: .once, showViewfinder: true, simulatedData: "8328716801")
+                CodeScannerView(codeTypes: [.qr, .ean13, .code128], scanMode: .once, showViewfinder: true) { response in
                     if case let .success(result) = response {
                         scannedISBN = result.string
                         analyzeBook(withIdentifer: result.string)
@@ -52,7 +53,9 @@ struct ScanBookSheet: View {
                 }
                 
                 if status == .waitingForResponse {
-                    Rectangle().fill(.black.opacity(0.3))
+                    Rectangle()
+                        .fill(.black.opacity(0.3))
+                        .ignoresSafeArea()
                     ProgressView()
                 }
             }

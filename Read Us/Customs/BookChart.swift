@@ -16,7 +16,7 @@ struct BookChart: View {
     private var model: BookChartModel
     
     @FetchRequest<BookUpdate> private var bookUpdates: FetchedResults<BookUpdate>
-    @FetchRequest<Book> private var books: FetchedResults<Book>
+    @FetchRequest<BookReading> private var bookReadings: FetchedResults<BookReading>
     
     init(for period: ChartPeriod, show dataType: Binding<TrendsDataType>, withDailyGoal: Binding<Bool>) {
         self._period = State(wrappedValue: period)
@@ -65,7 +65,7 @@ struct BookChart: View {
 //            )
         }
         
-        _books = FetchRequest(sortDescriptors: [])
+        _bookReadings = FetchRequest(sortDescriptors: [SortDescriptor(\.dateFinished)])
     }
     
     var startingYear: Int {
@@ -91,6 +91,7 @@ struct BookChart: View {
         Chart {
             if withDailyGoal {
                 RuleMark(y: .value("Pages Read", dailyGoal))
+                    .lineStyle(StrokeStyle(lineWidth: 1, lineCap: .round, dash: [5], dashPhase: 5))
                     .annotation(position: .top, alignment: .trailing) {
                         Text("Daily Goal")
                             .foregroundColor(.secondary)
@@ -137,10 +138,10 @@ struct BookChart: View {
                     skeleton = model.buildSkeleton(with: bookUpdates, startingYear: bookUpdates.first!.date_added.year)
                 }
             case .bookCount:
-                if books.isEmpty {
-                    skeleton = model.buildSkeleton(with: books, startingYear: startingYear)
+                if bookReadings.isEmpty {
+                    skeleton = model.buildSkeleton(with: bookReadings, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.bookReadingsArray.first?.date_finished.year ?? Date.now.year)
+                    skeleton = model.buildSkeleton(with: bookReadings, startingYear: bookReadings.first?.date_finished.year ?? Date.now.year)
                 }
             }
         }
@@ -154,10 +155,10 @@ struct BookChart: View {
                     skeleton = model.buildSkeleton(with: bookUpdates, startingYear: bookUpdates.first!.date_added.year)
                 }
             case .bookCount:
-                if books.isEmpty {
-                    skeleton = model.buildSkeleton(with: books, startingYear: startingYear)
+                if bookReadings.isEmpty {
+                    skeleton = model.buildSkeleton(with: bookReadings, startingYear: startingYear)
                 } else {
-                    skeleton = model.buildSkeleton(with: books, startingYear: books.first!.bookReadingsArray.first?.date_finished.year ?? Date.now.year)
+                    skeleton = model.buildSkeleton(with: bookReadings, startingYear: bookReadings.first?.date_finished.year ?? Date.now.year)
                 }
             }
         }
