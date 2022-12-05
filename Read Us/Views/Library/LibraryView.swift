@@ -43,8 +43,9 @@ struct LibraryView: View {
                                 .font(.title)
                         }
                         .foregroundStyle(.secondary)
-//                        .frame(width: geo.size.width, height: geo.size.height)
+                        .frame(maxWidth: .infinity)
                     }
+                    .frame(maxWidth: .infinity)
                 } else {
                     BookGrid(
                         books: filteredBooks,

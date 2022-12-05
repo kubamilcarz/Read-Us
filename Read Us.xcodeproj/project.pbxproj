@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C8170069293E656A00C71926 /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8170068293E656A00C71926 /* BackupView.swift */; };
+		C817006B293E66C300C71926 /* TextFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817006A293E66C300C71926 /* TextFile.swift */; };
+		C817006E293E683300C71926 /* BackupBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817006D293E683300C71926 /* BackupBook.swift */; };
+		C8170070293E6C8D00C71926 /* DataRemovalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C817006F293E6C8D00C71926 /* DataRemovalView.swift */; };
 		C826E6C8293754B500AFEF6E /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6C7293754B500AFEF6E /* UIDevice.swift */; };
 		C826E6CA2937553000AFEF6E /* DeveloperReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */; };
 		C826E6CC2937566300AFEF6E /* BookDetailReadings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C826E6CB2937566300AFEF6E /* BookDetailReadings.swift */; };
@@ -85,6 +89,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C8170068293E656A00C71926 /* BackupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
+		C817006A293E66C300C71926 /* TextFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFile.swift; sourceTree = "<group>"; };
+		C817006D293E683300C71926 /* BackupBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupBook.swift; sourceTree = "<group>"; };
+		C817006F293E6C8D00C71926 /* DataRemovalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRemovalView.swift; sourceTree = "<group>"; };
 		C826E6C7293754B500AFEF6E /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		C826E6C92937553000AFEF6E /* DeveloperReadingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperReadingHistory.swift; sourceTree = "<group>"; };
 		C826E6CB2937566300AFEF6E /* BookDetailReadings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailReadings.swift; sourceTree = "<group>"; };
@@ -177,6 +185,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C817006C293E682700C71926 /* Backup */ = {
+			isa = PBXGroup;
+			children = (
+				C817006D293E683300C71926 /* BackupBook.swift */,
+			);
+			path = Backup;
+			sourceTree = "<group>";
+		};
 		C83F5435292B9B4900B120D0 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +323,7 @@
 				C8AD2547290A69EC00C0B8A1 /* ChartableEntry.swift */,
 				C8AD2553290AAF1D00C0B8A1 /* BookChartModel.swift */,
 				C8AD2555290AAFA700C0B8A1 /* ChartPeriod+TrendsDataType.swift */,
+				C817006A293E66C300C71926 /* TextFile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,6 +331,7 @@
 		C898CE3E28E0A0840038AAA3 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				C817006C293E682700C71926 /* Backup */,
 				C8533FCD2911745100A99774 /* Properties */,
 				C8533FCC2911744500A99774 /* Class */,
 				C898CE3128E09E970038AAA3 /* Persistence.swift */,
@@ -399,6 +417,8 @@
 			isa = PBXGroup;
 			children = (
 				C8ECAF9D290FFB6C002011EF /* SettingsSheet.swift */,
+				C8170068293E656A00C71926 /* BackupView.swift */,
+				C817006F293E6C8D00C71926 /* DataRemovalView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -506,6 +526,7 @@
 				C898CE3228E09E970038AAA3 /* Persistence.swift in Sources */,
 				C8277D6B28F067B10078C9FD /* ReadingGoalsSection.swift in Sources */,
 				C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */,
+				C8170070293E6C8D00C71926 /* DataRemovalView.swift in Sources */,
 				C899860128E0F8A7002C678D /* BookDetailView.swift in Sources */,
 				C8533FC82911743B00A99774 /* Quote+CoreDataClass.swift in Sources */,
 				C8AD2556290AAFA700C0B8A1 /* ChartPeriod+TrendsDataType.swift in Sources */,
@@ -537,12 +558,15 @@
 				C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */,
 				C826E6CC2937566300AFEF6E /* BookDetailReadings.swift in Sources */,
 				C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */,
+				C817006B293E66C300C71926 /* TextFile.swift in Sources */,
 				C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */,
 				C8533FF1291179E600A99774 /* Book+CoreDataProperties.swift in Sources */,
+				C8170069293E656A00C71926 /* BackupView.swift in Sources */,
 				C8408B8828ED85E6009D45A3 /* WithoutListInset.swift in Sources */,
 				C8AD2554290AAF1D00C0B8A1 /* BookChartModel.swift in Sources */,
 				C847069B28E45A29006CC559 /* Date.swift in Sources */,
 				C83F5434292B971800B120D0 /* BookDelegate.swift in Sources */,
+				C817006E293E683300C71926 /* BackupBook.swift in Sources */,
 				C899860F28E1F623002C678D /* BookPhotoCell.swift in Sources */,
 				C8533FEB291179E600A99774 /* BookReading+CoreDataProperties.swift in Sources */,
 				C86CEDF128F6078400C5EB9A /* BookCenteredGrid.swift in Sources */,

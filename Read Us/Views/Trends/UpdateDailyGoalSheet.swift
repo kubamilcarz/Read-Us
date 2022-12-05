@@ -14,44 +14,60 @@ struct UpdateDailyGoalSheet: View {
     @State private var newGoal = ""
     
     @FocusState private var isFocused: Bool
+    var isNested: Bool
+    
+    init(isNested: Bool = false) {
+        self.isNested = isNested
+    }
     
     var body: some View {
-        NavigationView {
-            VStack(alignment: .trailing) {
-                HStack {
-                    Text("I want to read every day", comment: "part of a sentence 'I want to read every day %% pages.'")
-                    
-                    TextField("20", text: $newGoal)
-                        .focused($isFocused)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.numberPad)
-                        .frame(width: 50)
-                    
-                    Text("pages.", comment: "part of a sentence 'I want to read every day %% pages.'")
-                }
-                
-                Button("Update", action: update)
-                    .buttonBorderShape(.capsule)
-                    .controlSize(.mini)
-                    .buttonStyle(.bordered)
-                    .font(.system(size: 12))
-                    .disabled(Int(newGoal) == nil)
+        if isNested {
+            ScrollView {
+                content
             }
-            .navigationTitle("Daily Goal")
-            .navigationBarTitleDisplayMode(.inline)
+        } else {
+            NavigationView {
+                content
+            }
+        }
+    }
+    
+    private var content: some View {
+        VStack(alignment: .trailing) {
+            HStack {
+                Text("I want to read every day", comment: "part of a sentence 'I want to read every day %% pages.'")
+                
+                TextField("20", text: $newGoal)
+                    .focused($isFocused)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.numberPad)
+                    .frame(width: 50)
+                
+                Text("pages.", comment: "part of a sentence 'I want to read every day %% pages.'")
+            }
             
-            .toolbar {
+            Button("Update", action: update)
+                .buttonBorderShape(.capsule)
+                .controlSize(.mini)
+                .buttonStyle(.bordered)
+                .font(.system(size: 12))
+                .disabled(Int(newGoal) == nil)
+        }
+        .navigationTitle("Daily Goal")
+        .navigationBarTitleDisplayMode(.inline)
+        
+        .toolbar {
+            if !isNested {
                 Button("Done") {
                     update()
                     dismiss()
                 }
-                
             }
-            
-            .onAppear {
-                newGoal = String(dailyGoal)
-                isFocused = true
-            }
+        }
+        
+        .onAppear {
+            newGoal = String(dailyGoal)
+            isFocused = true
         }
     }
     

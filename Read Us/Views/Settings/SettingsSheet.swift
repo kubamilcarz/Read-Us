@@ -18,18 +18,22 @@ struct SettingsSheet: View {
         NavigationView {
             List {
                 Section {
-                    NavigationLink(destination: { }) {
+                    NavigationLink {
+                        BackupView()
+                    } label: {
                         Label("Backup", systemImage: "arrowshape.turn.up.backward.badge.clock")
                     }
                     
-                    NavigationLink(destination: { }) {
+                    NavigationLink {
+                        DataRemovalView()
+                    } label: {
                         Label("Data Removal", systemImage: "trash")
                     }
                 }
                 
                 Section {
-                    Button {
-                        isShowingUpdateDailyGoalSheet = true
+                    NavigationLink {
+                        UpdateDailyGoalSheet(isNested: true)
                     } label: {
                         Label("Reading Daily Goal", systemImage: "flame")
                     }
