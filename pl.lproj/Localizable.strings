@@ -1,0 +1,384 @@
+/* No comment provided by engineer. */
+" - " = " - ";
+
+/* No comment provided by engineer. */
+"–" = "–";
+
+/* No comment provided by engineer. */
+"**%lld** page(s)" = "**%lld** stron";
+
+/* No comment provided by engineer. */
+"/ %lld" = "/ %lld";
+
+/* No comment provided by engineer. */
+"%@" = "%@";
+
+/* No comment provided by engineer. */
+"%@ - %@" = "%@ - %@";
+
+/* No comment provided by engineer. */
+"%@ - Now" = "%@ - Teraz";
+
+/* No comment provided by engineer. */
+"%@ (cp: %lld)" = "%@ (cp: %lld)";
+
+/* No comment provided by engineer. */
+"%@ Reading Streak" = "%@ Łańcuszek Czytelniczy";
+
+/* No comment provided by engineer. */
+"%@ So Far" = "%@ Do Teraz";
+
+/* No comment provided by engineer. */
+"%lld" = "%lld";
+
+/* No comment provided by engineer. */
+"%lld book(s)" = "%lld książek";
+
+/* No comment provided by engineer. */
+"%lld/%lld pages" = "%lld/%lld stron";
+
+/* No comment provided by engineer. */
+"© Bookie 2022. All Rights Reserved" = "© Bookie 2022. Wszystkie Prawa Zastrzeżone";
+
+/* No comment provided by engineer. */
+"20" = "20";
+
+/* No comment provided by engineer. */
+"250" = "250";
+
+/* No comment provided by engineer. */
+"Add" = "Dodaj";
+
+/* No comment provided by engineer. */
+"Add a note" = "Dodaj notatkę";
+
+/* No comment provided by engineer. */
+"Add Book" = "Dodaj Książkę";
+
+/* No comment provided by engineer. */
+"Add New" = "Dodaj Nowy";
+
+/* No comment provided by engineer. */
+"Add Shelf" = "Dodaj Półkę";
+
+/* No comment provided by engineer. */
+"All" = "Wszystkie";
+
+/* No comment provided by engineer. */
+"Almost There!" = "Prawie!";
+
+/* No comment provided by engineer. */
+"And read %lld pages more. A total of %lld pages!" = "I przeczytałeś/aś %lld stron więcej. Łącznie to %lld stron!";
+
+/* No comment provided by engineer. */
+"API Use" = "Użycie API";
+
+/* No comment provided by engineer. */
+"Are you sure you want to remove all data? %@" = "Jesteś pewien/pewna, że chcesz usunąć wszystkie dane? %@";
+
+/* No comment provided by engineer. */
+"Are you sure?" = "Jesteś pewien/pewna?";
+
+/* No comment provided by engineer. */
+"Author" = "Autor";
+
+/* No comment provided by engineer. */
+"Backup" = "Kopia Zapasowa";
+
+/* No comment provided by engineer. */
+"Book Finished" = "Książka Skończona";
+
+/* No comment provided by engineer. */
+"Book Log" = "Dziennik Książek";
+
+/* No comment provided by engineer. */
+"Bookie" = "Bookie";
+
+/* No comment provided by engineer. */
+"Bookie is the app I've always dreamed about and I'm so excited it's finally here!" = "";
+
+/* No comment provided by engineer. */
+"Bookie sends a call to Open Library API every time you use Scan Book feature when adding a new book to the library. For further information, visit https://openlibrary.org/developers/api" = "Bookie wysyła zapytanie do Open Library API za każdym razem gdy używasz funkcji skanowania kodów kreskowych książek. Po więcej informacji, otwórz https://openlibrary.org/developers/api";
+
+/* No comment provided by engineer. */
+"books" = "książki";
+
+/* No comment provided by engineer. */
+"Bookshelf" = "Półka";
+
+/* No comment provided by engineer. */
+"By Month" = "Przez Miesiąc";
+
+/* No comment provided by engineer. */
+"Cancel" = "Anuluj";
+
+/* No comment provided by engineer. */
+"Choose Books" = "Wybierz Książki";
+
+/* No comment provided by engineer. */
+"Choose Type of Data" = "Wybierz Typ Danych";
+
+/* No comment provided by engineer. */
+"Daily Goal" = "Dzienny Cel";
+
+/* No comment provided by engineer. */
+"Data Removal" = "Usuwanie Danych";
+
+/* No comment provided by engineer. */
+"Date" = "Data";
+
+/* No comment provided by engineer. */
+"Days in a Row" = "Dni z Rzędu";
+
+/* No comment provided by engineer. */
+"Delete" = "Usuń";
+
+/* No comment provided by engineer. */
+"Description" = "Opis";
+
+/* No comment provided by engineer. */
+"Done" = "Gotowe";
+
+/* No comment provided by engineer. */
+"Edit" = "Edytuj";
+
+/* No comment provided by engineer. */
+"Exclude" = "Wykluczyć";
+
+/* No comment provided by engineer. */
+"Export Backup" = "Eksportuj";
+
+/* No comment provided by engineer. */
+"Finish" = "Zakończ";
+
+/* No comment provided by engineer. */
+"Finished on" = "Skończone";
+
+/* No comment provided by engineer. */
+"Go Back" = "Wróć";
+
+/* No comment provided by engineer. */
+"https://apps.apple.com/us/app/memorize-flashcards/id1631928972" = "https://apps.apple.com/us/app/memorize-flashcards/id1631928972";
+
+/* part of a sentence 'I want to read every day %% pages.' */
+"I want to read every day" = "Chcę codziennie czytać ";
+
+/* No comment provided by engineer. */
+"Import a backup in JSON format. You can choose if you want it to replace or merge with current library." = "Zimportuj kopię zapasową w formacie JSON. Możesz wybrać aby scalić z biblioteką albo ją zastąpić.";
+
+/* No comment provided by engineer. */
+"Import Backup" = "Wczytaj Kopię Zapasową";
+
+/* No comment provided by engineer. */
+"Last 7 Days" = "Ostatnie 7 Dni";
+
+/* No comment provided by engineer. */
+"Library" = "Biblioteka";
+
+/* No comment provided by engineer. */
+"Log" = "Dziennik";
+
+/* No comment provided by engineer. */
+"Make a backup of current data and export it as a JSON file." = "Zrób kopię zapasową biblioteki i wyeksportuj ją jako plik JSON.";
+
+/* No comment provided by engineer. */
+"Manually" = "Ręcznie";
+
+/* No comment provided by engineer. */
+"Merge with Library" = "Złącz z Biblioteką";
+
+/* No comment provided by engineer. */
+"New Book" = "Nowa Książka";
+
+/* No comment provided by engineer. */
+"New Note" = "Nowa Notatka";
+
+/* No comment provided by engineer. */
+"New Shelf" = "Nowa Półka";
+
+/* No comment provided by engineer. */
+"No Books" = "Brak Książek";
+
+/* No comment provided by engineer. */
+"No Reading Log" = "Nic do wyświetlenia";
+
+/* No comment provided by engineer. */
+"Notes" = "Notatki";
+
+/* No comment provided by engineer. */
+"Number of pages" = "Liczba Stron";
+
+/* No comment provided by engineer. */
+"p. %lld" = "str. %lld";
+
+/* No comment provided by engineer. */
+"Page Count" = "Liczba Stron";
+
+/* No comment provided by engineer. */
+"pages" = "stron";
+
+/* No comment provided by engineer. */
+"Pages Read" = "Stron Przeczytanych";
+
+/* part of a sentence 'I want to read every day %% pages.' */
+"pages." = "stron.";
+
+/* No comment provided by engineer. */
+"Profile" = "Profil";
+
+/* No comment provided by engineer. */
+"Rating" = "Ocena";
+
+/* No comment provided by engineer. */
+"Read %lld pages more to hit your goal." = "Przeczytaj %lld więcej stron aby osiągnąć cel.";
+
+/* No comment provided by engineer. */
+"Read Again" = "Przeczytaj Ponownie";
+
+/* No comment provided by engineer. */
+"Read every day and finish more books" = "Czytaj codziennie i kończ więcej książek";
+
+/* No comment provided by engineer. */
+"Read Later" = "Przeczytaj Później";
+
+/* No comment provided by engineer. */
+"Reading Daily Goal" = "Dzienny Cel";
+
+/* No comment provided by engineer. */
+"Reading Dates" = "Kiedy";
+
+/* No comment provided by engineer. */
+"Reading Log" = "Dziennik Czytania";
+
+/* No comment provided by engineer. */
+"Reading Now" = "Aktualnie";
+
+/* No comment provided by engineer. */
+"Reading Streak" = "Łańcuszek Czytelniczy";
+
+/* No comment provided by engineer. */
+"Readings" = "Historia Czytania";
+
+/* No comment provided by engineer. */
+"Remove" = "Usuń";
+
+/* No comment provided by engineer. */
+"Remove All Data" = "Usuń Wszystkie Dane";
+
+/* No comment provided by engineer. */
+"Remove Book" = "Usuń Książkę";
+
+/* No comment provided by engineer. */
+"Remove From Shelf" = "Usuń z Półki";
+
+/* No comment provided by engineer. */
+"Resume" = "Wznów";
+
+/* No comment provided by engineer. */
+"Save" = "Zapisz";
+
+/* No comment provided by engineer. */
+"Scan Code" = "Zeskanuj  Kod";
+
+/* No comment provided by engineer. */
+"Search Library" = "Szukaj w Bibliotece";
+
+/* No comment provided by engineer. */
+"See All" = "Zobacz Wszystko";
+
+/* No comment provided by engineer. */
+"Settings" = "Ustawienia";
+
+/* No comment provided by engineer. */
+"Shelves" = "Półki";
+
+/* No comment provided by engineer. */
+"Start" = "Rozpocznij";
+
+/* No comment provided by engineer. */
+"Start Reading" = "Zacznij Czytać";
+
+/* No comment provided by engineer. */
+"Start reading this book" = "Zacznij czytać";
+
+/* No comment provided by engineer. */
+"Started on" = "Rozpoczęto";
+
+/* No comment provided by engineer. */
+"Stop Reading" = "Przestań Czytać";
+
+/* No comment provided by engineer. */
+"Success!" = "Sukces!";
+
+/* No comment provided by engineer. */
+"This action cannot be undone." = "Ta czynność nie może być cofnięta.";
+
+/* No comment provided by engineer. */
+"This Month" = "W tym Miesiącu";
+
+/* No comment provided by engineer. */
+"This operation cannot be undone." = "Ta czynność nie może być cofnięta.";
+
+/* No comment provided by engineer. */
+"This Year" = "Ten Rok";
+
+/* No comment provided by engineer. */
+"Title" = "Tytuł";
+
+/* No comment provided by engineer. */
+"Today's Reading" = "Przeczytane Dzisiaj";
+
+/* No comment provided by engineer. */
+"Total" = "Łącznie";
+
+/* No comment provided by engineer. */
+"Trends" = "Trendy";
+
+/* No comment provided by engineer. */
+"Typed value is not a number" = "Wpisana wartość nie jest liczbą";
+
+/* No comment provided by engineer. */
+"unknown book" = "nieznana książka";
+
+/* No comment provided by engineer. */
+"Update" = "Zaktualizuj";
+
+/* No comment provided by engineer. */
+"Update Goal" = "Zmień Cel";
+
+/* No comment provided by engineer. */
+"Update Progress" = "Zaktualizuj Postęp";
+
+/* No comment provided by engineer. */
+"Version: %@" = "Wersja: %@";
+
+/* No comment provided by engineer. */
+"What are your thoughts?" = "Co myślisz?";
+
+/* No comment provided by engineer. */
+"Where are you?" = "Gdzie jesteś?";
+
+/* No comment provided by engineer. */
+"Words from Author" = "Słowa od Autora";
+
+/* No comment provided by engineer. */
+"Write a review" = "Napisz Recenzję";
+
+/* No comment provided by engineer. */
+"You Hit Your Goal!" = "Udało Ci Się Osiągnąć Cel!";
+
+/* No comment provided by engineer. */
+"You rated this book with %lld stars" = "Oceniłeś/aś tą książka na %lld gwiazdek";
+
+/* No comment provided by engineer. */
+"You read **%lld** books" = "Przeczytałeś/aś **%lld** książek";
+
+/* No comment provided by engineer. */
+"You read %lld pages." = "Przeczytałeś/aś %lld stron.";
+
+/* No comment provided by engineer. */
+"You Read. A lot!" = "Przeczytałeś/aś dość sporo!";
+
+/* No comment provided by engineer. */
+"You stopped reading this book" = "Przestałeś/aś czytać tą książkę";
+
