@@ -8,25 +8,17 @@
 import SwiftUI
 
 struct BookLogView: View {
-    @FetchRequest<BookReading>(sortDescriptors: [SortDescriptor(\.dateFinished, order: .reverse)]) var bookReadings: FetchedResults<BookReading>
-    
-    var filteredReadings: [BookReading] {
-        bookReadings.filter { $0.dateFinished != nil }
-    }
-    
     var body: some View {
         NavigationView {
-            List {
-                Section {
-                    NavigationLink {
-                        
-                    } label: {
-                        Label("By Month", systemImage: "calendar")
-                    }
-                }
-                
-                ForEach(filteredReadings) { reading in
-                    bookCell(reading: reading)
+            ScrollView {
+                VStack(spacing: 25) {
+                    BookLogChallengeHero()
+                        .padding(.horizontal, 10)
+                    
+                    Divider()
+                    
+                    BookLogRecentlyReadCell()
+                        .padding(.horizontal, 10)
                 }
             }
             .navigationTitle("Book Log")

@@ -83,6 +83,12 @@
 		C8CE889028EEE8E300FCB607 /* readUs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C8CE888D28EEE8D000FCB607 /* readUs.xcdatamodeld */; };
 		C8CE889628EF2CCD00FCB607 /* BookChooserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */; };
 		C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */; };
+		C8D829B8294F7C7C00C695E8 /* BookLogChallengeHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829B7294F7C7C00C695E8 /* BookLogChallengeHero.swift */; };
+		C8D829BB294F7D0400C695E8 /* YearlyChallenge+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829B9294F7D0400C695E8 /* YearlyChallenge+CoreDataClass.swift */; };
+		C8D829BC294F7D0400C695E8 /* YearlyChallenge+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829BA294F7D0400C695E8 /* YearlyChallenge+CoreDataProperties.swift */; };
+		C8D829BE294F854E00C695E8 /* SlimYearlyGoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */; };
+		C8D829C0294F856200C695E8 /* YearlyGoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */; };
+		C8D829C2294F878000C695E8 /* BookLogRecentlyReadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829C1294F878000C695E8 /* BookLogRecentlyReadCell.swift */; };
 		C8DD37332940B3E900516DCE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8DD37312940B3E900516DCE /* Localizable.strings */; };
 		C8DD37362940B3E900516DCE /* Read-Us-InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8DD37342940B3E900516DCE /* Read-Us-InfoPlist.strings */; };
 		C8ECAF9B290FFAD3002011EF /* BookLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9A290FFAD3002011EF /* BookLogView.swift */; };
@@ -168,6 +174,12 @@
 		C8CE888E28EEE8D000FCB607 /* readUs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = readUs.xcdatamodel; sourceTree = "<group>"; };
 		C8CE889528EF2CCD00FCB607 /* BookChooserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChooserSheet.swift; sourceTree = "<group>"; };
 		C8CE889728EF35A400FCB607 /* CustomCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircularProgressView.swift; sourceTree = "<group>"; };
+		C8D829B7294F7C7C00C695E8 /* BookLogChallengeHero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogChallengeHero.swift; sourceTree = "<group>"; };
+		C8D829B9294F7D0400C695E8 /* YearlyChallenge+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearlyChallenge+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C8D829BA294F7D0400C695E8 /* YearlyChallenge+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "YearlyChallenge+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlimYearlyGoalCell.swift; sourceTree = "<group>"; };
+		C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearlyGoalCell.swift; sourceTree = "<group>"; };
+		C8D829C1294F878000C695E8 /* BookLogRecentlyReadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogRecentlyReadCell.swift; sourceTree = "<group>"; };
 		C8DD37322940B3E900516DCE /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C8DD37352940B3E900516DCE /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = "pl.lproj/Read-Us-InfoPlist.strings"; sourceTree = "<group>"; };
 		C8ECAF9A290FFAD3002011EF /* BookLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogView.swift; sourceTree = "<group>"; };
@@ -232,6 +244,7 @@
 		C8533FCC2911744500A99774 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				C8D829B9294F7D0400C695E8 /* YearlyChallenge+CoreDataClass.swift */,
 				C8533FF229117B6B00A99774 /* BookUpdate+CoreDataClass.swift */,
 				C8533FE2291179E600A99774 /* BookReading+CoreDataClass.swift */,
 				C8533FE4291179E600A99774 /* Note+CoreDataClass.swift */,
@@ -247,6 +260,7 @@
 		C8533FCD2911745100A99774 /* Properties */ = {
 			isa = PBXGroup;
 			children = (
+				C8D829BA294F7D0400C695E8 /* YearlyChallenge+CoreDataProperties.swift */,
 				C8533FF329117B6B00A99774 /* BookUpdate+CoreDataProperties.swift */,
 				C8533FE3291179E600A99774 /* BookReading+CoreDataProperties.swift */,
 				C8533FE5291179E600A99774 /* Note+CoreDataProperties.swift */,
@@ -415,6 +429,10 @@
 			isa = PBXGroup;
 			children = (
 				C8ECAF9A290FFAD3002011EF /* BookLogView.swift */,
+				C8D829B7294F7C7C00C695E8 /* BookLogChallengeHero.swift */,
+				C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */,
+				C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */,
+				C8D829C1294F878000C695E8 /* BookLogRecentlyReadCell.swift */,
 			);
 			path = BookLog;
 			sourceTree = "<group>";
@@ -462,7 +480,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1400;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					C898CE2428E09E960038AAA3 = {
 						CreatedOnToolsVersion = 14.0;
@@ -519,6 +537,7 @@
 				C89985F728E0E9C4002C678D /* NewBookSheet.swift in Sources */,
 				C8533FC02911743B00A99774 /* Tag+CoreDataClass.swift in Sources */,
 				C8AD254C290A720600C0B8A1 /* BookDetailReadingStatus.swift in Sources */,
+				C8D829BE294F854E00C695E8 /* SlimYearlyGoalCell.swift in Sources */,
 				C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */,
 				C89985EC28E0CACE002C678D /* LibraryView.swift in Sources */,
 				C8533FCA2911743B00A99774 /* Shelf+CoreDataClass.swift in Sources */,
@@ -531,13 +550,16 @@
 				C8533FC92911743B00A99774 /* Quote+CoreDataProperties.swift in Sources */,
 				C8AD2552290AA65F00C0B8A1 /* BookChart.swift in Sources */,
 				C89985F228E0D051002C678D /* CachedBook.swift in Sources */,
+				C8D829B8294F7C7C00C695E8 /* BookLogChallengeHero.swift in Sources */,
 				C8533FF529117B6B00A99774 /* BookUpdate+CoreDataProperties.swift in Sources */,
 				C898CE3228E09E970038AAA3 /* Persistence.swift in Sources */,
+				C8D829C2294F878000C695E8 /* BookLogRecentlyReadCell.swift in Sources */,
 				C8277D6B28F067B10078C9FD /* ReadingGoalsSection.swift in Sources */,
 				C8BCD89128FD6CE9004DC8FD /* Color.swift in Sources */,
 				C8170070293E6C8D00C71926 /* DataRemovalView.swift in Sources */,
 				C899860128E0F8A7002C678D /* BookDetailView.swift in Sources */,
 				C8533FC82911743B00A99774 /* Quote+CoreDataClass.swift in Sources */,
+				C8D829BB294F7D0400C695E8 /* YearlyChallenge+CoreDataClass.swift in Sources */,
 				C8AD2556290AAFA700C0B8A1 /* ChartPeriod+TrendsDataType.swift in Sources */,
 				C899861B28E1FD73002C678D /* CustomProgressView.swift in Sources */,
 				C898CE2B28E09E960038AAA3 /* ContentView.swift in Sources */,
@@ -547,6 +569,7 @@
 				C89985DD28E0AEC5002C678D /* CustomTabBarView.swift in Sources */,
 				C8533FCB2911743B00A99774 /* Shelf+CoreDataProperties.swift in Sources */,
 				C8408B8A28ED8977009D45A3 /* ShelfRow.swift in Sources */,
+				C8D829BC294F7D0400C695E8 /* YearlyChallenge+CoreDataProperties.swift in Sources */,
 				C8533FF0291179E600A99774 /* Book+CoreDataClass.swift in Sources */,
 				C826E6C8293754B500AFEF6E /* UIDevice.swift in Sources */,
 				C8ECAF9B290FFAD3002011EF /* BookLogView.swift in Sources */,
@@ -567,6 +590,7 @@
 				C8AD254A290A6AAA00C0B8A1 /* UpdateDailyGoalSheet.swift in Sources */,
 				C826E6CC2937566300AFEF6E /* BookDetailReadings.swift in Sources */,
 				C8CE888828EEE74200FCB607 /* ShelfDetailView.swift in Sources */,
+				C8D829C0294F856200C695E8 /* YearlyGoalCell.swift in Sources */,
 				C817006B293E66C300C71926 /* TextFile.swift in Sources */,
 				C899861D28E1FFAB002C678D /* UpdateBookProgressSheet.swift in Sources */,
 				C8533FF1291179E600A99774 /* Book+CoreDataProperties.swift in Sources */,
@@ -618,6 +642,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -679,6 +704,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

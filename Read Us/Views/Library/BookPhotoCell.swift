@@ -30,7 +30,13 @@ struct BookPhotoCell: View {
     
     var cornerRadius: CGFloat {
         if let width {
-            return width <= 70 ? 10 : 12
+            if width <= 70 && width >= 50 {
+                return 10
+            } else if width < 50 {
+                return 6
+            } else {
+                return 12
+            }
         }
         
         if let minWidth {
@@ -52,12 +58,12 @@ struct BookPhotoCell: View {
                         Rectangle().fill(.ultraThinMaterial)
                         if let width {
                             Image(systemName: "photo.on.rectangle")
-                                .font(width < 70 ? .body : .title2)
+                                .font(width < 50 ? .caption : width < 70 ? .body : .title2)
                                 .foregroundColor(.gray.opacity(0.7))
                         }
                         if let minWidth {
                             Image(systemName: "photo.on.rectangle")
-                                .font(minWidth < 70 ? .body : .title2)
+                                .font(minWidth < 50 ? .caption : minWidth < 70 ? .body : .title2)
                                 .foregroundColor(.gray.opacity(0.7))
                         }
                     }
