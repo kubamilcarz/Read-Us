@@ -89,6 +89,7 @@
 		C8D829BE294F854E00C695E8 /* SlimYearlyGoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */; };
 		C8D829C0294F856200C695E8 /* YearlyGoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */; };
 		C8D829C2294F878000C695E8 /* BookLogRecentlyReadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829C1294F878000C695E8 /* BookLogRecentlyReadCell.swift */; };
+		C8D829C4294F8DFA00C695E8 /* PastChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D829C3294F8DFA00C695E8 /* PastChallengesView.swift */; };
 		C8DD37332940B3E900516DCE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8DD37312940B3E900516DCE /* Localizable.strings */; };
 		C8DD37362940B3E900516DCE /* Read-Us-InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C8DD37342940B3E900516DCE /* Read-Us-InfoPlist.strings */; };
 		C8ECAF9B290FFAD3002011EF /* BookLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8ECAF9A290FFAD3002011EF /* BookLogView.swift */; };
@@ -180,6 +181,7 @@
 		C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlimYearlyGoalCell.swift; sourceTree = "<group>"; };
 		C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearlyGoalCell.swift; sourceTree = "<group>"; };
 		C8D829C1294F878000C695E8 /* BookLogRecentlyReadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogRecentlyReadCell.swift; sourceTree = "<group>"; };
+		C8D829C3294F8DFA00C695E8 /* PastChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastChallengesView.swift; sourceTree = "<group>"; };
 		C8DD37322940B3E900516DCE /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C8DD37352940B3E900516DCE /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = "pl.lproj/Read-Us-InfoPlist.strings"; sourceTree = "<group>"; };
 		C8ECAF9A290FFAD3002011EF /* BookLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogView.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */,
 				C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */,
 				C8D829C1294F878000C695E8 /* BookLogRecentlyReadCell.swift */,
+				C8D829C3294F8DFA00C695E8 /* PastChallengesView.swift */,
 			);
 			path = BookLog;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				C8408B8C28EDA1EC009D45A3 /* ReadingHistorySheet.swift in Sources */,
 				C8533FC62911743B00A99774 /* Session+CoreDataClass.swift in Sources */,
 				C86CEDEF28F602FE00C5EB9A /* ReadThisYearSection.swift in Sources */,
+				C8D829C4294F8DFA00C695E8 /* PastChallengesView.swift in Sources */,
 				C8ECAFA0290FFD0A002011EF /* BookieSection.swift in Sources */,
 				C898CE2928E09E960038AAA3 /* Read_UsApp.swift in Sources */,
 				C86CEDEB28F5F95800C5EB9A /* BookGrid.swift in Sources */,

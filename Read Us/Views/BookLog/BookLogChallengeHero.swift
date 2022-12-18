@@ -8,15 +8,21 @@
 import SwiftUI
 
 struct BookLogChallengeHero: View {
+    @FetchRequest<YearlyChallenge>(sortDescriptors: [SortDescriptor(\.year, order: .reverse)]) var challenges: FetchedResults<YearlyChallenge>
+    
+    var currentChallenge: YearlyChallenge? {
+        challenges.first(where: { $0.year_int == Date.now.year })
+    }
+    
     var body: some View {
         VStack {
-            YearlyGoalCell(isSetup: true)
+            YearlyGoalCell(challenge: currentChallenge)
             
             HStack {
                 SlimYearlyGoalCell()
                 
                 NavigationLink {
-                    Text("")
+                    PastChallengesView(challenges: challenges)
                 } label: {
                     Text("Past Challenges")
                         .font(.system(.caption, design: .serif))

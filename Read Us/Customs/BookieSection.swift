@@ -17,36 +17,20 @@ struct BookieSection<Content: View>: View {
     }
     
     enum SectionColor {
-        case ultraThinMaterial, background
+        case even, odd
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            if bgColor == .background {
-                Rectangle()
-                    .fill(.ultraThinMaterial)
-                    .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                    .frame(height: 30)
-                    .frame(maxWidth: .infinity)
-                    .background(.background)
-                    .padding(.top, -30)
-                
-                
+        Group {
+            if bgColor == .even {
                 content
-                    .padding()
+                    .padding(.vertical)
+                    .padding(.horizontal, 10)
                     .background(.background)
             } else {
-                Rectangle()
-                    .fill(.background)
-                    .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                    .frame(height: 30)
-                    .frame(maxWidth: .infinity)
-                    .background(.background)
-                    .padding(.top, -30)
-                
-                
                 content
-                    .padding()
+                    .padding(.vertical)
+                    .padding(.horizontal, 10)
                     .background(.ultraThinMaterial)
             }
         }

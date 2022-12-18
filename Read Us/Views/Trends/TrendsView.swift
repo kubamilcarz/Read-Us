@@ -19,7 +19,7 @@ struct TrendsView: View {
 //                    trendsTypePickers
                     
                     if trendsDataType == .pages {
-                        BookieSection(.background) {
+                        BookieSection(.even) {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("Last 7 Days")
@@ -33,7 +33,7 @@ struct TrendsView: View {
                             }
                         }
                         
-                        BookieSection(.ultraThinMaterial) {
+                        BookieSection(.odd) {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("This Month")
@@ -48,7 +48,7 @@ struct TrendsView: View {
                         }
                     }
                     
-                    BookieSection(.background) {
+                    BookieSection(.even) {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("This Year")
@@ -62,7 +62,7 @@ struct TrendsView: View {
                         }
                     }
                     
-                    BookieSection(.ultraThinMaterial) {
+                    BookieSection(.odd) {
                         VStack(alignment: .leading) {
                             HStack {
                                 Text("All")
@@ -75,7 +75,7 @@ struct TrendsView: View {
                         }
                     }
                     
-                    BookieSection(.background) { }
+                    BookieSection(.even) { }
                 }
                 .padding(.bottom, 75)
             }
@@ -109,6 +109,6 @@ struct TrendsView: View {
         }
         .pickerStyle(.segmented)
         .frame(maxWidth: 210)
-        .padding(.horizontal)
+        .padding(.horizontal, 10)
     }
 }

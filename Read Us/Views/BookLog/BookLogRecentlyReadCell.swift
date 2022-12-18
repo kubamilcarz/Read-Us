@@ -32,9 +32,23 @@ struct BookLogRecentlyReadCell: View {
                 .controlSize(.mini)
             }
             
-            ForEach(filteredReadings) { reading in
-                if let book = reading.book {
-                    bookCell(book: book, finishDate: reading.date_finished)
+            if filteredReadings.isEmpty {
+                HStack {
+                    VStack(spacing: 25) {
+                        Image(systemName: "tray.fill")
+                            .font(.title)
+                        
+                        Text("No read books")
+                            .font(.body)
+                    }
+                    .foregroundColor(.secondary)
+                }
+                .padding(.vertical, 50)
+            } else {
+                ForEach(filteredReadings) { reading in
+                    if let book = reading.book {
+                        bookCell(book: book, finishDate: reading.date_finished)
+                    }
                 }
             }
         }

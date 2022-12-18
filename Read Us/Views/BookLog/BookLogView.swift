@@ -20,9 +20,11 @@ struct BookLogView: View {
                     BookLogRecentlyReadCell()
                         .padding(.horizontal, 10)
                 }
+                .padding(.bottom, 75)
             }
             .navigationTitle("Book Log")
-            .padding(.bottom, 75)
+            .navigationBarTitleDisplayMode(.inline)
+            
         }
         .accentColor(.ruAccentColor)
     }

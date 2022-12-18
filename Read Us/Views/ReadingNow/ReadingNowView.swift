@@ -47,7 +47,7 @@ struct ReadingNowView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 15) {
                     todaysReading
-                        .padding(.horizontal)
+                        
                     
 //                    DeveloperReadingHistory()
                         
@@ -82,8 +82,8 @@ struct ReadingNowView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .padding(.horizontal, 10)
                     }
-                    .padding(.horizontal)
                     
                     VStack(spacing: 0) {
                         ZStack {
@@ -99,7 +99,7 @@ struct ReadingNowView: View {
                         
                         listsSection
                             .padding(.vertical, 15)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 10)
                             .background(.ultraThinMaterial)
                     }
                     
@@ -135,7 +135,7 @@ struct ReadingNowView: View {
                         
                         ReadThisYearSection(for: Date.now.year)
                             .padding(.vertical, 30)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 10)
                             .background(.ultraThinMaterial)
                     }
                     
@@ -442,6 +442,7 @@ extension ReadingNowView {
             .onTapGesture {
                 isShowingReadingHistorySheet = true
             }
+            .padding(.horizontal, 10)
             
             Divider()
         }

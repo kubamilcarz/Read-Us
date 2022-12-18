@@ -52,7 +52,7 @@ struct LibraryView: View {
                         isEditModeOn: $isEditModeOn,
                         isShowingLibraryChoser: $isShowingLibraryChoser
                     )
-                    .padding(.horizontal)
+                    .padding(.horizontal, 10)
                     .padding(.bottom, filteredBooks.count >= 9 ? 125 : 0)
                     
                     if filteredBooks.count >= 9 {
