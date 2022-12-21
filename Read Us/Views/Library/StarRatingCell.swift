@@ -14,33 +14,47 @@ struct StarRatingCell: View {
     var book: Book?
     @State private var rating: Int
     @Binding var bindedRating: Int
+    private var isResetButtonVisible = false
     
-    init(for book: Book) {
+    init(for book: Book, withResetButton: Bool = false) {
         self.book = book
         self._bindedRating = Binding(projectedValue: .constant(0))
         
         let bookReadings = book.bookReadingsArray.sorted(by: { $0.date_finished > $1.date_finished })
         
         self._rating = State(wrappedValue: bookReadings.first?.rating_int ?? 0)
+        self.isResetButtonVisible = withResetButton
     }
     
     init(for rating: Binding<Int>) {
         self._bindedRating = Binding(projectedValue: rating)
         self._rating = State(wrappedValue: 0)
     }
-    
+        
     var body: some View {
-        HStack(spacing: 3) {
-            ForEach(1..<6) { star in
-                Image(systemName: "star\(star <= rating ? ".fill" : "")")
-                    .imageScale(.small)
-                    .onTapGesture {
-                        if star == rating {
-                            changeRating(to: 0)
-                        } else {
-                            changeRating(to: star)
+        HStack {
+            HStack(spacing: 3) {
+                ForEach(1..<6) { star in
+                    Image(systemName: "star\(star <= rating ? ".fill" : "")")
+                        .imageScale(.small)
+                        .transition(.scale)
+                        .onTapGesture {
+                            if star == rating {
+                                changeRating(to: 0)
+                            } else {
+                                changeRating(to: star)
+                            }
                         }
-                    }
+                }
+            }
+            if isResetButtonVisible && rating != 0 {
+                Button(action: { changeRating(to: 0) }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.ruAccentColor)
+                        .symbolRenderingMode(.hierarchical)
+                }
+                .buttonStyle(.plain)
+                .transition(.slide)
             }
         }
         .accessibilityElement()

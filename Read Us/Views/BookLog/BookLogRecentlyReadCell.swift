@@ -11,7 +11,11 @@ struct BookLogRecentlyReadCell: View {
     @FetchRequest<BookReading>(sortDescriptors: [SortDescriptor(\.dateFinished, order: .reverse)]) var bookReadings: FetchedResults<BookReading>
     
     var filteredReadings: [BookReading] {
-        Array(bookReadings.filter({ $0.dateFinished != nil }).prefix(5))
+        bookReadings.filter({ $0.dateFinished != nil })
+    }
+    
+    var first5Readings: [BookReading] {
+        Array(filteredReadings.prefix(5))
     }
     
     var body: some View {
@@ -24,7 +28,7 @@ struct BookLogRecentlyReadCell: View {
                 Spacer()
                 
                 NavigationLink {
-                    
+                    ReadingLogList(readings: filteredReadings)
                 } label: {
                     Text("All")
                         .font(.subheadline)
@@ -32,7 +36,7 @@ struct BookLogRecentlyReadCell: View {
                 .controlSize(.mini)
             }
             
-            if filteredReadings.isEmpty {
+            if first5Readings.isEmpty {
                 HStack {
                     VStack(spacing: 15) {
                         Image(systemName: "tray.fill")
@@ -45,46 +49,12 @@ struct BookLogRecentlyReadCell: View {
                 }
                 .padding(.vertical, 50)
             } else {
-                ForEach(filteredReadings) { reading in
+                ForEach(first5Readings) { reading in
                     if let book = reading.book {
-                        bookCell(book: book, finishDate: reading.date_finished)
+                        BookReadingCell(book: book, finishDate: reading.date_finished)
                     }
                 }
             }
         }
-    }
-    
-    private func bookCell(book: Book, finishDate: Date) -> some View {
-        HStack(alignment: .top, spacing: 15) {
-            BookPhotoCell(for: book.cover, width: 65)
-            
-            VStack(alignment: .leading) {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(book.title_string)
-                        .font(.system(.subheadline, design: .serif))
-                        .bold()
-                    Text(book.author_string)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                }
-                
-                Spacer()
-                
-                HStack {
-                    Text("Finished on \(finishDate.formatted(date: .abbreviated, time: .omitted))")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                    
-                    Spacer()
-                }
-            }
-            .padding(.vertical, 10)
-        }
-    }
-}
-
-struct BookLogRecentlyReadCell_Previews: PreviewProvider {
-    static var previews: some View {
-        BookLogRecentlyReadCell()
     }
 }

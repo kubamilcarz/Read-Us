@@ -83,9 +83,6 @@ struct BookDetailView: View {
         .onAppear {
             title = book.title_string
             author = book.author_string
-            
-            startDate = book.bookReadingsArray.first?.date_started ?? Date.now
-            finishDate = book.bookReadingsArray.first?.date_finished ?? Date.now
         }
         
         .onChange(of: photoSelection) { newValue in
@@ -153,18 +150,7 @@ struct BookDetailView: View {
             }
             .font(.subheadline)
             .foregroundStyle(.secondary)
-            
-            if isEditModeOn && book.isRead && !book.isReading {
-                HStack(spacing: 5) {
-                    DatePicker("Start", selection: $startDate, displayedComponents: .date)
-                    
-                    Text("–").foregroundColor(.secondary)
-                    
-                    DatePicker("Finish", selection: $finishDate, in: startDate..., displayedComponents: .date)
-                }
-                .labelsHidden()
-                .padding(.top, 15)
-            }
+        
         }
         .offset(y: isEditModeOn ? -5 : 0)
     }
