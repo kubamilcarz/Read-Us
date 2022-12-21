@@ -13,12 +13,12 @@ struct BookLogView: View {
             ScrollView {
                 VStack(spacing: 25) {
                     BookLogChallengeHero()
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal)
                     
                     Divider()
                     
                     BookLogRecentlyReadCell()
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal)
                 }
                 .padding(.bottom, 75)
             }

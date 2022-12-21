@@ -53,17 +53,24 @@ struct ReadThisYearSection: View {
                 }
             }
             
-            WidthReader { width in
-                HFlow(alignment: .center, maxWidth: width, horizontalSpacing: 10, verticalSpacing: 10) {
-                    ForEach(filteredBooks) { book in
-                        NavigationLink(destination: BookDetailView(book: book)) {
-                            bookCell(book: book)
+            if filteredBooks.isEmpty {
+                Text("You haven't read any books")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.vertical, 50)
+            } else {
+                WidthReader { width in
+                    HFlow(alignment: .center, maxWidth: width, horizontalSpacing: 10, verticalSpacing: 10) {
+                        ForEach(filteredBooks) { book in
+                            NavigationLink(destination: BookDetailView(book: book)) {
+                                bookCell(book: book)
+                            }
+                            .frame(minWidth: 50, maxWidth: 50)
                         }
-                        .frame(minWidth: 50, maxWidth: 50)
                     }
                 }
+                .padding()
             }
-            .padding()
         }
         .frame(maxWidth: .infinity)
     }

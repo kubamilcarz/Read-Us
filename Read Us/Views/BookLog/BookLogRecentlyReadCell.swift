@@ -34,7 +34,7 @@ struct BookLogRecentlyReadCell: View {
             
             if filteredReadings.isEmpty {
                 HStack {
-                    VStack(spacing: 25) {
+                    VStack(spacing: 15) {
                         Image(systemName: "tray.fill")
                             .font(.title)
                         

@@ -47,8 +47,13 @@ struct ReadingGoalsSection: View {
         VStack(spacing: display == .readingNow ? 15 : 30) {
             VStack(spacing: 5) {
                 if display == .readingNow {
-                    Text("\(Image(systemName: "flame")) Reading Streak")
-                        .font(.system(.title2, design: .serif))
+                    HStack(spacing: 5) {
+                        Image(systemName: "flame")
+                            .bold()
+                        
+                        Text("Reading Streak")
+                    }
+                    .font(.system(.title2, design: .serif))
                     
                     Text("Read every day and finish more books")
                         .font(.subheadline)

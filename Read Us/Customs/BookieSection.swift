@@ -24,13 +24,11 @@ struct BookieSection<Content: View>: View {
         Group {
             if bgColor == .even {
                 content
-                    .padding(.vertical)
-                    .padding(.horizontal, 10)
+                    .padding()
                     .background(.background)
             } else {
                 content
-                    .padding(.vertical)
-                    .padding(.horizontal, 10)
+                    .padding()
                     .background(.ultraThinMaterial)
             }
         }

@@ -33,7 +33,7 @@ struct UpdateDailyGoalSheet: View {
     }
     
     private var content: some View {
-        VStack(alignment: .trailing) {
+        VStack(alignment: .center, spacing: 15) {
             HStack {
                 Text("I want to read every day", comment: "part of a sentence 'I want to read every day %% pages.'")
                 
@@ -43,16 +43,18 @@ struct UpdateDailyGoalSheet: View {
                     .keyboardType(.numberPad)
                     .frame(width: 50)
                 
-                Text("pages.", comment: "part of a sentence 'I want to read every day %% pages.'")
+                Text("pages", comment: "part of a sentence 'I want to read every day %% pages.'")
             }
             
-            Button("Update", action: update)
-                .buttonBorderShape(.capsule)
-                .controlSize(.mini)
-                .buttonStyle(.bordered)
-                .font(.system(size: 12))
-                .disabled(Int(newGoal) == nil)
+            Button(action: update) {
+                Text("Update")
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 5)
+            }
+            .buttonStyle(.borderedProminent)
+            .disabled(Int(newGoal) == nil)
         }
+        .padding(.horizontal)
         .navigationTitle("Daily Goal")
         .navigationBarTitleDisplayMode(.inline)
         

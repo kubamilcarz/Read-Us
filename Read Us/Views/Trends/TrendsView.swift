@@ -15,72 +15,50 @@ struct TrendsView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 0) {
-//                    trendsTypePickers
-                    
+                VStack(spacing: 30) {
                     if trendsDataType == .pages {
-                        BookieSection(.even) {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("Last 7 Days")
-                                        .font(.system(.title2, design: .serif).bold())
-                                    
-                                    Spacer()
-                                }
-                                
-                                BookChart(for: .week, show: $trendsDataType, withDailyGoal: $withDailyGoal)
-                                    .frame(minHeight: 250)
-                            }
-                        }
-                        
-                        BookieSection(.odd) {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("This Month")
-                                        .font(.system(.title2, design: .serif).bold())
-                                    
-                                    Spacer()
-                                }
-                                
-                                BookChart(for: .month, show: $trendsDataType, withDailyGoal: $withDailyGoal)
-                                    .frame(minHeight: 250)
-                            }
-                        }
-                    }
-                    
-                    BookieSection(.even) {
                         VStack(alignment: .leading) {
-                            HStack {
-                                Text("This Year")
-                                    .font(.system(.title2, design: .serif).bold())
-                                
-                                Spacer()
-                            }
+                            BookieSectionHeader("Last 7 Days")
                             
-                            BookChart(for: .year, show: $trendsDataType, withDailyGoal: .constant(false))
+                            BookChart(for: .week, show: $trendsDataType, withDailyGoal: $withDailyGoal)
                                 .frame(minHeight: 250)
                         }
-                    }
-                    
-                    BookieSection(.odd) {
+                        .padding(.horizontal)
+                        
+                        Divider()
+                        
                         VStack(alignment: .leading) {
-                            HStack {
-                                Text("All")
-                                    .font(.system(.title2, design: .serif).bold())
-                                
-                                Spacer()
-                            }
+                            BookieSectionHeader("This Month")
                             
-                            BookChart(for: .all, show: $trendsDataType, withDailyGoal: .constant(false))
+                            BookChart(for: .month, show: $trendsDataType, withDailyGoal: $withDailyGoal)
+                                .frame(minHeight: 250)
                         }
+                        .padding(.horizontal)
+                        
+                        Divider()
                     }
                     
-                    BookieSection(.even) { }
+                    VStack(alignment: .leading) {
+                        BookieSectionHeader("This Year")
+                        
+                        BookChart(for: .year, show: $trendsDataType, withDailyGoal: .constant(false))
+                            .frame(minHeight: 250)
+                    }
+                    .padding(.horizontal)
+                    
+                    Divider()
+                    
+                    VStack(alignment: .leading) {
+                        BookieSectionHeader("All")
+                        
+                        BookChart(for: .all, show: $trendsDataType, withDailyGoal: .constant(false))
+                    }
+                    .padding(.horizontal)
                 }
                 .padding(.bottom, 75)
             }
-            .background(.ultraThinMaterial)
             .navigationTitle("Trends")
+            
             .onChange(of: trendsDataType) { _ in
                 if trendsDataType == .pages {
                     withDailyGoal = true
@@ -109,6 +87,6 @@ struct TrendsView: View {
         }
         .pickerStyle(.segmented)
         .frame(maxWidth: 210)
-        .padding(.horizontal, 10)
+        .padding(.horizontal)
     }
 }

@@ -127,7 +127,6 @@ struct BookChart: View {
             }
         }
         .frame(minHeight: 80)
-        .padding(.bottom, 30)
         
         .onAppear {
             switch dataType {

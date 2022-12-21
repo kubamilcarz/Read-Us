@@ -24,7 +24,7 @@ struct PastChallengesView: View {
             VStack {
                 if let currentChallenge {
                     YearlyGoalCell(challenge: currentChallenge)
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal)
                     
                     Divider()
                 }
@@ -34,10 +34,11 @@ struct PastChallengesView: View {
                         SlimYearlyGoalCell()
                     }
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal)
             }
         }
         .navigationTitle("Past Challenges")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
