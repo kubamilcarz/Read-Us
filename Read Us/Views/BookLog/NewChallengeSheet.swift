@@ -94,7 +94,9 @@ struct NewChallengeSheet: View {
                         
                     }
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.vertical, 50)
+                .padding(.horizontal)
             }
 
             closeButton
@@ -104,6 +106,9 @@ struct NewChallengeSheet: View {
         .tint(.ruAccentColor)
         .onAppear {
             isFieldFocused = true
+        }
+        .onTapGesture {
+            self.hideKeyboard()
         }
     }
     

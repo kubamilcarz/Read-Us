@@ -27,14 +27,11 @@ struct ReadingLogList: View {
                     }
                     .padding(.vertical, 50)
                 } else {
-                    ForEach(readings) { reading in
-                        if let book = reading.book {
-                            BookReadingCell(book: book, finishDate: reading.date_finished)
-                        }
-                    }
+                    BookLogList(readings: readings)
                 }
             }
             .padding(.horizontal)
+            .padding(.bottom, 75)
         }
         .navigationTitle("Reading Log")
         .navigationBarTitleDisplayMode(.inline)

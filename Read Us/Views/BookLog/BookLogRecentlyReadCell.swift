@@ -49,11 +49,7 @@ struct BookLogRecentlyReadCell: View {
                 }
                 .padding(.vertical, 50)
             } else {
-                ForEach(first5Readings) { reading in
-                    if let book = reading.book {
-                        BookReadingCell(book: book, finishDate: reading.date_finished)
-                    }
-                }
+                BookLogList(readings: first5Readings)
             }
         }
     }

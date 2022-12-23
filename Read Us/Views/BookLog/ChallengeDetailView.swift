@@ -18,7 +18,7 @@ struct ChallengeDetailView: View {
         readings.filter { $0.dateFinished != nil && $0.dateFinished?.year == challenge.year_int }.sorted { $0.date_finished > $1.date_finished }
     }
     
-    @State private var layout: BookLayout = .grid
+    @State private var layout: BookLayout = .list
     @State private var isChallengeUpdateSheetOpen = false
     
     enum BookLayout {
@@ -55,21 +55,15 @@ struct ChallengeDetailView: View {
                         Image(systemName: "list.dash").tag(BookLayout.list)
                         Image(systemName: "rectangle.grid.3x2.fill").tag(BookLayout.grid)
                     }
-                    .controlSize(.small)
                     .frame(maxWidth: 120)
                     .pickerStyle(.segmented)
+                    .controlSize(.mini)
                 }
                 .padding(.horizontal)
                 
                 if layout == .list {
-                    VStack {
-                        ForEach(filteredReadings) { reading in
-                            if let book = reading.book {
-                                BookReadingCell(book: book, finishDate: reading.date_finished)
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
+                    BookLogList(readings: filteredReadings)
+                        .padding(.horizontal)
                 } else {
                     WidthReader { width in
                         HFlow(alignment: .center, maxWidth: width, horizontalSpacing: 10, verticalSpacing: 10) {
