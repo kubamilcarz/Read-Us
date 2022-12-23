@@ -23,6 +23,7 @@ struct BookDetailView: View {
     
     @State private var title = ""
     @State private var author = ""
+    @State private var pageCount = ""
     
     @State private var startDate = Date.now
     @State private var finishDate = Date.now
@@ -83,6 +84,7 @@ struct BookDetailView: View {
         .onAppear {
             title = book.title_string
             author = book.author_string
+            pageCount = "\(book.number_of_pages)"
         }
         
         .onChange(of: photoSelection) { newValue in
@@ -150,7 +152,19 @@ struct BookDetailView: View {
             }
             .font(.subheadline)
             .foregroundStyle(.secondary)
-        
+            
+            if isEditModeOn {
+                HStack {
+                    TextField("\(book.number_of_pages)", text: $pageCount)
+                        .textFieldStyle(.roundedBorder)
+                        .keyboardType(.numberPad)
+                        .frame(maxWidth: 60)
+                    
+                    Text("pages")
+                }
+                .font(.subheadline)
+            }
+            
         }
         .offset(y: isEditModeOn ? -5 : 0)
     }
@@ -178,6 +192,7 @@ struct BookDetailView: View {
                     // update title and author
                     book.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
                     book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
+                    book.numberOfPages = Int64(Int(pageCount.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0) ?? 0
                     
                     if book.isRead && !book.isReading {
                         let latestRead = dataManager.getLatestBookReading(for: book)

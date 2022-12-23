@@ -13,9 +13,9 @@ class DataManager: ObservableObject {
 
     func pauseCurrentReading(moc: NSManagedObjectContext, for book: Book) {
         // check if the book is curerntly being read
+        book.isReading = false
+        
         if let currentReading = getCurrentBookReading(for: book) {
-            book.isReading = false
-            
             currentReading.isReading = false
             currentReading.countToStats = false
             try? moc.save()
@@ -24,9 +24,9 @@ class DataManager: ObservableObject {
     
     func unpauseCurrentReading(moc: NSManagedObjectContext, for book: Book) {
         // check if the book is curerntly being read
+        book.isReading = true
+        
         if let currentReading = getCurrentBookReading(for: book) {
-            book.isReading = true
-            
             currentReading.isReading = true
             currentReading.countToStats = false
             try? moc.save()
