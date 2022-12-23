@@ -54,6 +54,7 @@ struct ReadingGoalsSection: View {
                         Text("Reading Streak")
                     }
                     .font(.system(.title2, design: .serif))
+                    .bold()
                     
                     Text("Read every day and finish more books")
                         .font(.subheadline)
@@ -63,7 +64,8 @@ struct ReadingGoalsSection: View {
                 } else if display == .today {
                     HStack {
                         Text("Reading Streak")
-                            .font(.system(.headline, design: .serif))
+                            .font(.system(.title2, design: .serif))
+                            .bold()
                         
                         Spacer()
                     }

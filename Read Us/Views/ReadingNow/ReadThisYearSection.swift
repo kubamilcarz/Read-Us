@@ -9,22 +9,18 @@ import FrameUp
 import SwiftUI
 
 struct ReadThisYearSection: View {
-    @FetchRequest<Book>(sortDescriptors: [
-        SortDescriptor(\.title)
-    ], predicate: NSPredicate(format: "isRead == true")) var books: FetchedResults<Book>
+    @FetchRequest<BookReading>(sortDescriptors: []) var readings: FetchedResults<BookReading>
     
     @State private var year: Int
     
-    var filteredBooks: [Book] {
-        books.filter { $0.bookReadingsArray.sorted(by: { $0.date_finished < $1.date_finished }).first?.date_finished.year == year }
+    var filteredReadings: [BookReading] {
+        readings.filter { $0.dateFinished != nil && $0.dateFinished?.year == year }.sorted { $0.date_finished < $1.date_finished }
     }
     
     init(for year: Int) {
         self._year = State(wrappedValue: year)
         
-        _books = FetchRequest<Book>(sortDescriptors: [
-            SortDescriptor(\.title)
-        ], predicate: NSPredicate(format: "isRead == true"))
+        _readings = FetchRequest<BookReading>(sortDescriptors: [])
     }
     
     var body: some View {
@@ -53,7 +49,7 @@ struct ReadThisYearSection: View {
                 }
             }
             
-            if filteredBooks.isEmpty {
+            if filteredReadings.isEmpty {
                 Text("You haven't read any books")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -61,11 +57,13 @@ struct ReadThisYearSection: View {
             } else {
                 WidthReader { width in
                     HFlow(alignment: .center, maxWidth: width, horizontalSpacing: 10, verticalSpacing: 10) {
-                        ForEach(filteredBooks) { book in
-                            NavigationLink(destination: BookDetailView(book: book)) {
-                                bookCell(book: book)
+                        ForEach(filteredReadings) { reading in
+                            if let book = reading.book {
+                                NavigationLink(destination: BookDetailView(book: book)) {
+                                    bookCell(book: book)
+                                }
+                                .frame(minWidth: 50, maxWidth: 50)
                             }
-                            .frame(minWidth: 50, maxWidth: 50)
                         }
                     }
                 }
@@ -98,7 +96,7 @@ struct ReadThisYearSection: View {
         VStack(spacing: 5) {
             Text("\(String(year)) So Far")
                 .font(.system(.title2, design: .serif))
-            Text("You read **\(filteredBooks.count)** books")
+            Text("You read **\(filteredReadings.count)** books")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

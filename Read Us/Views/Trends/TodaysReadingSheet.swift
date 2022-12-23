@@ -54,57 +54,34 @@ struct TodaysReadingSheet: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(spacing: 0) {
-                    
+                VStack(spacing: 30) {
                     readToday
+                        .padding(.horizontal)
                     
-                    VStack(spacing: 0) {
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                            .frame(height: 30)
-                            .frame(maxWidth: .infinity)
-                            .background(.background)
-                            .padding(.top, -30)
-                            
-                            
-                        last7Days
-                    }
+                    Divider()
                     
-                    VStack(spacing: 0) {
-                        Rectangle()
-                            .fill(.background)
-                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                            .frame(height: 30)
-                            .frame(maxWidth: .infinity)
-                            .background(.ultraThinMaterial)
-                            .padding(.top, -30)
-                        
-                        ReadingGoalsSection(for: .today)
-                            .padding(.horizontal)
-                            .padding(.vertical, 30)
-                    }
+                    last7Days
+                        .padding(.horizontal)
                     
-                    VStack(spacing: 0) {
-                        Rectangle()
-                            .fill(.ultraThinMaterial)
-                            .cornerRadius(24, corners: [.bottomLeft, .bottomRight])
-                            .frame(height: 30)
-                            .frame(maxWidth: .infinity)
-                            .background(.background)
-                            .padding(.top, -30)
-                            
-                            
-                        readingLog
-                    }
+                    Divider()
+                    
+                    ReadingGoalsSection(for: .today)
+                        .padding(.horizontal)
+                    
+                    Divider()
+                    
+                    readingLog
                 }
             }
-            .background(.ultraThinMaterial)
             .navigationTitle("Today's Reading")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("Done") {
+                Button {
                     dismiss()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundColor(.ruAccentColor)
                 }
             }
             .sheet(isPresented: $isShowingUpdateDailyGoalSheet) {
@@ -143,33 +120,32 @@ struct TodaysReadingSheet: View {
             .buttonStyle(.bordered)
             .font(.system(size: 10))
         }
-        .padding(30)
+        .padding(.top, 40)
+        .padding(.bottom, 10)
     }
     
     private var last7Days: some View {
         VStack(spacing: 15) {
             HStack {
                 Text("Last 7 Days")
-                    .font(.system(.headline, design: .serif))
+                    .font(.system(.title2, design: .serif))
+                    .bold()
                 
                 Spacer()
             }
             
             BookChart(for: .week, show: .constant(.pages), withDailyGoal: .constant(true))
-                .padding(.horizontal)
                 .frame(height: 250)
             
         }
-        .padding(.vertical, 30)
-        .padding(.horizontal)
-        .background(.background)
     }
     
     private var readingLog: some View {
         VStack(spacing: 15) {
             HStack {
                 Text("Reading Log")
-                    .font(.system(.headline, design: .serif))
+                    .font(.system(.title2, design: .serif))
+                    .bold()
                 
                 Spacer()
                 
@@ -192,7 +168,5 @@ struct TodaysReadingSheet: View {
                 .frame(minHeight: 300, maxHeight: 900)
             
         }
-        .padding(.vertical, 30)
-        .background(.background)
     }
 }
