@@ -29,5 +29,6 @@ struct CustomProgressView: View {
             }
         }
         .frame(height: height)
+        .clipShape(Capsule())
     }
 }

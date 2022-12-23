@@ -16,7 +16,7 @@ struct PastChallengesView: View {
     }
     
     var sortedChallenges: [YearlyChallenge] {
-        challenges.sorted { $0.year_int > $1.year_int }
+        challenges.sorted { $0.year_int > $1.year_int }.filter { $0.year_int != Date.now.year }
     }
     
     var body: some View {
@@ -31,7 +31,7 @@ struct PastChallengesView: View {
                 
                 VStack {
                     ForEach(sortedChallenges) { challenge in
-                        SlimYearlyGoalCell()
+                        SlimYearlyGoalCell(challenge: challenge)
                     }
                 }
                 .padding(.horizontal)

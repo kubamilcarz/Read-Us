@@ -34,7 +34,7 @@ extension YearlyChallenge {
     }
     
     public var goalWasHit: Bool {
-        actualNumber_int > goal_int
+        actualNumber_int >= goal_int
     }
 }
 

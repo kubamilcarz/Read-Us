@@ -11,7 +11,8 @@ struct BookGrid: View {
     @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var dataManager: DataManager
     
-    var books: [Book]
+    var books: [Book]?
+    var readings: [BookReading]?
     
     @Binding var isEditModeOn: Bool
     @Binding var isShowingLibraryChoser: Bool
@@ -26,6 +27,12 @@ struct BookGrid: View {
         self.shelf = shelf
     }
     
+    init(readings: [BookReading]) {
+        self.readings = readings
+        self._isEditModeOn = Binding(projectedValue: .constant(false))
+        self._isShowingLibraryChoser = Binding(projectedValue: .constant(false))
+    }
+    
     @State private var bookToUpdate: Book?
     @State private var bookToRemove: Book?
     @State private var isShowingNewShelfSheet = false
@@ -37,15 +44,15 @@ struct BookGrid: View {
     
     var body: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 90), spacing: 15)], alignment: .leading) {
-            ForEach(books) { book in
-                NavigationLink {
-                    BookDetailView(book: book)
-                } label: {
-                    bookCell(book: book)
+            if let books {
+                ForEach(books) { book in
+                    navigationCell(for: book)
                 }
-                .tint(.primary)
-                .contextMenu {
-                    bookContextMenu(book: book)
+            } else if let readings {
+                ForEach(readings) { reading in
+                    if let book = reading.book {
+                        navigationCell(for: book)
+                    }
                 }
             }
             
@@ -81,6 +88,18 @@ struct BookGrid: View {
             NewShelfSheet()
                 .presentationDetents([.fraction(2/3)])
                 .presentationDragIndicator(.visible)
+        }
+    }
+    
+    private func navigationCell(for book: Book) -> some View {
+        NavigationLink {
+            BookDetailView(book: book)
+        } label: {
+            bookCell(book: book)
+        }
+        .tint(.primary)
+        .contextMenu {
+            bookContextMenu(book: book)
         }
     }
     

@@ -8,18 +8,31 @@
 import SwiftUI
 
 struct BookLogChallengeHero: View {
-    @FetchRequest<YearlyChallenge>(sortDescriptors: [SortDescriptor(\.year, order: .reverse)]) var challenges: FetchedResults<YearlyChallenge>
+    @FetchRequest<YearlyChallenge>(sortDescriptors: []) var challenges: FetchedResults<YearlyChallenge>
     
     var currentChallenge: YearlyChallenge? {
         challenges.first(where: { $0.year_int == Date.now.year })
     }
     
+    var previousChallenge: YearlyChallenge? {
+        challenges.first(where: { $0.year_int == Date.now.year - 1 })
+    }
+    
     var body: some View {
         VStack {
-            YearlyGoalCell(challenge: currentChallenge)
+            NavigationLink {
+                if let currentChallenge {
+                    ChallengeDetailView(challenge: currentChallenge)
+                }
+            } label: {
+                YearlyGoalCell(challenge: currentChallenge)
+            }
+            .buttonStyle(.plain)
             
             HStack {
-                SlimYearlyGoalCell()
+                if let previousChallenge {
+                    SlimYearlyGoalCell(challenge: previousChallenge)
+                }
                 
                 NavigationLink {
                     PastChallengesView(challenges: challenges)
@@ -27,6 +40,7 @@ struct BookLogChallengeHero: View {
                     Text("Past Challenges")
                         .font(.system(.caption, design: .serif))
                         .foregroundStyle(.primary)
+                        .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .foregroundStyle(.primary)

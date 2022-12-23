@@ -8,25 +8,33 @@
 import SwiftUI
 
 struct SlimYearlyGoalCell: View {
+    
+    var challenge: YearlyChallenge?
+    
     var body: some View {
         HStack(spacing: 15) {
-            VStack(alignment: .leading, spacing: 15) {
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack {
-                        Text("2021 Challenge")
-                            .font(.system(.subheadline, design: .serif).bold())
+            if let challenge {
+                VStack(alignment: .leading, spacing: 15) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack {
+                            Text("\(String(challenge.year_int)) Challenge")
+                                .font(.system(.subheadline, design: .serif).bold())
+                            
+                            Spacer()
+                        }
                         
-                        Spacer()
+                        Text("31 books")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
                     }
-                    
-                    Text("31 books")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
                 }
+                
+                bookStack
+            } else {
+                Text("No Previous Challenges")
+                    .font(.system(.caption, design: .serif))
+                    .foregroundStyle(.primary)
             }
-            
-            bookStack
-            
         }
         .frame(maxWidth: .infinity)
         .padding(10)
@@ -56,11 +64,5 @@ struct SlimYearlyGoalCell: View {
         }
         .offset(x: -22.5)
         .padding(.horizontal, -22.5)
-    }
-}
-
-struct SlimYearlyGoalCell_Previews: PreviewProvider {
-    static var previews: some View {
-        SlimYearlyGoalCell()
     }
 }

@@ -11,8 +11,14 @@ struct YearlyGoalCell: View {
     
     var challenge: YearlyChallenge?
     
+    @FetchRequest<BookReading>(sortDescriptors: []) var readings: FetchedResults<BookReading>
+    
+    var filteredReadings: [BookReading] {
+        readings.filter { $0.dateFinished != nil && $0.dateFinished?.year == challenge?.year_int }.sorted { $0.date_finished > $1.date_finished }
+    }
+    
     var progress: CGFloat {
-        CGFloat(((challenge?.actualNumber_int ?? 0) / (challenge?.goal_int ?? 0)) ?? 0)
+        CGFloat(filteredReadings.count) / CGFloat(challenge?.goal_int ?? 0)
     }
     
     @State private var isShowingNewChallengeSheet = false
@@ -26,13 +32,13 @@ struct YearlyGoalCell: View {
                     VStack(alignment: .leading, spacing: 15) {
                         VStack(alignment: .leading, spacing: 3) {
                             HStack {
-                                Text("\(challenge.year_int) Challenge")
+                                Text("\(String(challenge.year_int)) Challenge")
                                     .font(.system(.headline, design: .serif).bold())
                                 
                                 Spacer()
                             }
                             
-                            Text("\(challenge.actualNumber_int)/\(challenge.goal_int)")
+                            Text("\(filteredReadings.count)/\(challenge.goal_int)")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -67,7 +73,7 @@ struct YearlyGoalCell: View {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
         
         .sheet(isPresented: $isShowingNewChallengeSheet) {
-            Text("hello")
+            NewChallengeSheet(year: String(Date.now.year))
         }
     }
     
