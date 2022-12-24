@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
-import CoreData
+import StoreKit
 
-struct ContentView: View {    
+struct ContentView: View {
+    @Environment(\.requestReview) var requestReview
     @StateObject var dataManager = DataManager()
+    
+    @AppStorage("AppLaunchCount") var launchCount = 0
     
     var body: some View {
         CustomTabBarContainerView(selection: $dataManager.tabSelection) {
@@ -24,6 +27,13 @@ struct ContentView: View {
         }
         .environmentObject(dataManager)
         .tint(.ruAccentColor)
+        .onAppear {
+            launchCount += 1
+            
+            if launchCount % 10 == 0 {
+                requestReview()
+            }
+        }
     }
 
 }

@@ -25,9 +25,6 @@ struct BookDetailView: View {
     @State private var author = ""
     @State private var pageCount = ""
     
-    @State private var startDate = Date.now
-    @State private var finishDate = Date.now
-    
     var bookProgress: CGFloat {
         if book.isRead {
             return 1.0
@@ -192,17 +189,8 @@ struct BookDetailView: View {
                     // update title and author
                     book.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
                     book.author = author.trimmingCharacters(in: .whitespacesAndNewlines)
-                    book.numberOfPages = Int64(Int(pageCount.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0) ?? 0
-                    
-                    if book.isRead && !book.isReading {
-                        let latestRead = dataManager.getLatestBookReading(for: book)
-                        
-                        latestRead?.dateStarted = startDate
-                        latestRead?.dateFinished = finishDate
-                        
-//                        book.startedReadingOn = startDate
-//                        book.finishedReadingOn = finishDate
-                    }
+                    book.numberOfPages = Int64(Int(pageCount.trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0)
+
                     try? moc.save()
                 }
             }

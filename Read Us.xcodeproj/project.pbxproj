@@ -107,7 +107,7 @@
 		C8FA38302955D0D7007B0838 /* ChallengeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA382F2955D0D7007B0838 /* ChallengeDelegate.swift */; };
 		C8FA38322955D88D007B0838 /* ChallengeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA38312955D88D007B0838 /* ChallengeDetailView.swift */; };
 		C8FA383429566001007B0838 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA383329566001007B0838 /* View.swift */; };
-		C8FA3836295661F6007B0838 /* BookLogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA3835295661F6007B0838 /* BookLogList.swift */; };
+		C8FA383929574349007B0838 /* BookLogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FA383829574349007B0838 /* BookLogList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -212,7 +212,7 @@
 		C8FA382F2955D0D7007B0838 /* ChallengeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDelegate.swift; sourceTree = "<group>"; };
 		C8FA38312955D88D007B0838 /* ChallengeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailView.swift; sourceTree = "<group>"; };
 		C8FA383329566001007B0838 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
-		C8FA3835295661F6007B0838 /* BookLogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogList.swift; sourceTree = "<group>"; };
+		C8FA383829574349007B0838 /* BookLogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -508,7 +508,7 @@
 				C8D829B7294F7C7C00C695E8 /* BookLogChallengeHero.swift */,
 				C8D829BF294F856200C695E8 /* YearlyGoalCell.swift */,
 				C8D829BD294F854E00C695E8 /* SlimYearlyGoalCell.swift */,
-				C8FA3835295661F6007B0838 /* BookLogList.swift */,
+				C8FA383829574349007B0838 /* BookLogList.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -607,7 +607,7 @@
 				C8D829BE294F854E00C695E8 /* SlimYearlyGoalCell.swift in Sources */,
 				C8CE889828EF35A400FCB607 /* CustomCircularProgressView.swift in Sources */,
 				C8FA382A295392C1007B0838 /* BookReadingDetailView.swift in Sources */,
-				C8FA3836295661F6007B0838 /* BookLogList.swift in Sources */,
+				C8FA383929574349007B0838 /* BookLogList.swift in Sources */,
 				C89985EC28E0CACE002C678D /* LibraryView.swift in Sources */,
 				C8FA3821295384CB007B0838 /* ReadingNowShelvesSection.swift in Sources */,
 				C8FA38322955D88D007B0838 /* ChallengeDetailView.swift in Sources */,

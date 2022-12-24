@@ -74,6 +74,44 @@ struct BookReadingDetailView: View {
                 .buttonStyle(.borderedProminent)
                 .withoutListInset()
                 
+                Section {
+                    HStack {
+                        Button(role: .cancel) {
+                            reading.countToStats.toggle()
+                            try? moc.save()
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                moc.refresh(reading, mergeChanges: true)
+                            }
+                        } label: {
+                            Label(reading.countToStats ? "Hide" : "Show", systemImage: "eye\(reading.countToStats ? ".slash" : "")")
+                                .padding(.vertical, 7)
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.secondary)
+                        
+                        Button(role: .destructive) {
+                            moc.delete(reading)
+                            try? moc.save()
+                            
+                            dismiss()
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                                .padding(.vertical, 7)
+                                .frame(maxWidth: .infinity)
+                                .foregroundColor(.red)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.red)
+                    }
+                    .withoutListInset()
+                    .background(.clear)
+                }
+                .controlSize(.mini)
+                .buttonBorderShape(.roundedRectangle)
+                
             } else {
                 Text("Something went wrong")
             }

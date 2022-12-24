@@ -21,6 +21,8 @@ struct ChallengeDetailView: View {
     @State private var layout: BookLayout = .list
     @State private var isChallengeUpdateSheetOpen = false
     
+    @Namespace private var bookCoverAnimation
+
     enum BookLayout {
         case list, grid
     }
@@ -73,6 +75,7 @@ struct ChallengeDetailView: View {
                                         BookPhotoCell(for: book.cover, minWidth: 50)
                                     }
                                     .frame(minWidth: 50, maxWidth: 50)
+                                    .matchedGeometryEffect(id: "bookCover-\(reading.id?.uuidString ?? UUID().uuidString)", in: bookCoverAnimation)
                                 }
                             }
                         }

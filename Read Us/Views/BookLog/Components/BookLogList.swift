@@ -2,7 +2,7 @@
 //  BookLogList.swift
 //  Read Us
 //
-//  Created by Kuba Milcarz on 12/23/22.
+//  Created by Kuba Milcarz on 12/24/22.
 //
 
 import SwiftUI
@@ -22,8 +22,13 @@ struct BookLogList: View {
             VStack {
                 ForEach(readings) { reading in
                     if let book = reading.book {
-                        BookReadingCell(book: book, finishDate: reading.date_finished)
-                            .padding(.vertical, 7.5)
+                        NavigationLink {
+                            BookDetailView(book: book)
+                        } label: {
+                            BookReadingCell(book: book, finishDate: reading.date_finished, readingID: reading.id)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.vertical, 7.5)
                     }
                 }
             }
