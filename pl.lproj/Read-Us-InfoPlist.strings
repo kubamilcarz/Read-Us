@@ -4,3 +4,6 @@
 /* Bundle name */
 "CFBundleName" = "Bookie";
 
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Używamy kamery do skanowania kodów kreskowych z książek.";
+

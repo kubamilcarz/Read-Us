@@ -213,6 +213,8 @@
 		C8FA38312955D88D007B0838 /* ChallengeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetailView.swift; sourceTree = "<group>"; };
 		C8FA383329566001007B0838 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		C8FA383829574349007B0838 /* BookLogList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLogList.swift; sourceTree = "<group>"; };
+		C8FA383A2957AD3A007B0838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C8FA383B2957AD3A007B0838 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Read-Us-InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -561,6 +563,7 @@
 				en,
 				Base,
 				pl,
+				en_US,
 			);
 			mainGroup = C898CE1C28E09E960038AAA3;
 			packageReferences = (
@@ -700,6 +703,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C8DD37322940B3E900516DCE /* pl */,
+				C8FA383A2957AD3A007B0838 /* en */,
 			);
 			name = Localizable.strings;
 			path = ..;
@@ -709,6 +713,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C8DD37352940B3E900516DCE /* pl */,
+				C8FA383B2957AD3A007B0838 /* en */,
 			);
 			name = "Read-Us-InfoPlist.strings";
 			path = ..;
@@ -843,7 +848,7 @@
 				"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME[sdk=iphoneos*]" = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Read Us/Read Us.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "Read\\ Us/Preview\\ Content";
 				DEVELOPMENT_TEAM = 7AGNJTPT6V;
 				ENABLE_PREVIEWS = YES;
@@ -880,7 +885,7 @@
 				"ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME[sdk=iphoneos*]" = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Read Us/Read Us.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_ASSET_PATHS = "Read\\ Us/Preview\\ Content";
 				DEVELOPMENT_TEAM = 7AGNJTPT6V;
 				ENABLE_PREVIEWS = YES;

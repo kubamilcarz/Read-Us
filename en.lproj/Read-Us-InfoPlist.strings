@@ -1,0 +1,6 @@
+/* Bundle name */
+"CFBundleName" = "Bookie";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Bookie will use camera to import books into the app by scanning bar codes.";
+

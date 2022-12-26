@@ -50,7 +50,7 @@ struct ReadingNowShelvesSection: View {
             Spacer()
         
             NavigationLink(destination: ShelvesView(isNested: true)) {
-                Text("See All")
+                Text("All")
                     .font(.subheadline)
                     .foregroundColor(.ruAccentColor)
             }
