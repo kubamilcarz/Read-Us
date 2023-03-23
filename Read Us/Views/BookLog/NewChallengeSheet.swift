@@ -92,7 +92,6 @@ struct NewChallengeSheet: View {
                             .font(.system(.body, design: .serif))
                             .foregroundColor(.secondary)
                         
-                        Text(doesChallengeAlreadyExist ? "already exists" : "does not exist")
                     }
                 }
                 .padding(.vertical, 50)

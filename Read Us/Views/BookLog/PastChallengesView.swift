@@ -23,15 +23,25 @@ struct PastChallengesView: View {
         ScrollView {
             VStack {
                 if let currentChallenge {
-                    YearlyGoalCell(challenge: currentChallenge)
-                        .padding(.horizontal)
+                    NavigationLink {
+                        ChallengeDetailView(challenge: currentChallenge)
+                    } label: {
+                        YearlyGoalCell(challenge: currentChallenge)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
                     
                     Divider()
                 }
                 
                 VStack {
                     ForEach(sortedChallenges) { challenge in
-                        SlimYearlyGoalCell(challenge: challenge)
+                        NavigationLink {
+                            ChallengeDetailView(challenge: challenge)
+                        } label: {
+                            SlimYearlyGoalCell(challenge: challenge)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal)

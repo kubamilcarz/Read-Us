@@ -31,7 +31,12 @@ struct BookLogChallengeHero: View {
             
             HStack {
                 if let previousChallenge {
-                    SlimYearlyGoalCell(challenge: previousChallenge)
+                    NavigationLink {
+                        ChallengeDetailView(challenge: previousChallenge)
+                    } label: {
+                        SlimYearlyGoalCell(challenge: previousChallenge)
+                    }
+                    .buttonStyle(.plain)
                 }
                 
                 NavigationLink {

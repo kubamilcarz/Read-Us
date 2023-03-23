@@ -79,12 +79,45 @@ struct YearlyGoalCell: View {
     
     private var bookStack: some View {
         ZStack {
-            BookPhotoCell(for: nil, width: 55)
-                .padding(.leading, 100)
-            BookPhotoCell(for: nil, width: 55)
-                .padding(.leading, 50)
-            BookPhotoCell(for: nil, width: 55)
+            if filteredReadings.count >= 3 {
+                ForEach(filteredReadings.prefix(3).indices) { index in
+                    BookPhotoCell(for: filteredReadings[2-index].book?.cover, width: 55)
+                        .padding(.leading, CGFloat(2 - index)*50)
+                        .shadow(radius: 5, x: 15)
+                }
+            } else if filteredReadings.count == 2 {
+                BookPhotoCell(for: nil, width: 55)
+                    .padding(.leading, 100)
+                    .shadow(radius: 5, x: 15)
+                BookPhotoCell(for: filteredReadings[1].book?.cover, width: 55)
+                    .padding(.leading, 50)
+                    .shadow(radius: 5, x: 15)
+                BookPhotoCell(for: filteredReadings[0].book?.cover, width: 55)
+                    .padding(.leading, 0)
+                    .shadow(radius: 5, x: 15)
+            } else if filteredReadings.count == 1 {
+                BookPhotoCell(for: nil, width: 55)
+                    .padding(.leading, 100)
+                    .shadow(radius: 5, x: 15)
+                BookPhotoCell(for: nil, width: 55)
+                    .padding(.leading, 50)
+                    .shadow(radius: 5, x: 15)
+                BookPhotoCell(for: filteredReadings[0].book?.cover, width: 55)
+                    .padding(.leading, 0)
+                    .shadow(radius: 5, x: 15)
+            } else if filteredReadings.count == 2 {
+                BookPhotoCell(for: nil, width: 55)
+                    .padding(.leading, 100)
+                    .shadow(radius: 5, x: 15)
+                BookPhotoCell(for: nil, width: 55)
+                    .padding(.leading, 50)
+                    .shadow(radius: 5, x: 15)
+                BookPhotoCell(for: nil, width: 55)
+                    .padding(.leading, 0)
+                    .shadow(radius: 5, x: 15)
+            }
         }
+        .clipShape(RoundedRectangle(cornerRadius: 12))
         .offset(x: -25)
         .padding(.horizontal, -25)
     }

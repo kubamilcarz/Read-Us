@@ -17,7 +17,7 @@ struct SlimYearlyGoalCell: View {
                 VStack(alignment: .leading, spacing: 15) {
                     VStack(alignment: .leading, spacing: 3) {
                         HStack {
-                            Text("\(String(challenge.year_int)) Challenge")
+                            Text("\(String(challenge.year_int))")
                                 .font(.system(.subheadline, design: .serif).bold())
                             
                             Spacer()
